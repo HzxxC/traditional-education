@@ -1,0 +1,123 @@
+@charset 'utf-8';
+
+/* ================================ */
+/* 网站二次开发网页样式				*/
+/* by hzxx-cp 2017/09/04
+/* ================================ */
+
+body { 
+	font-family: "Microsoft YaHei"; 
+	/*background-color: #000;*/
+	background-color: #F4F8FB 
+}
+
+/* 首页 */
+.hao-gd-body {
+	margin: 10px;
+	border-radius: 0.2rem;
+}
+.hao-gd-body span.hao-gd-title  {
+	font-size: 0.6rem;
+	color: #16CAD9;
+	border: 1px solid #16CAD9;
+	border-radius: 0.2rem;
+	padding: 1px 4px;
+	left: 0.6rem;
+	top: 0.45rem;
+	right: inherit;
+}
+.hao-gd-body .rollTextMenus {
+	height: 24px;
+	padding-left: 64px;
+}
+.hao-gd-body .rollTextMenus div, .hao-gd-body .rollTextMenus div a {
+	height: 24px;
+	line-height: 24px;
+	/*font-size: 0.7rem*/
+}
+.hao-gd-body span {
+	top: 0.2rem;
+	right: 0.4rem;
+}
+.hao-gd-body span a {
+	position: relative;
+	/*font-size: 0.7rem;*/
+}
+.hao-gd-body span a:before {
+	display: inline-block;
+	content: "";
+	width: 1px;
+	height: 21px;
+	background-color: #676b70;
+	position: absolute;
+	top: -1px;
+	left: -8px;
+}
+/* 商品推荐 */
+.goods-recommender, .stores-segment {
+	margin: 5px 0 10px;
+}
+.index-title {
+	text-align: center;
+	margin-bottom: 10px;
+}
+.index-title span {
+	position: relative;
+	font-size: 0.8rem;
+	color: #428DE8;
+}
+.index-title span:before, .index-title span:after {
+	display: inline-block;
+	content: '';
+	width: 2.8rem;
+	height: 1px;
+	background-color: #428DE8;
+	position: absolute;
+}
+.index-title span:before {
+	top: 0.58rem;
+	left: -3.2rem;
+}
+.index-title span:after {
+	top: 0.58rem;
+	right: -3.2rem;
+}
+.gr-list {
+	background-color: #fff;
+	padding: 0 15px;
+}
+.gr-list .gr-list-item {
+	display: block;
+	float: left;
+	width: 25%;
+	padding: 10px 5px;
+	text-align: center;
+	-wekit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.gr-list-item a img {
+	display: block;
+	width: 100%;
+	height: 85px; 
+}
+.gr-list-item span.price {
+	font-size: 0.6rem;
+	color: #FD2A55;
+}
+
+footer {
+	padding-top: 2.8rem;
+}
+.footnav {
+	background-color: #fff;
+	border-top: 1px solid #ddd;
+	height: 2.7rem;
+}
+.footnav ul li {
+	width: 25%;
+	padding-top: 0.4rem;
+}
+.footnav ul li i.categroy {
+	background-image: url(../images/browse_grid.png);
+}

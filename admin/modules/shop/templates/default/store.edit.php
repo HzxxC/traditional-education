@@ -19,21 +19,13 @@
   <h3>编辑店铺信息</h3>
     <ul class="tab-base nc-row">
       <li><a class="current" href="javascript:void(0);">店铺信息</a></li>
-      <li><a href="javascript:void(0);">注册信息</a></li>
+      <!-- <li><a href="javascript:void(0);">注册信息</a></li> -->
     </ul>
     </div>
     <form id="store_form" method="post">
       <input type="hidden" name="form_submit" value="ok" />
       <input type="hidden" name="store_id" value="<?php echo $output['store_array']['store_id'];?>" />
       <div class="ncap-form-default">
-        <dl class="row">
-          <dt class="tit">
-            <label><?php echo $lang['store_user_name'];?></label>
-          </dt>
-          <dd class="opt"><?php echo $output['store_array']['member_name'];?><span class="err"></span>
-            <p class="notic"></p>
-          </dd>
-        </dl>
         <dl class="row">
           <dt class="tit">
             <label for="store_name"><em>*</em>店铺名称</label>
@@ -54,45 +46,57 @@
         </dl>
         <dl class="row">
           <dt class="tit">
-            <label><?php echo $lang['belongs_class'];?></label>
+            <label for="store_avatar"><em></em>店铺头像</label>
           </dt>
           <dd class="opt">
-            <select name="sc_id">
-              <option value="0"><?php echo $lang['nc_please_choose'];?></option>
-              <?php if(is_array($output['class_list'])){ ?>
-              <?php foreach($output['class_list'] as $k => $v){ ?>
-              <option <?php if($output['store_array']['sc_id'] == $v['sc_id']){ ?>selected="selected"<?php } ?> value="<?php echo $v['sc_id']; ?>"><?php echo $v['sc_name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
+            <div class="ncsc-upload-thumb store-sns-pic">
+            <p>
+              <img nctype="normal_img" src="<?php if(empty($output['store_array']['store_avatar'])) echo SHOP_TEMPLATES_URL.'/images/member/default_image.png'; else echo getStoreLogo($output['store_array']['store_avatar']);?> "/>
+            </p>
+            <input type="hidden" name="store_avatar" id="store_avatar" value="<?php echo $output['store_array']['store_avatar'] ?>" />
+          </div>
+          <div class="handle">
+            <div class="ncsc-upload-btn"> <a href="javascript:void(0);"><span>
+              <input type="file" hidefocus="true" size="1" class="input-file" name="normal_file" id="normal_file">
+              </span>
+              <p><i class="icon-upload-alt"></i>图片上传</p>
+              </a> 
+              </div>
+          </div>
             <span class="err"></span>
-            <p class="notic"> </p>
+            <p class="notic">
+              此处为店铺方形头像：<br />
+              <span style="color: orange;">建议使用宽180像素-高120像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</span></p>
           </dd>
         </dl>
         <dl class="row">
           <dt class="tit">
-            <label for="grade_id"> <?php echo $lang['belongs_level'];?> </label>
+            <label for="store_address"><em>*</em>店铺地址</label>
           </dt>
           <dd class="opt">
-            <select id="grade_id" name="grade_id">
-              <?php if(is_array($output['grade_list'])){ ?>
-              <?php foreach($output['grade_list'] as $k => $v){ ?>
-              <option <?php if($output['store_array']['grade_id'] == $v['sg_id']){ ?>selected="selected"<?php } ?> value="<?php echo $v['sg_id']; ?>"><?php echo $v['sg_name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
+            <input type="text" value="<?php echo $output['store_array']['store_address'];?>" id="store_address" name="store_address" class="input-txt" />
             <span class="err"></span>
             <p class="notic"></p>
           </dd>
         </dl>
         <dl class="row">
           <dt class="tit">
-            <label><?php echo $lang['period_to'];?></label>
+            <label for="store_phone"><em>*</em>店铺联系方式</label>
           </dt>
           <dd class="opt">
-            <input type="text" value="<?php echo $output['store_array']['store_end_time'];?>" id="end_time" name="end_time" class="input-txt">
+            <input type="text" value="<?php echo $output['store_array']['store_phone'];?>" id="store_phone" name="store_phone" class="input-txt" />
             <span class="err"></span>
-            <p class="notic"><?php echo $lang['formart'];?> </p>
+            <p class="notic"></p>
+          </dd>
+        </dl>
+        <dl class="row">
+          <dt class="tit">
+            <label for="store_content"><em></em>店铺介绍</label>
+          </dt>
+          <dd class="opt">
+           <textarea name="store_content" rows="6" class="tarea" id="store_content"><?php echo $output['store_array']['store_content'];?></textarea>
+            <span class="err"></span>
+            <p class="notic"></p>
           </dd>
         </dl>
         <dl class="row">
@@ -403,7 +407,7 @@
 </div>
 <script type="text/javascript" src="<?php echo RESOURCE_SITE_URL;?>/js/common_select.js" charset="utf-8"></script> 
 <script type="text/javascript" src="<?php echo ADMIN_RESOURCE_URL;?>/js/jquery.nyroModal.js"></script>
-
+<script type="text/javascript" src="<?php echo RESOURCE_SITE_URL;?>/js/ajaxfileupload/ajaxfileupload.js"></script> 
 <script type="text/javascript">
 var SHOP_SITE_URL = '<?php echo SHOP_SITE_URL;?>';
 $(function(){
@@ -437,12 +441,24 @@ $(function(){
              store_name: {
                  required : true,
                  remote   : '<?php echo urlAdminShop('store', 'ckeck_store_name', array('store_id' => $output['store_array']['store_id']))?>'
-              }
+              },
+              store_address: {
+                  required : true
+              },
+              store_phone: {
+                  required : true
+              },
         },
         messages : {
             store_name: {
                 required : '<i class="fa fa-exclamation-circle"></i><?php echo $lang['please_input_store_name'];?>',
                 remote   : '<i class="fa fa-exclamation-circle"></i>店铺名称已存在'
+            },
+            store_address: {
+                required : '<i class="fa fa-exclamation-circle"></i>请输入店铺地址',
+            },
+            store_phone: {
+                required : '<i class="fa fa-exclamation-circle"></i>请输入店铺联系方式',
             }
         }
     });
@@ -454,5 +470,35 @@ $(function(){
         _form.hide();
         _form.eq(_index).show();
     });
+
+    // 图片上传js
+  $('#normal_file').unbind().live('change', function(){
+    
+    // $('img[nctype="normal_img"]').attr('src',SHOP_TEMPLATES_URL+"/images/loading.gif");
+
+    $.ajaxFileUpload
+    (
+      {
+        url:'index.php?act=store&op=image_upload&uploadpath=<?php echo ATTACH_STORE;?>',
+        secureuri:false,
+        fileElementId:'normal_file',
+        dataType: 'json',
+         success: function (data, status)
+        {
+          if(typeof(data.error) != 'undefind'){
+            $('img[nctype="normal_img"]').attr('src',data.url);
+            $('#store_avatar').val(data.name);
+          }else{
+            alert(data.error);
+          }
+        },
+        error: function (data, status, e)
+        {
+          alert(e);
+        }
+      }
+    )
+    return false;
+  });
 });
 </script>

@@ -2453,3 +2453,93 @@ margin: 0 auto!important; padding: 0; zoom: 1; }
 .pagination li span.currentpage { color: #FFF; font-weight: bold; background-color: #41BEDD; border-color: #3AABC6 #3AABC6 #318EA6 #3AABC6; border-radius: 0; }
 .paixv a { text-decoration: none; color: #000 }
 .paixv a:hover { color: #06F }
+
+/* 图片上传样式 */
+
+.ncsc-upload-thumb { width: 180px; height: 120px; }
+.ncsc-upload-thumb { background-color: #FFF; border: dashed 1px #E6E6E6; position: relative; z-index: 1;}
+.ncsc-upload-thumb:hover { border-style: solid; border-color: #27A9E3;}
+.ncsc-upload-thumb p img { width: 180px; height: 120px; margin-top: expression(160-this.height/2); }
+
+.ncsc-upload-btn { vertical-align: top; display: inline-block; *display: inline/*IE7*/; width: 80px; height: 30px; margin: 5px 5px 0 0; *zoom:1;}
+.ncsc-upload-btn a { display: block; position: relative; z-index: 1;}
+.ncsc-upload-btn span { width: 80px; height: 30px; position: absolute; left: 0; top: 0; z-index: 2; cursor: pointer;}
+.ncsc-upload-btn .input-file { width: 80px; height: 30px; padding: 0; margin: 0; border: none 0; opacity:0; filter: alpha(opacity=0); cursor: pointer; }
+.ncsc-upload-btn p { font-size: 12px; line-height: 20px; background-color: #F5F5F5; color: #999; text-align: center; color: #666; width: 78px; height: 20px; padding: 4px 0; border: solid 1px; border-color: #DCDCDC #DCDCDC #B3B3B3 #DCDCDC; position: absolute; left: 0; top: 0; z-index: 1;}
+.ncsc-upload-btn p i { vertical-align: middle; margin-right: 4px;}
+.ncsc-upload-btn a:hover p { background-color: #E6E6E6; color: #333; border-color: #CFCFCF #CFCFCF #B3B3B3 #CFCFCF;}
+
+/* 商品发布页面相关样式
+------------------------------------------- */
+
+/*发布流程步骤提示*/
+.add-goods-step { font-size: 0; background-color: #FFF; *word-spacing:-1px/*IE6、7*/; margin: 20px 0 20px 20px; }
+.add-goods-step li { color: #CCC; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; width:25%; *width: 24%; height: 50px; position: relative; z-index: 1;}
+.add-goods-step li { *display: inline/*IE6,7*/; zoom: 1;}
+.add-goods-step li .icon { font-size: 32px; line-height: 50px; text-align: center; width: 40px; height: 50px; position: absolute; z-index: 1; top: 0; left: 5px;}
+.add-goods-step li h6 { font-size: 11px; line-height: 16px; position: absolute; z-index: 1; top: 0; left: 50px; -webkit-text-size-adjust:none;}
+.add-goods-step li h2 { font-size: 22px; font-weight: lighter; line-height: 30px; color: #CCC; position: absolute; z-index: 1; top: 16px; left: 50px;}
+.add-goods-step li .arrow { font-size: 20px; line-height: 50px; color: #CCC; text-align: center; width: 20px; height: 50px; position: absolute; z-index: 1; top: 0; right: 0;}
+.add-goods-step li.current,
+.add-goods-step li.current h2 { color: #27A9E3;}
+.sticky .add-goods-step { width: 940px; height: 50px; padding: 10px 0 10px 20px; margin: 0; border-bottom: solid 1px #27A9E3; position: fixed; z-index: 99; top: 0;}
+
+/* 发布商品第一步-选择分类 */
+.wp_data_loading { font-size:12px; background-color: #FFF; display: none; width:120px; height:16px; padding: 20px; border:1px solid #92AED1; margin-left: -81px; margin-top: -28px; position: absolute; z-index:30; left: 50%; top: 50%; filter: alpha(opacity=75); -moz-opacity: 0.75; opacity: .75;}
+.data_loading { line-height: 16px; background: url(../images/loading.gif) no-repeat 0 0; padding-left: 30px;}
+.wp_sort { background-color: #FAFAFA; height:318px; padding:15px; margin: 10px auto; border: solid 1px #E6E6E6; position:relative; z-index: 1;}
+.sort_title { font-size: 12px; line-height: 30px; color: #777; text-align: center; height: 30px; margin: 0 auto; }
+.sort_title .text { font: 12px/20px Arial; color: #777; background-color: #FFF; vertical-align: top; text-align: left; display: inline-block; width: 700px; height: 20px; padding: 4px; border: solid 1px #CCC; outline: 0 none; letter-spacing: normal; word-spacing: normal; *display: inline/*IE6,7*/; cursor:pointer; zoom:1;}
+.sort_title .text:hover{ color: #333; border-color: #75B9F0; box-shadow: 0 0 0 2px rgba(82, 168, 236, 0.15); outline: 0 none;}
+
+
+.sort_title i { color: #CCC; position: absolute; z-index: 1; top: 20px; left: 870px;}
+.sort_title:hover i{ color: #333;}
+.select_list{ background-color: #FFF; display: none; width: 708px; height: 200px; border: solid 1px #75B9F0; position: absolute; z-index: 2; top: 44px; left: 179px; overflow-y: scroll; overflow-x: hidden;}
+.select_list ul { margin:0; padding:0;}
+.select_list ul li { display: block; clear: both; border-bottom: dashed 1px #E6E6E6; position: relative; z-index: 1;}
+.select_list ul li span{ line-height: 30px; display: block; height: 30px; padding: 0 10px; margin: 0; cursor: pointer;}
+.select_list ul li:hover { color:#06C; background-color: #f4fafe;}
+.select_list ul li a { width: 16px; height: 16px; color: #27A9E3; position: absolute; z-index: 2; top: 5px; right: 10px;}
+.select_list ul li a:hover { text-decoration: none; color: #DA542E;}
+.wp_sort_block{ font-size: 0; *word-spacing:-1px/*IE6、7*/; /*margin: 15px auto 0;*/ overflow: hidden; /*width: 924px;*/}
+.sort_list { background: #FFF; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; margin-right: 15px; border: solid 1px #E6E6E6; border-radius: 4px; }
+.sort_list { *display: inline/*IE6,7*/;}
+.sort_list_last { margin-right: 0;}
+#class_div .none { display: none; }
+.wp_category_list{ width: 284px; height: 264px; padding: 8px 4px 8px 8px; margin:0;}
+.wp_category_list.blank { background-color: #F0F0F0;}
+.wp_category_list.blank .category_list{ display:none;}
+.category_list { height: 264px; overflow: hidden; position: relative; z-index: 1;}
+.category_list ul { margin: 0 15px 0 0 ;}
+.category_list ul li { clear: both;}
+.category_list ul li a { font-size: 12px; line-height: 20px; color: #666; display: block; height: 20px; padding: 4px 8px; margin: 1px; overflow:hidden; }
+.category_list ul li a i { font-size: 12px; display: none;}
+.category_list ul li a.classDivClick { color: #3A87AD; background-color: #D9EDF7; display: block; margin: 0; border: solid 1px #BCE8F1;}
+.category_list ul li a.classDivClick i { font-size: 14px;margin-top: 3px; display: block; margin-left: 6px; float: right;}
+.category_list ul li a:hover {text-decoration: none;}
+.category_list ul .hight_light { color:#f50;}
+.hover_tips_cont { font-size: 0; *word-spacing:-1px/*IE6、7*/; text-align:left; overflow: hidden;}
+.hover_tips_cont span { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; white-space: nowrap; display: inline-block; *display: inline/*IE6,7*/; zoom:1;}
+.hover_tips_cont span i { margin: 0 5px; margin-top: -4px;}
+.bottom .submit-border { margin: 10px auto;}
+.bottom .submit { font: 14px/36px "microsoft yahei"; text-align: center; min-width: 100px; *min-width: auto; height: 36px;}
+.bottom a.submit { width: 100px; margin: 0 auto;}
+.bottom .submit[disabled="disabled"] { color: #999; text-shadow: none; background-color: #F5F5F5; border: solid 1px; border-color: #DCDCDC #DCDCDC #B3B3B3 #DCDCDC; cursor: default;}
+.bottom .ncbtn { font-size: 14px; vertical-align: top; padding: 8px 19px; margin: 10px auto;}
+a.disabled:hover { cursor: default; background-color: #ECF0F1; box-shadow: none; color: #777; }
+
+/*商品添加步骤二运费模板样式 by hou*/
+/* 发布商品-属性 */
+.spec-bg { background-color: #FCFCFC;}
+.spec { font-size: 0; *word-spacing:-1px/*IE6、7*/; }
+.spec li { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE6,7*/; width:25%; margin-bottom: 6px; zoom: 1;}
+.spec li span { line-height: 30px; vertical-align: middle; margin-right:6px;}
+.spec li span .text { vertical-align: middle; width: 130px;}
+.spec-div { max-height: 300px; max-width: 800px; padding: 0 0 10px 0; position: relative; z-index: 1; overflow: hidden;}
+.spec_table { background-color: #FFF; width: 98%; margin: 10px 10px 0 0; border: solid 1px #BCE8F1; box-shadow: 3px 3px 0 rgba(153,153,153,0.15);}
+.spec_table thead th { font-weight: 600; line-height: 24px; color: #3A87AD; background: #D9EDF7; white-space: nowrap; height: 24px; padding: 5px 10px;}
+.spec_table tbody td { white-space: nowrap; height: 30px; padding: 5px 10px; border-top: solid 1px #BCE8F1;}
+.spec_table .text.price,
+.spec_table .text.stock { width: 40px;}
+.spec_table .text.sku { width: 80px;}

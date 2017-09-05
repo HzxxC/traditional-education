@@ -1,0 +1,9 @@
+[2017-09-05 09:21:44] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','系统东','','0','40','0','0','1')
+[2017-09-05 10:09:55] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','系统东111','','0','40','0','0','1')
+[2017-09-05 10:14:38] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','系统东111222','','0','40','0','0','1')

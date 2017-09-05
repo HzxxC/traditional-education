@@ -10,78 +10,83 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="msapplication-tap-highlight" content="no" />
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
-<title>好商城 触屏版</title>
+<title>首页</title>
 <link rel="stylesheet" type="text/css" href="css/base.css">
 <link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="css/modify.css">
 <link rel="apple-touch-icon" href="images/touch-icon-iphone.png"/>
 </head>
 <body>
 <div class="nctouch-home-top fixed-Width">
-  <header id="header" class="transparent">
-    <div class="logo"></div>
-    <div class="header-wrap"> <a href="tmpl/search.html" class="header-inp"> <i class="icon"></i> <span class="search-input" id="keyword">请输入关键词</span> </a> </div>
-    <div class="header-r"><a id="header-nav" href="tmpl/member/chat_list.html"><i class="message"></i>
-      <p>消息</p>
-      <sup></sup></a></div>
-  </header>
   <div class="cohesive"></div>
   <div class="adv_list" id="main-container1"></div>
 </div>
-<div class="nctouch-home-nav fixed-Width">
-  <ul>
-    <li><a href="tmpl/product_first_categroy.html"><span><i></i></span>
-      <p>分类</p>
-      </a></li>
-    <li><a href="tmpl/cart_list.html"><span><i></i></span>
-      <p>购物车</p>
-      </a></li>
-    <li><a href="shop.html"><span><i></i></span>
-      <p>店铺街</p>
-      </a></li>
-    <li><a href="tmpl/member/signin.html"><span><i></i></span>
-      <p>每日签到</p>
-      </a></li>
-     <li><a href="tmpl/member/member.html"><span><i></i></span>
-      <p>我的商城</p>
-      </a></li>
-    <li><a href="tmpl/member/order_list.html"><span><i></i></span>
-      <p>我的订单</p>
-      </a></li>
-    <li><a href="tmpl/member/member_asset.html"><span><i></i></span>
-      <p>我的财产</p>
-      </a></li>
-    <li><a href="tmpl/member/views_list.html"><span><i></i></span>
-      <p>我的足迹</p>
-      </a></li>
-  </ul>
-</div>
 <div class="hao-gd-body fixed-Width">
-	<span><a href="tmpl/article_list.html?ac_id=1">更多...</a></span>
-	 <div class="component-typehao-img-con">
-        <img class="component-typehao-img" src="images/rd_w.png" height="100%" width="54px">
-    </div>
-    <img class="component-typehao-logo" src="images/gg_w.png" height="22px" width="22px">
+	<span><a href="tmpl/article_list.html?ac_id=1">更多</a></span>
+    <span class="hao-gd-title">公告</span>
     <div class="rollTextMenus" id="getgg"></div>
 </div>
+<!-- 商品推荐 -->
+<div class="goods-recommender">
+	<div class="index-title">
+		<span>商品推荐</span>
+	</div>
+	<div class="gr-list clearfix" id="gettj"></div>
+</div>
+<!-- 店铺细分 -->
+<div class="stores-segment">
+	<div class="index-title">
+		<span>店铺细分</span>
+	</div>
+	<div class="ss-list clearfix" id="getstores"></div>
+</div>
+
+
 <div class="nctouch-home-layout" id="main-container2"></div>
+
 <div class="fix-block-r"> <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a> </div>
+
+
 <footer id="footer"></footer>
+
 <script type="text/html" id="getgg_tpl">
 <% for (var i=0;i<article_list.length;i++) {%>
  <div id="rollTextMenu<%=i+1%>"  style="display: <% if (i==0) { %> block <% }else{ %>none<% } %>" > <a href="tmpl/article_show.html?article_id=<%=article_list[i].article_id%>"><%=article_list[i].article_title%></a></div>
 <% } %>
 </script>
 <script type="text/html" id="adv_list">
-		<div class="swipe-wrap">
-		<% for (var i in item) { %>
-			<div class="item">
-				<a href="<%= item[i].url %>">
-					<img src="<%= item[i].image %>" alt="">
-				</a>
-			</div>
-		<% } %>
+	<div class="swipe-wrap">
+	<% for (var i in item) { %>
+		<div class="item">
+			<a href="<%= item[i].url %>">
+				<img src="<%= item[i].image %>" alt="">
+			</a>
 		</div>
+	<% } %>
+	</div>
 </script> 
+<!-- 商品推荐 -->
+<script type="text/html" id="gettj_tpl">
+<% for (var i=0;i<recommend_list.length;i++) {%>
+ <div class="gr-list-item">
+ 	<a href="<%= recommend_list[i].url %>">
+ 		<img src="<%= recommend_list[i].goods_image %>" alt="">
+ 		<span class="price">￥<%= recommend_list[i].goods_promotion_price %></span>
+ 	</a>
+ </div>
+<% } %>
+</script> 
+<!-- 店铺细分 -->
+<script type="text/html" id="getstores_tpl">
+<% for (var i=0;i<stores_list.length;i++) {%>
+ <div class="ss-list-item">
+ 	<!-- <a href="<%= stores_list[i].url %>">
+ 		<img src="<%= stores_list[i].goods_image %>" alt="">
+ 		<span class="price">￥<%= stores_list[i].goods_promotion_price %></span>
+ 	</a> -->
+ </div>
+<% } %>
+</script>
 <script type="text/html" id="home1">
 	<div class="nctouch-home-block">
 	<% if (title) { %>

@@ -1,0 +1,3 @@
+[2017-08-31 09:38:05] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload&upload_type=uploadedfile ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('首页_14(1)','',NULL,'1_05574874851670997.png','13068','250x244','1504143485','1')

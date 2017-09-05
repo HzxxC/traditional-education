@@ -200,6 +200,7 @@ class SystemControl{
      * 获取菜单
      */
     protected final function getMenu() {
+
         if (empty($this->menu)) {
             $this->menu  = rkcache('admin_menu', true);
         }

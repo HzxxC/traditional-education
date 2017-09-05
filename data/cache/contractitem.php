@@ -11,8 +11,8 @@
     'cti_sort' => '1',
     'cti_state_key' => 'open',
     'cti_state_text' => '开启',
-    'cti_icon_url' => 'http://v53.33hao.com/data/upload/shop/contracticon/7day.gif',
-    'cti_icon_url_60' => 'http://v53.33hao.com/data/upload/shop/contracticon/7day_60.gif',
+    'cti_icon_url' => 'http://localhost/traditional-education/data/upload/shop/contracticon/7day.gif',
+    'cti_icon_url_60' => 'http://localhost/traditional-education/data/upload/shop/contracticon/7day_60.gif',
     'cti_state_name' => '开启',
   ),
   2 => 
@@ -27,8 +27,8 @@
     'cti_sort' => '2',
     'cti_state_key' => 'open',
     'cti_state_text' => '开启',
-    'cti_icon_url' => 'http://v53.33hao.com/data/upload/shop/contracticon/pz.gif',
-    'cti_icon_url_60' => 'http://v53.33hao.com/data/upload/shop/contracticon/pz_60.gif',
+    'cti_icon_url' => 'http://localhost/traditional-education/data/upload/shop/contracticon/pz.gif',
+    'cti_icon_url_60' => 'http://localhost/traditional-education/data/upload/shop/contracticon/pz_60.gif',
     'cti_state_name' => '开启',
   ),
   3 => 
@@ -43,8 +43,8 @@
     'cti_sort' => '3',
     'cti_state_key' => 'open',
     'cti_state_text' => '开启',
-    'cti_icon_url' => 'http://v53.33hao.com/data/upload/shop/contracticon/psbf.gif',
-    'cti_icon_url_60' => 'http://v53.33hao.com/data/upload/shop/contracticon/psbf_60.gif',
+    'cti_icon_url' => 'http://localhost/traditional-education/data/upload/shop/contracticon/psbf.gif',
+    'cti_icon_url_60' => 'http://localhost/traditional-education/data/upload/shop/contracticon/psbf_60.gif',
     'cti_state_name' => '开启',
   ),
   4 => 
@@ -59,8 +59,8 @@
     'cti_sort' => '4',
     'cti_state_key' => 'open',
     'cti_state_text' => '开启',
-    'cti_icon_url' => 'http://v53.33hao.com/data/upload/shop/contracticon/jswl.gif',
-    'cti_icon_url_60' => 'http://v53.33hao.com/data/upload/shop/contracticon/jswl_60.gif',
+    'cti_icon_url' => 'http://localhost/traditional-education/data/upload/shop/contracticon/jswl.gif',
+    'cti_icon_url_60' => 'http://localhost/traditional-education/data/upload/shop/contracticon/jswl_60.gif',
     'cti_state_name' => '开启',
   ),
 );

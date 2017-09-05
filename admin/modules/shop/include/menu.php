@@ -22,8 +22,8 @@ $_menu['shop'] = array(
                                 'payment' => $lang['nc_pay_method'],
                                 'express' => $lang['nc_admin_express_set'],
                                 'waybill' => '运单模板',
-                                'web_config' => '首页管理',
-                                'web_channel' => '频道管理'
+                                // 'web_config' => '首页管理',
+                                // 'web_channel' => '频道管理'
                         )),
                 array(
                         'name' => $lang['nc_goods'],
@@ -40,10 +40,10 @@ $_menu['shop'] = array(
                         'name' => $lang['nc_store'],
                         'child' => array(
                                 'store' => $lang['nc_store_manage'],
-                                'store_grade' => $lang['nc_store_grade'],
+                                // 'store_grade' => $lang['nc_store_grade'],
                                 'store_class' => $lang['nc_store_class'],
-                                'domain' => $lang['nc_domain_manage'],
-                                'sns_strace' => $lang['nc_s_snstrace'],
+                                // 'domain' => $lang['nc_domain_manage'],
+                                // 'sns_strace' => $lang['nc_s_snstrace'],
                                 'help_store' => '店铺帮助',
                                 'store_joinin' => '商家入驻',
                                 'ownshop' => '自营店铺'

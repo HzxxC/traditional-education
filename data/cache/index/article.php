@@ -72,42 +72,6 @@ $article_list=array (
     array (
       0 => 
       array (
-        'article_id' => '6',
-        'ac_id' => '2',
-        'article_url' => '',
-        'ac_code' => 'member',
-        'article_position' => '1',
-        'article_title' => '如何注册成为会员',
-        'article_time' => '1449242303',
-        'ac_name' => '新手上路',
-        'ac_parent_id' => '0',
-      ),
-      1 => 
-      array (
-        'article_id' => '39',
-        'ac_id' => '2',
-        'article_url' => '',
-        'ac_code' => 'member',
-        'article_position' => '1',
-        'article_title' => '积分细则',
-        'article_time' => '1449242303',
-        'ac_name' => '新手上路',
-        'ac_parent_id' => '0',
-      ),
-      2 => 
-      array (
-        'article_id' => '40',
-        'ac_id' => '2',
-        'article_url' => '',
-        'ac_code' => 'member',
-        'article_position' => '1',
-        'article_title' => '积分兑换说明',
-        'article_time' => '1449242303',
-        'ac_name' => '新手上路',
-        'ac_parent_id' => '0',
-      ),
-      3 => 
-      array (
         'article_id' => '7',
         'ac_id' => '2',
         'article_url' => '',
@@ -118,7 +82,7 @@ $article_list=array (
         'ac_name' => '新手上路',
         'ac_parent_id' => '0',
       ),
-      4 => 
+      1 => 
       array (
         'article_id' => '8',
         'ac_id' => '2',
@@ -126,6 +90,42 @@ $article_list=array (
         'ac_code' => 'member',
         'article_position' => '1',
         'article_title' => '忘记密码',
+        'article_time' => '1449242303',
+        'ac_name' => '新手上路',
+        'ac_parent_id' => '0',
+      ),
+      2 => 
+      array (
+        'article_id' => '9',
+        'ac_id' => '2',
+        'article_url' => '',
+        'ac_code' => 'member',
+        'article_position' => '1',
+        'article_title' => '我要买',
+        'article_time' => '1449242303',
+        'ac_name' => '新手上路',
+        'ac_parent_id' => '0',
+      ),
+      3 => 
+      array (
+        'article_id' => '10',
+        'ac_id' => '2',
+        'article_url' => '',
+        'ac_code' => 'member',
+        'article_position' => '1',
+        'article_title' => '查看已购买商品',
+        'article_time' => '1449242303',
+        'ac_name' => '新手上路',
+        'ac_parent_id' => '0',
+      ),
+      4 => 
+      array (
+        'article_id' => '6',
+        'ac_id' => '2',
+        'article_url' => '',
+        'ac_code' => 'member',
+        'article_position' => '1',
+        'article_title' => '如何注册成为会员',
         'article_time' => '1449242303',
         'ac_name' => '新手上路',
         'ac_parent_id' => '0',
@@ -147,6 +147,30 @@ $article_list=array (
     array (
       0 => 
       array (
+        'article_id' => '16',
+        'ac_id' => '4',
+        'article_url' => '',
+        'ac_code' => 'payment',
+        'article_position' => '1',
+        'article_title' => '如何注册支付宝',
+        'article_time' => '1449242303',
+        'ac_name' => '支付方式',
+        'ac_parent_id' => '0',
+      ),
+      1 => 
+      array (
+        'article_id' => '17',
+        'ac_id' => '4',
+        'article_url' => '',
+        'ac_code' => 'payment',
+        'article_position' => '1',
+        'article_title' => '在线支付',
+        'article_time' => '1449242303',
+        'ac_name' => '支付方式',
+        'ac_parent_id' => '0',
+      ),
+      2 => 
+      array (
         'article_id' => '28',
         'ac_id' => '4',
         'article_url' => '',
@@ -157,7 +181,7 @@ $article_list=array (
         'ac_name' => '支付方式',
         'ac_parent_id' => '0',
       ),
-      1 => 
+      3 => 
       array (
         'article_id' => '29',
         'ac_id' => '4',
@@ -169,7 +193,7 @@ $article_list=array (
         'ac_name' => '支付方式',
         'ac_parent_id' => '0',
       ),
-      2 => 
+      4 => 
       array (
         'article_id' => '30',
         'ac_id' => '4',
@@ -177,30 +201,6 @@ $article_list=array (
         'ac_code' => 'payment',
         'article_position' => '1',
         'article_title' => '公司转账',
-        'article_time' => '1449242303',
-        'ac_name' => '支付方式',
-        'ac_parent_id' => '0',
-      ),
-      3 => 
-      array (
-        'article_id' => '16',
-        'ac_id' => '4',
-        'article_url' => '',
-        'ac_code' => 'payment',
-        'article_position' => '1',
-        'article_title' => '如何注册支付宝',
-        'article_time' => '1449242303',
-        'ac_name' => '支付方式',
-        'ac_parent_id' => '0',
-      ),
-      4 => 
-      array (
-        'article_id' => '17',
-        'ac_id' => '4',
-        'article_url' => '',
-        'ac_code' => 'payment',
-        'article_position' => '1',
-        'article_title' => '在线支付',
         'article_time' => '1449242303',
         'ac_name' => '支付方式',
         'ac_parent_id' => '0',

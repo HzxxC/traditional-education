@@ -10,36 +10,37 @@ $(function (){
         var key = getCookie('key');
     }
     var html = '<div class="nctouch-footer-wrap posr">'
-        +'<div class="nav-text">';
-    if(key){
-        html += '<a href="'+WapSiteUrl+'/tmpl/member/member.html">我的商城</a>'
-            + '<a id="logoutbtn" href="javascript:void(0);">注销</a>'
-            + '<a href="'+WapSiteUrl+'/tmpl/member/member_feedback.html">反馈</a>'
-	    + '<a href="' + WapSiteUrl + '/tmpl/article_list.html?ac_id=2">帮助</a>';
+    //     +'<div class="nav-text">';
+    // if(key){
+    //     html += '<a href="'+WapSiteUrl+'/tmpl/member/member.html">我的商城</a>'
+    //         + '<a id="logoutbtn" href="javascript:void(0);">注销</a>'
+    //         + '<a href="'+WapSiteUrl+'/tmpl/member/member_feedback.html">反馈</a>'
+	   //  + '<a href="' + WapSiteUrl + '/tmpl/article_list.html?ac_id=2">帮助</a>';
             
-    } else {
-        html += '<a href="'+WapSiteUrl+'/tmpl/member/login.html">登录</a>'
-            + '<a href="'+WapSiteUrl+'/tmpl/member/register.html">注册</a>'
-            + '<a href="'+WapSiteUrl+'/tmpl/member/login.html">反馈</a>'
-	    + '<a href="' + WapSiteUrl + '/tmpl/article_list.html?ac_id=2">帮助</a>';
-    }
-        html += '<a href="javascript:void(0);" class="gotop">返回顶部</a>' + "</div>" + '<!--<div class="copyright">' + 'Copyright&nbsp;&copy;&nbsp;2005-2016 <a href="javascript:void(0);">好商城V5 www.33hao.com</a>版权所有' + "</div>--></div>";
+    // } 
+    // else {
+    //     html += '<a href="'+WapSiteUrl+'/tmpl/member/login.html">登录</a>'
+    //         + '<a href="'+WapSiteUrl+'/tmpl/member/register.html">注册</a>'
+    //         + '<a href="'+WapSiteUrl+'/tmpl/member/login.html">反馈</a>'
+	   //  + '<a href="' + WapSiteUrl + '/tmpl/article_list.html?ac_id=2">帮助</a>';
+    // }
+    //     html += '<a href="javascript:void(0);" class="gotop">返回顶部</a>' + "</div>" + '<!--<div class="copyright">' + 'Copyright&nbsp;&copy;&nbsp;2005-2016 <a href="javascript:void(0);">好商城V5 www.33hao.com</a>版权所有' + "</div>--></div>";
         
       if (cart_count > 0) {
       	var fnav = '<div id="footnav" class="footnav clearfix"><ul>'
 		+'<li><a href="'+WapSiteUrl+'"><i class="home"></i><p>首页</p></a></li>'
-		+'<li><a href="'+WapSiteUrl+'/tmpl/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li>'
-		+'<li><a href="'+WapSiteUrl+'/tmpl/search.html"><i class="search"></i><p>搜索</p></a></li>'
+		+'<li><a href="'+WapSiteUrl+'/tmpl/search.html"><i class="categroy"></i><p>分类</p></a></li>'
+		// +'<li><a href="'+WapSiteUrl+'/tmpl/search.html"><i class="search"></i><p>搜索</p></a></li>'
 		+'<li><a href="'+WapSiteUrl+'/tmpl/cart_list.html"><span id="cart_count"><i class="cart"></i><sup>' + cart_count + '</sup></span><p>购物车</p></a></li>'
-		+'<li><a href="'+WapSiteUrl+'/tmpl/member/member.html"><i class="member"></i><p>我的商城</p></a></li></ul>'
+		+'<li><a href="'+WapSiteUrl+'/tmpl/member/member.html"><i class="member"></i><p>我的</p></a></li></ul>'
 		+'</div>';
       	} else {
       	var fnav = '<div id="footnav" class="footnav clearfix"><ul>'
 		+'<li><a href="'+WapSiteUrl+'"><i class="home"></i><p>首页</p></a></li>'
-		+'<li><a href="'+WapSiteUrl+'/tmpl/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li>'
-		+'<li><a href="'+WapSiteUrl+'/tmpl/search.html"><i class="search"></i><p>搜索</p></a></li>'
+		+'<li><a href="'+WapSiteUrl+'/tmpl/search.html"><i class="categroy"></i><p>分类</p></a></li>'
+		// +'<li><a href="'+WapSiteUrl+'/tmpl/search.html"><i class="search"></i><p>搜索</p></a></li>'
 		+'<li><a href="'+WapSiteUrl+'/tmpl/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li>'
-		+'<li><a href="'+WapSiteUrl+'/tmpl/member/member.html"><i class="member"></i><p>我的商城</p></a></li></ul>'
+		+'<li><a href="'+WapSiteUrl+'/tmpl/member/member.html"><i class="member"></i><p>我的</p></a></li></ul>'
 		+'</div>';	
       	}
 	$("#footer").html(html+fnav);

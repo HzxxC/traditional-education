@@ -17,10 +17,10 @@ class storeControl extends SystemControl{
 
     private $_links = array(
         array('url'=>'act=store&op=store','text'=>'管理'),
-        array('url'=>'act=store&op=store_joinin','text'=>'开店申请'),
-        array('url'=>'act=store&op=reopen_list','text'=>'续签申请'),
-        array('url'=>'act=store&op=store_bind_class_applay_list','text'=>'经营类目申请'),
-        array('url'=>'act=store&op=bill_cycle','text'=>'结算周期设置')
+        // array('url'=>'act=store&op=store_joinin','text'=>'开店申请'),
+        // array('url'=>'act=store&op=reopen_list','text'=>'续签申请'),
+        // array('url'=>'act=store&op=store_bind_class_applay_list','text'=>'经营类目申请'),
+        // array('url'=>'act=store&op=bill_cycle','text'=>'结算周期设置')
     );
 
     public function __construct(){
@@ -122,7 +122,8 @@ class storeControl extends SystemControl{
         foreach ($store_list as $value) {
             $param = array();
             $store_state = $this->getStoreState($value);
-            $operation = "<a class='btn green' href='index.php?act=store&op=store_joinin_detail&member_id=".$value['member_id']."'><i class='fa fa-list-alt'></i>查看</a><span class='btn'><em><i class='fa fa-cog'></i>" . L('nc_set') . " <i class='arrow'></i></em><ul><li><a href='index.php?act=store&op=store_edit&store_id=" . $value['store_id'] . "'>编辑店铺信息</a></li><li><a href='index.php?act=store&op=del&store_id=" . $value['store_id'] . "'>删除该店铺</a></li><li><a href='index.php?act=store&op=store_bind_class&store_id=" . $value['store_id'] . "'>修改经营类目</a></li>";
+            // <a href='index.php?act=store&op=store_bind_class&store_id=" . $value['store_id'] . "'>修改经营类目</a>
+            $operation = "<a class='btn green' href='index.php?act=store&op=store_joinin_detail&member_id=".$value['member_id']."'><i class='fa fa-list-alt'></i>查看</a><span class='btn'><em><i class='fa fa-cog'></i>" . L('nc_set') . " <i class='arrow'></i></em><ul><li><a href='index.php?act=store&op=store_edit&store_id=" . $value['store_id'] . "'>编辑店铺信息</a></li><li><a href='index.php?act=store&op=del&store_id=" . $value['store_id'] . "'>删除该店铺</a></li><li></li>";
             if (str_cut($store_state, 6) == 'expire'  && cookie('remindRenewal'.$value['store_id']) == null) {
                 $operation .= "<li><a class='expire' href=". urlAdminShop('store', 'remind_renewal', array('store_id'=>$value['store_id'])). ">提醒商家续费</a></li>";
             }
@@ -137,19 +138,19 @@ class storeControl extends SystemControl{
             }
             $store_name .= $value['store_name'] . "<i class='fa fa-external-link ' title='新窗口打开'></i></a>";
             $param['store_name'] = $store_name;
-            $param['member_id'] = $value['member_name'];
-            $param['seller_name'] = $value['seller_name'];
+            // $param['member_id'] = $value['member_name'];
+            // $param['seller_name'] = $value['seller_name'];
             $param['store_avatar'] = "<a href='javascript:void(0);' class='pic-thumb-tip' onMouseOut='toolTip()' onMouseOver='toolTip(\"<img src=".getStoreLogo($value['store_avatar']).">\")'><i class='fa fa-picture-o'></i></a>";
-            $param['store_label'] = "<a href='javascript:void(0);' class='pic-thumb-tip' onMouseOut='toolTip()' onMouseOver='toolTip(\"<img src=".getStoreLogo($value['store_label'], 'store_logo').">\")'><i class='fa fa-picture-o'></i></a>";
-            $param['grade_id'] = $grade_array[$value['grade_id']];
+            // $param['store_label'] = "<a href='javascript:void(0);' class='pic-thumb-tip' onMouseOut='toolTip()' onMouseOver='toolTip(\"<img src=".getStoreLogo($value['store_label'], 'store_logo').">\")'><i class='fa fa-picture-o'></i></a>";
+            // $param['grade_id'] = $grade_array[$value['grade_id']];
             $param['store_time'] = date('Y-m-d', $value['store_time']);
             $param['store_end_time'] = $value['store_end_time']?date('Y-m-d', $value['store_end_time']):L('no_limit');
             $param['store_state'] = $value['store_state']?L('open'):L('close');
-            $param['sc_id'] = $class_array[$value['sc_id']];
-            $param['area_info'] = $value['area_info'];
+            // $param['sc_id'] = $class_array[$value['sc_id']];
+            // $param['area_info'] = $value['area_info'];
             $param['store_address'] = $value['store_address'];
-            $param['store_qq'] = $value['store_qq'];
-            $param['store_ww'] = $value['store_ww'];
+            // $param['store_qq'] = $value['store_qq'];
+            // $param['store_ww'] = $value['store_ww'];
             $param['store_phone'] = $value['store_phone'];
             $data['list'][$value['store_id']] = $param;
         }
@@ -397,11 +398,11 @@ class storeControl extends SystemControl{
         //保存
         if (chksubmit()){
             //取店铺等级的审核
-            $model_grade = Model('store_grade');
-            $grade_array = $model_grade->getOneGrade(intval($_POST['grade_id']));
-            if (empty($grade_array)){
-                showMessage($lang['please_input_store_level']);
-            }
+            // $model_grade = Model('store_grade');
+            // $grade_array = $model_grade->getOneGrade(intval($_POST['grade_id']));
+            // if (empty($grade_array)){
+            //     showMessage($lang['please_input_store_level']);
+            // }
             //结束时间
             $time   = '';
             if(trim($_POST['end_time']) != ''){
@@ -413,6 +414,10 @@ class storeControl extends SystemControl{
             $update_array['grade_id'] = intval($_POST['grade_id']);
             $update_array['store_end_time'] = $time;
             $update_array['store_state'] = intval($_POST['store_state']);
+            $update_array['store_avatar'] = $_POST['store_avatar'];
+            $update_array['store_address'] = trim($_POST['store_address']);
+            $update_array['store_phone'] = trim($_POST['store_phone']);
+            $update_array['store_content'] = trim($_POST['store_content']);
             if ($update_array['store_state'] == 0){
                 //根据店铺状态修改该店铺所有商品状态
                 $model_goods = Model('goods');
@@ -443,7 +448,7 @@ class storeControl extends SystemControl{
                 showMessage($lang['nc_common_save_fail']);
             }
         }
-        //取店铺信息
+        // //取店铺信息
         $store_array = $model_store->getStoreInfoByID($_GET['store_id']);
         if (empty($store_array)){
             showMessage($lang['store_no_exist']);
@@ -451,13 +456,13 @@ class storeControl extends SystemControl{
         //整理店铺内容
         $store_array['store_end_time'] = $store_array['store_end_time']?date('Y-m-d',$store_array['store_end_time']):'';
         //店铺分类
-        $model_store_class = Model('store_class');
-        $parent_list = $model_store_class->getStoreClassList(array(),'',false);
+        // $model_store_class = Model('store_class');
+        // $parent_list = $model_store_class->getStoreClassList(array(),'',false);
         //店铺等级
-        $model_grade = Model('store_grade');
-        $grade_list = $model_grade->getGradeList();
-        Tpl::output('grade_list',$grade_list);
-        Tpl::output('class_list',$parent_list);
+        // $model_grade = Model('store_grade');
+        // $grade_list = $model_grade->getGradeList();
+        // Tpl::output('grade_list',$grade_list);
+        // Tpl::output('class_list',$parent_list);
         Tpl::output('store_array',$store_array);
 		Tpl::output('store_zizhi',$store_array['is_person']);
 
@@ -721,61 +726,30 @@ class storeControl extends SystemControl{
     {
         if (chksubmit())
         {
-            $memberName = $_POST['member_name'];
-            $memberPasswd = (string) $_POST['member_passwd'];
-
-            if (strlen($memberName) < 3 || strlen($memberName) > 15
-                || strlen($_POST['seller_name']) < 3 || strlen($_POST['seller_name']) > 15)
-                showMessage('账号名称必须是3~15位', '', 'html', 'error');
-
-            if (strlen($memberPasswd) < 6)
-                showMessage('登录密码不能短于6位', '', 'html', 'error');
-
-            if (!$this->checkMemberName($memberName))
-                showMessage('店主账号已被占用', '', 'html', 'error');
-
-            if (!$this->checkSellerName($_POST['seller_name']))
-                showMessage('店主卖家账号名称已被其它店铺占用', '', 'html', 'error');
-
-            try
-            {
-                $memberId = model('member')->addMember(array(
-                    'member_name' => $memberName,
-                    'member_passwd' => $memberPasswd,
-                    'member_email' => '',
-                ));
-            }
-            catch (Exception $ex)
-            {
-                showMessage('店主账号新增失败', '', 'html', 'error');
-            }
 
             $storeModel = model('store');
 
             $saveArray = array();
             $saveArray['store_name'] = $_POST['store_name'];
-            $saveArray['member_id'] = $memberId;
-            $saveArray['member_name'] = $memberName;
-            $saveArray['seller_name'] = $_POST['seller_name'];
+            $saveArray['member_id'] = 0;
+            $saveArray['member_name'] = '';
+            $saveArray['seller_name'] = '';
             $saveArray['bind_all_gc'] = 1;
             $saveArray['store_state'] = 1;
             $saveArray['store_time'] = time();
             $saveArray['is_own_shop'] = 0;
 
+            if (!empty($_POST['store_avatar'])){
+                $saveArray['store_avatar'] = $_POST['store_avatar'];
+            }
+
             $storeId = $storeModel->addStore($saveArray);
 
-            model('seller')->addSeller(array(
-                'seller_name' => $_POST['seller_name'],
-                'member_id' => $memberId,
-                'store_id' => $storeId,
-                'seller_group_id' => 0,
-                'is_admin' => 1,
-            ));
 			model('store_joinin')->save(array(
-                'seller_name' => $_POST['seller_name'],
+                'seller_name' => '',
 				'store_name'  => $_POST['store_name'],
-				'member_name' => $memberName,
-                'member_id' => $memberId,
+				'member_name' => '',
+                'member_id' => 0,
 				'joinin_state' => 40,
 				'company_province_id' => 0,
 				'sc_bail' => 0,
@@ -1417,4 +1391,29 @@ class storeControl extends SystemControl{
         $this->log("删除外驻店铺: {$storeArray['store_name']}");
         showMessage('操作成功', getReferer());
     }
+
+    /**
+     * 上传图片
+     */
+    public function image_uploadOp() {
+        //上传图片
+        $upload = new UploadFile();
+        $upload->set('thumb_width', 500);
+        $upload->set('thumb_height',499);
+        $upload->set('thumb_ext','_small');
+        $upload->set('max_size',C('image_max_filesize')?C('image_max_filesize'):1024);
+        $upload->set('ifremove',true);
+        $upload->set('default_dir',$_GET['uploadpath']);
+
+        if (!empty($_FILES['normal_file']['tmp_name'])){
+            $result = $upload->upfile('normal_file');
+            if ($result){
+                exit(json_encode(array('status'=>1,'url'=>UPLOAD_SITE_URL.'/'.$_GET['uploadpath'].'/'.$upload->thumb_image, 'name'=>$upload->thumb_image)));
+            }else {
+                exit(json_encode(array('status'=>0,'msg'=>$upload->error)));
+            }
+        }
+    }
+
+
 }

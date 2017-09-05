@@ -150,4 +150,47 @@ class indexControl extends mobileHomeControl{
 		}    	
     }
 
+    /**
+     * 获得商品推荐列表
+     */
+    public function gettjOp() {
+        
+        $model_goods    = Model('goods');
+        $model_store    = Model('store');
+
+        // 获得自营店铺ID，自营店铺类型为1
+        $store_info = $model_store->field('store_id')->where(array('is_own_shop'=>1))->find();
+        $recommend_list = $model_goods->getGoodsCommendList($store_info['store_id'], 6);          
+        
+        if(!empty($recommend_list)) {
+            
+            foreach ($recommend_list as $k=>$v) {
+                //处理图片
+                $recommend_list[$k]['url'] = urlShop('goods','index',array('goods_id'=>$v['goods_id']));
+                $recommend_list[$k]['goods_image'] = cthumb($v['goods_image'], 240);
+            }
+            output_data(array('recommend_list' => $recommend_list)); 
+        }
+        else {
+            output_error('暂无数据！');
+        }       
+    }
+
+    public function getstoresOp() {
+        
+        if(isset($_GET['store_type'])) {
+
+            $model_store    = Model('store');
+            // 获得非自营店铺ID，自营店铺类型为1
+            $condition['store_state'] = 1;
+            $condition['is_own_shop'] = 0;
+            $stores_list = $model_store->field('*')->where($condition)->order('store_sort asc')->select();
+
+            output_data(array('stores_list' => $stores_list)); 
+
+        } else {
+            output_error('缺少参数:店铺类型');
+        }
+    }
+
 }

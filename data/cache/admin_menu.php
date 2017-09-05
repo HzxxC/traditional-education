@@ -11,12 +11,8 @@
         array (
           'setting' => '站点设置',
           'upload' => '上传设置',
-          'message' => '邮件设置',
-          'taobao_api' => '淘宝接口',
           'admin' => '权限设置',
           'admin_log' => '操作日志',
-          'area' => '地区设置',
-          'task' => '计划任务',
           'cache' => '清理缓存',
         ),
       ),
@@ -73,8 +69,6 @@
           'payment' => '支付方式',
           'express' => '快递公司',
           'waybill' => '运单模板',
-          'web_config' => '首页管理',
-          'web_channel' => '频道管理',
         ),
       ),
       1 => 
@@ -97,10 +91,7 @@
         'child' => 
         array (
           'store' => '店铺管理',
-          'store_grade' => '店铺等级',
           'store_class' => '店铺分类',
-          'domain' => '二级域名',
-          'sns_strace' => '店铺动态',
           'help_store' => '店铺帮助',
           'store_joinin' => '商家入驻',
           'ownshop' => '自营店铺',
@@ -188,130 +179,6 @@
           'stat_goods' => '商品分析',
           'stat_marketing' => '营销分析',
           'stat_aftersale' => '售后分析',
-        ),
-      ),
-    ),
-  ),
-  'cms' => 
-  array (
-    'name' => '资讯',
-    'child' => 
-    array (
-      0 => 
-      array (
-        'name' => '设置',
-        'child' => 
-        array (
-          'cms_manage' => '资讯设置',
-          'cms_index' => '首页管理',
-          'cms_navigation' => '导航管理',
-          'cms_tag' => '标签管理',
-          'cms_comment' => '评论管理',
-        ),
-      ),
-      1 => 
-      array (
-        'name' => '专题',
-        'child' => 
-        array (
-          'cms_special' => '专题管理',
-        ),
-      ),
-      2 => 
-      array (
-        'name' => '文章',
-        'child' => 
-        array (
-          'cms_article_class' => '文章分类',
-          'cms_article' => '文章管理',
-        ),
-      ),
-      3 => 
-      array (
-        'name' => '画报',
-        'child' => 
-        array (
-          'cms_picture_class' => '画报分类',
-          'cms_picture' => '画报管理',
-        ),
-      ),
-    ),
-  ),
-  'circle' => 
-  array (
-    'name' => '圈子',
-    'child' => 
-    array (
-      0 => 
-      array (
-        'name' => '设置',
-        'child' => 
-        array (
-          'circle_setting' => '圈子设置',
-          'circle_adv' => '首页幻灯',
-        ),
-      ),
-      1 => 
-      array (
-        'name' => '成员',
-        'child' => 
-        array (
-          'circle_member' => '成员管理',
-          'circle_memberlevel' => '成员头衔',
-        ),
-      ),
-      2 => 
-      array (
-        'name' => '圈子',
-        'child' => 
-        array (
-          'circle_manage' => '圈子管理',
-          'circle_class' => '分类管理',
-          'circle_theme' => '话题管理',
-          'circle_inform' => '举报管理',
-        ),
-      ),
-    ),
-  ),
-  'microshop' => 
-  array (
-    'name' => '微商城',
-    'child' => 
-    array (
-      0 => 
-      array (
-        'name' => '设置',
-        'child' => 
-        array (
-          'manage' => '微商城设置',
-          'comment' => '评论管理',
-          'adv' => '广告管理',
-        ),
-      ),
-      1 => 
-      array (
-        'name' => '随心看',
-        'child' => 
-        array (
-          'goods' => '随心看管理',
-          'goods_class' => '随心看分类',
-        ),
-      ),
-      2 => 
-      array (
-        'name' => '个人秀',
-        'child' => 
-        array (
-          'personal' => '个人秀管理',
-          'personal_class' => '个人秀分类',
-        ),
-      ),
-      3 => 
-      array (
-        'name' => '店铺街',
-        'child' => 
-        array (
-          'store' => '店铺街管理',
         ),
       ),
     ),

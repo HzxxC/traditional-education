@@ -36,31 +36,68 @@
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="member_name"><em>*</em>会员账号</label>
+          <label for="store_avatar"><em></em>店铺头像</label>
         </dt>
         <dd class="opt">
-          <input type="text" value="" id="member_name" name="member_name" class="input-txt" />
+          <div class="ncsc-upload-thumb store-sns-pic">
+          <p><img nctype="normal_img" src="<?php echo SHOP_TEMPLATES_URL?>/images/member/default_image.png"/></p>
+          <input type="hidden" name="store_avatar" id="store_avatar" value="" />
+        </div>
+        <div class="handle">
+          <div class="ncsc-upload-btn"> <a href="javascript:void(0);"><span>
+            <input type="file" hidefocus="true" size="1" class="input-file" name="normal_file" id="normal_file">
+            </span>
+            <p><i class="icon-upload-alt"></i>图片上传</p>
+            </a> 
+            </div>
+        </div>
           <span class="err"></span>
-          <p class="notic">用于登录会员中心</p>
+          <p class="notic">
+            此处为店铺方形头像：<br />
+            <span style="color: orange;">建议使用宽180像素-高120像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</span></p>
         </dd>
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="seller_name"><em>*</em>商家账号</label>
+          <label for="store_address"><em>*</em>店铺地址</label>
         </dt>
         <dd class="opt">
-          <input type="text" value="" id="seller_name" name="seller_name" class="input-txt" />
+          <input type="text" value="" id="store_address" name="store_address" class="input-txt" />
           <span class="err"></span>
-          <p class="notic">用于登录商家中心，可与店主账号不同</p>
+          <p class="notic"></p>
         </dd>
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="member_passwd"><em>*</em>登录密码</label>
+          <label for="store_phone"><em>*</em>店铺联系方式</label>
         </dt>
         <dd class="opt">
-          <input type="password" value="" id="member_passwd" name="member_passwd" class="input-txt" />
+          <input type="text" value="" id="store_phone" name="store_phone" class="input-txt" />
           <span class="err"></span>
+          <p class="notic"></p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="store_content">店铺介绍</label>
+        </dt>
+        <dd class="opt">
+         <textarea name="store_content" rows="6" class="tarea" id="store_content"></textarea>
+          <span class="err"></span>
+          <p class="notic"></p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label><?php echo $lang['state'];?></label>
+        </dt>
+        <dd class="opt">
+          <div class="onoff">
+          <label for="store_state_enabled" class="cb-enable selected" title="是">是</label>
+          <label for="store_state_disabled" class="cb-disable" title="否">否</label>
+          <input id="store_state_enabled" name="store_state" checked="checked" value="1" type="radio">
+          <input id="store_state_disabled" name="store_state" value="0" type="radio">
+          </div>
           <p class="notic"></p>
         </dd>
       </dl>
@@ -68,80 +105,78 @@
     </div>
   </form>
 </div>
+<script type="text/javascript" src="<?php echo RESOURCE_SITE_URL;?>/js/ajaxfileupload/ajaxfileupload.js"></script> 
 <script type="text/javascript">
 $(function(){
-    //按钮先执行验证再提交表单
-    $("#submitBtn").click(function(){
-        if($("#store_form").valid()){
-            $("#store_form").submit();
-        }
-    });
 
-    $('#store_form').validate({
-        errorPlacement: function(error, element){
-            var error_td = element.parent('dd').children('span.err');
-            error_td.append(error);
+  //按钮先执行验证再提交表单
+  $("#submitBtn").click(function(){
+      if($("#store_form").valid()){
+          $("#store_form").submit();
+      }
+  });
+
+  $('#store_form').validate({
+      errorPlacement: function(error, element){
+          var error_td = element.parent('dd').children('span.err');
+          error_td.append(error);
+      },
+      rules : {
+          store_name: {
+              required : true,
+              remote   : '<?php echo urlAdminShop('ownshop', 'ckeck_store_name')?>'
+          },
+          store_address: {
+              required : true
+          },
+          store_phone: {
+              required : true
+          },
+      },
+      messages : {
+          store_name: {
+              required : '<i class="fa fa-exclamation-circle"></i>请输入店铺名称',
+              remote   : '<i class="fa fa-exclamation-circle"></i>店铺名称已存在'
+          },
+          store_address: {
+              required : '<i class="fa fa-exclamation-circle"></i>请输入店铺地址',
+          },
+          store_phone: {
+              required : '<i class="fa fa-exclamation-circle"></i>请输入店铺联系方式',
+          }
+      }
+  });
+
+  // 图片上传js
+  $('#normal_file').unbind().live('change', function(){
+    
+    // $('img[nctype="normal_img"]').attr('src',SHOP_TEMPLATES_URL+"/images/loading.gif");
+
+    $.ajaxFileUpload
+    (
+      {
+        url:'index.php?act=store&op=image_upload&uploadpath=<?php echo ATTACH_STORE;?>',
+        secureuri:false,
+        fileElementId:'normal_file',
+        dataType: 'json',
+         success: function (data, status)
+        {
+          if(typeof(data.error) != 'undefind'){
+            $('img[nctype="normal_img"]').attr('src',data.url);
+            $('#store_avatar').val(data.name);
+          }else{
+            alert(data.error);
+          }
         },
-        rules : {
-            store_name: {
-                required : true,
-                remote   : '<?php echo urlAdminShop('ownshop', 'ckeck_store_name')?>'
-            },
-            member_name: {
-                required : true,
-                minlength : 3,
-                maxlength : 15,
-                remote   : {
-                    url : 'index.php?act=ownshop&op=check_member_name',
-                    type: 'get',
-                    data:{
-                        member_name : function(){
-                            return $('#member_name').val();
-                        }
-                    }
-                }
-            },
-            seller_name: {
-                required : true,
-                minlength : 3,
-                maxlength : 15,
-                remote   : {
-                    url : 'index.php?act=ownshop&op=check_seller_name',
-                    type: 'get',
-                    data:{
-                        seller_name : function(){
-                            return $('#seller_name').val();
-                        }
-                    }
-                }
-            },
-            member_passwd : {
-                required : true,
-                minlength: 6
-            }
-        },
-        messages : {
-            store_name: {
-                required : '<i class="fa fa-exclamation-circle"></i>请输入店铺名称',
-                remote   : '<i class="fa fa-exclamation-circle"></i>店铺名称已存在'
-            },
-            member_name: {
-                required : '<i class="fa fa-exclamation-circle"></i>请输入会员账号',
-                minlength: '<i class="fa fa-exclamation-circle"></i>会员账号最短为3位',
-                maxlength: '<i class="fa fa-exclamation-circle"></i>会员账号最长为15位',
-                remote   : '<i class="fa fa-exclamation-circle"></i>此名称已被其它店铺会员占用，请重新输入'
-            },
-            seller_name: {
-                required : '<i class="fa fa-exclamation-circle"></i>请输入商家账号',
-                minlength: '<i class="fa fa-exclamation-circle"></i>商家账号最短为3位',
-                maxlength: '<i class="fa fa-exclamation-circle"></i>商家账号最长为15位',
-                remote  : '<i class="fa fa-exclamation-circle"></i>此名称已被其它店铺占用，请重新输入'
-            },
-            member_passwd : {
-                required : '<i class="fa fa-exclamation-circle"></i>请输入登录密码',
-                minlength: '<i class="fa fa-exclamation-circle"></i>登录密码长度不能小于6'
-            }
+        error: function (data, status, e)
+        {
+          alert(e);
         }
-    });
+      }
+    )
+    return false;
+  });
+
+
 });
 </script> 

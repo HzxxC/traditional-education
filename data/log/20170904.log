@@ -1,0 +1,51 @@
+[2017-09-04 11:43:37] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload&upload_type=uploadedfile ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('1','',NULL,'1_05578406175192597.jpg','37850','430x430','1504496617','1')
+[2017-09-04 11:43:54] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('2','',NULL,'1_05578406349456968.jpg','3104','60x60','1504496634','1')
+[2017-09-04 11:45:33] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('2','',NULL,'1_05578407335344656.jpg','13125','130x130','1504496733','1')
+[2017-09-04 11:46:00] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('3','',NULL,'1_05578407605619132.jpg','13593','130x130','1504496760','1')
+[2017-09-04 14:09:23] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload&upload_type=uploadedfile ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('3','',NULL,'1_05578493633143387.jpg','13593','130x130','1504505363','1')
+[2017-09-04 14:09:33] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('2','',NULL,'1_05578493732649006.jpg','13125','130x130','1504505373','1')
+[2017-09-04 14:10:24] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload&upload_type=uploadedfile ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('2','',NULL,'1_05578494240616649.jpg','13125','130x130','1504505423','1')
+[2017-09-04 14:10:31] /traditional-education/shop/index.php?act=store_goods_add&op=image_upload ( act=store_goods_add&op=image_upload ) 
+ERR: Db Error: Column 'aclass_id' cannot be null
+INSERT  INTO `te_album_pic` (apic_name,apic_tag,aclass_id,apic_cover,apic_size,apic_spec,upload_time,store_id) VALUES ('1','',NULL,'1_05578494314977411.jpg','37850','430x430','1504505431','1')
+[2017-09-04 17:05:10] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','现代学校','','0','40','0','0','1')
+[2017-09-04 17:13:15] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','新东方厨师','','0','40','0','0','1')
+[2017-09-04 17:34:57] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','新东方福','','0','40','0','0','1')
+[2017-09-04 17:43:02] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','现代学校2','','0','40','0','0','1')
+[2017-09-04 17:44:04] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','新东方1','','0','40','0','0','1')
+[2017-09-04 17:44:33] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','新东方222','','0','40','0','0','1')
+[2017-09-04 17:44:52] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','现代学校22','','0','40','0','0','1')
+[2017-09-04 17:46:59] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','新东方233','','0','40','0','0','1')
+[2017-09-04 17:52:12] /traditional-education/admin/modules/shop/index.php?act=store&op=haoshop_add ( act=store&op=haoshop_add ) 
+ERR: Db Error: Duplicate entry '0' for key 'PRIMARY'
+INSERT  INTO `te_store_joinin` (seller_name,store_name,member_name,member_id,joinin_state,company_province_id,sc_bail,joinin_year) VALUES ('','新东方厨师11','','0','40','0','0','1')

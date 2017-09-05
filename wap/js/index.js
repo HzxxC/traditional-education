@@ -102,19 +102,49 @@ $(function() {
     });
     
     
-    	 $.ajax({
-				url:ApiUrl+"/index.php?act=index&op=getgg",
-				type:'get',
-				data:{ac_id:1},
-				jsonp:'callback',
-				dataType:'jsonp',
-				success:function(result){
-					var data = result.datas;
-					data.WapSiteUrl = WapSiteUrl;
-					var html = template.render('getgg_tpl', data);				
-					$("#getgg").html(html);
-				}
-			});
+    $.ajax({
+    	url:ApiUrl+"/index.php?act=index&op=getgg",
+    	type:'get',
+    	data:{ac_id:1},
+    	jsonp:'callback',
+    	dataType:'jsonp',
+    	success:function(result){
+    		var data = result.datas;
+    		data.WapSiteUrl = WapSiteUrl;
+    		var html = template.render('getgg_tpl', data);				
+    		$("#getgg").html(html);
+    	}
+    });
+
+    // 平台自营商品推荐
+    $.ajax({
+        url:ApiUrl+"/index.php?act=index&op=gettj",
+        type:'get',
+        jsonp:'callback',
+        dataType:'jsonp',
+        success:function(result){
+            var data = result.datas;
+            data.WapSiteUrl = WapSiteUrl;
+            var html = template.render('gettj_tpl', data);              
+            $("#gettj").html(html);
+        }
+    });
+
+    // 非平台自营店铺列表
+    $.ajax({
+        url:ApiUrl+"/index.php?act=index&op=getstores",
+        type:'get',
+        data: {store_type: 0},
+        jsonp:'callback',
+        dataType:'jsonp',
+        success:function(result){
+            var data = result.datas;
+            data.WapSiteUrl = WapSiteUrl;
+            var html = template.render('getstores_tpl', data);              
+            $("#getstores").html(html);
+            console.log(data);
+        }
+    });
 
 });
 

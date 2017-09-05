@@ -143,7 +143,8 @@ $(function(){
             {display: '允许退款', name : 'virtual_invalid_refund', width : 100, sortable : false, align: 'center', className: 'column-a'}
             ],
         buttons : [
-            {display: '<i class="fa fa-file-excel-o"></i>导出数据', name : 'csv', bclass : 'csv', title : '将选定行数据导出CVS文件', onpress : fg_operation }
+            {display: '<i class="fa fa-file-excel-o"></i>导出数据', name : 'csv', bclass : 'csv', title : '将选定行数据导出CVS文件', onpress : fg_operation },
+             {display: '<i class="fa fa-plus"></i>新增数据', name : 'add_step_one', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operations }      
             ],
         searchitems : [
             {display: 'SPU', name : 'goods_commonid'},
@@ -184,6 +185,12 @@ function fg_operation(name, bDiv) {
             itemids[i] = $(this).attr('data-id');
         });
         fg_csv(itemids);
+    }
+}
+
+function fg_operations(name, bDiv) {
+    if (name == 'add_step_one') {
+        window.location.href = 'index.php?act=goods&op=add_step_one';
     }
 }
 

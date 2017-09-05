@@ -957,6 +957,18 @@ function getStoreLogo($img, $type = 'store_avatar'){
         }
     }
 }
+/**
+ * 店铺头像
+  * @param string $store_id
+ * @return string
+ */
+function getStoreAvatarForID($id) {
+	if(file_exists(BASE_UPLOAD_PATH.'/'.ATTACH_AVATAR.'/store_avatar_'.$id.'.jpg')){
+		return UPLOAD_SITE_URL.'/'.ATTACH_AVATAR.'/store_avatar_'.$id.'.jpg';
+	}else{
+		return UPLOAD_SITE_URL.'/'.ATTACH_COMMON.DS.C('default_store_avatar');
+	}
+}
 
 /**
  * 获取文章URL

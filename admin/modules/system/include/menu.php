@@ -15,12 +15,12 @@ $_menu['system'] = array (
                         'child' => array(
                                 'setting' => $lang['nc_web_set'],
                                 'upload' => $lang['nc_upload_set'],
-                                'message' => '邮件设置',
-                                'taobao_api' => '淘宝接口',
+                                // 'message' => '邮件设置',
+                                // 'taobao_api' => '淘宝接口',
                                 'admin' => '权限设置',
                                 'admin_log' => $lang['nc_admin_log'],
-                                'area' => '地区设置',
-								'task' => '计划任务',
+                                // 'area' => '地区设置',
+				// 'task' => '计划任务',
                                 'cache' => $lang['nc_admin_clear_cache'],
 								
                         )
