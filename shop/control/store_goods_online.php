@@ -29,7 +29,7 @@ class store_goods_onlineControl extends BaseSellerControl {
         $model_goods = Model('goods');
 
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         if (intval($_GET['stc_id']) > 0) {
             $where['goods_stcids'] = array('like', '%,' . intval($_GET['stc_id']) . ',%');
         }
@@ -46,8 +46,8 @@ class store_goods_onlineControl extends BaseSellerControl {
                     break;
             }
         }
-        if (intval($_GET['sup_id']) > 0) {
-            $where['sup_id']= intval($_GET['sup_id']);
+        if (intval($_GET['store_id']) > 0) {
+            $where['store_id']= intval($_GET['store_id']);
         }
 
         //权限组对应分类权限判断
@@ -67,9 +67,9 @@ class store_goods_onlineControl extends BaseSellerControl {
         $store_goods_class = Model('store_goods_class')->getClassTree(array('store_id' => $_SESSION['store_id'], 'stc_state' => '1'));
         Tpl::output('store_goods_class', $store_goods_class);
 
-        // 供货商
-        $supplier_list = Model('store_supplier')->getStoreSupplierList(array('sup_store_id' => $_SESSION['store_id']));
-        Tpl::output('supplier_list', $supplier_list);
+        // 商品所属店铺
+        $store_list = Model('store')->getStoreOnlineList(array());
+        Tpl::output('store_list', $store_list);
 		
 		// 分销权限
 		$store_info = $this->store_info; 
@@ -86,12 +86,13 @@ class store_goods_onlineControl extends BaseSellerControl {
      */
     public function edit_goodsOp() {
         $common_id = $_GET['commonid'];
+        $edit_store_id = $_GET['store_id'];
         if ($common_id <= 0) {
             showMessage(L('wrong_argument'), '', 'html', 'error');
         }
         $model_goods = Model('goods');
         $goodscommon_info = $model_goods->getGoodsCommonInfoByID($common_id);
-        if (empty($goodscommon_info) || $goodscommon_info['store_id'] != $_SESSION['store_id'] || $goodscommon_info['goods_lock'] == 1) {
+        if (empty($goodscommon_info) || $goodscommon_info['store_id'] != $edit_store_id || $goodscommon_info['goods_lock'] == 1) {
             showMessage(L('wrong_argument'), '', 'html', 'error');
         }
 
@@ -102,7 +103,7 @@ class store_goods_onlineControl extends BaseSellerControl {
                 showMessage('您所在的组无权操作该分类下的商品','', 'html', 'error');
             }
         }
-        $where = array('goods_commonid' => $common_id, 'store_id' => $_SESSION['store_id']);
+        $where = array('goods_commonid' => $common_id, 'store_id' => $edit_store_id);
         $goodscommon_info['g_storage'] = $model_goods->getGoodsSum($where, 'goods_storage');
         $goodscommon_info['spec_name'] = unserialize($goodscommon_info['spec_name']);
         $goodscommon_info['goods_custom'] = unserialize($goodscommon_info['goods_custom']);
@@ -181,7 +182,7 @@ class store_goods_onlineControl extends BaseSellerControl {
         Tpl::output ( 'sp_value', $sp_value );
 
         // 实例化店铺商品分类模型
-        $store_goods_class = Model('store_goods_class')->getClassTree(array('store_id' => $_SESSION ['store_id'], 'stc_state' => '1'));
+        $store_goods_class = Model('store_goods_class')->getClassTree(array('store_id' => $edit_store_id, 'stc_state' => '1'));
         Tpl::output('store_goods_class', $store_goods_class);
         //处理商品所属分类
         $store_goods_class_tmp = array();
@@ -236,12 +237,12 @@ class store_goods_onlineControl extends BaseSellerControl {
         Tpl::output('minute_array', $minute_array);
 
         // 关联版式
-        $plate_list = Model('store_plate')->getStorePlateList(array('store_id' => $_SESSION['store_id']), 'plate_id,plate_name,plate_position');
+        $plate_list = Model('store_plate')->getStorePlateList(array('store_id' => $edit_store_id), 'plate_id,plate_name,plate_position');
         $plate_list = array_under_reset($plate_list, 'plate_position', 2);
         Tpl::output('plate_list', $plate_list);
 
         // 供货商
-        $supplier_list = Model('store_supplier')->getStoreSupplierList(array('sup_store_id' => $_SESSION['store_id']));
+        $supplier_list = Model('store_supplier')->getStoreSupplierList(array('sup_store_id' => $edit_store_id));
         Tpl::output('supplier_list', $supplier_list);
 
         $menu_promotion = array(
@@ -259,12 +260,13 @@ class store_goods_onlineControl extends BaseSellerControl {
     public function edit_save_goodsOp() {
         $logic_goods = Logic('goods');
 		$gc_id = intval($_POST['cate_id']);
+        $edit_store_id = intval($_POST['store_id']);
 		// 三方店铺验证是否绑定了该分类
         if (!checkPlatformStore()) {
             //商品分类 by 33hao. com 提供批量显示所有分类插件
             $model_bind_class = Model('store_bind_class');
             $goods_class = Model('goods_class')->getGoodsClassForCacheModel();
-            $where['store_id'] = $_SESSION['store_id'];
+            $where['store_id'] = $edit_store_id;
             $class_2 = $goods_class[$gc_id]['gc_parent_id'];
             $class_1 = $goods_class[$class_2]['gc_parent_id'];
             $where['class_1'] =  $class_1;
@@ -296,12 +298,12 @@ class store_goods_onlineControl extends BaseSellerControl {
 
             }
         }
-
+        $store_info = Model('store') -> getStoreOnlineInfoByID($edit_store_id);
         $result =  $logic_goods->updateGoods(
             $_POST,
-            $_SESSION['store_id'], 
-            $_SESSION['store_name'], 
-            $this->store_info['store_state'], 
+            $store_info['store_id'], 
+            $store_info['store_name'], 
+            $store_info['store_state'], 
             $_SESSION['seller_id'], 
             $_SESSION['seller_name'],
             $_SESSION['bind_all_gc']
@@ -321,12 +323,13 @@ class store_goods_onlineControl extends BaseSellerControl {
      */
     public function edit_imageOp() {
         $common_id = intval($_GET['commonid']);
+        $edit_store_id = intval($_GET['store_id']);
         if ($common_id <= 0) {
             showMessage(L('wrong_argument'), urlShop('seller_center'), 'html', 'error');
         }
         $model_goods = Model('goods');
         $common_list = $model_goods->getGoodsCommonInfoByID($common_id, 'store_id,goods_lock,spec_value,is_virtual,is_fcode,is_presell');
-        if ($common_list['store_id'] != $_SESSION['store_id'] || $common_list['goods_lock'] == 1) {
+        if ($common_list['store_id'] != $edit_store_id || $common_list['goods_lock'] == 1) {
             showMessage(L('wrong_argument'), urlShop('seller_center'), 'html', 'error');
         }
 
@@ -353,13 +356,14 @@ class store_goods_onlineControl extends BaseSellerControl {
 
 
         $model_spec = Model('spec');
-        $value_array = $model_spec->getSpecValueList(array('sp_value_id' => array('in', $colorid_array), 'store_id' => $_SESSION['store_id']), 'sp_value_id,sp_value_name');
+        $value_array = $model_spec->getSpecValueList(array('sp_value_id' => array('in', $colorid_array), 'store_id' => $edit_store_id), 'sp_value_id,sp_value_name');
         if (empty($value_array)) {
             $value_array[] = array('sp_value_id' => '0', 'sp_value_name' => '无颜色');
         }
         Tpl::output('value_array', $value_array);
 
         Tpl::output('commonid', $common_id);
+        Tpl::output('store_id', $edit_store_id);
 
         $menu_promotion = array(
                 'lock' => $common_list['goods_lock'] == 1 ? true : false,
@@ -376,7 +380,9 @@ class store_goods_onlineControl extends BaseSellerControl {
     public function edit_save_imageOp() {
         if (chksubmit()) {
             $common_id = intval($_POST['commonid']);
-            $rs = Logic('goods')->editSaveImage($_POST['img'], $common_id, $_SESSION['store_id'], $_SESSION['seller_id'], $_SESSION['seller_name']);
+            $edit_store_id = intval($_POST['store_id']);
+
+            $rs = Logic('goods')->editSaveImage($_POST['img'], $common_id, $edit_store_id, $_SESSION['seller_id'], $_SESSION['seller_name']);
             if ($rs['state']) {
                 showDialog(L('nc_common_op_succ'), $_POST['ref_url'], 'succ');
             } else {
@@ -413,9 +419,10 @@ class store_goods_onlineControl extends BaseSellerControl {
      * 删除商品
      */
     public function drop_goodsOp() {
+        $del_store_id = $_GET['store_id'];
         $common_id = $this->checkRequestCommonId($_GET['commonid']);
         $commonid_array = explode(',', $common_id);
-        $result = Logic('goods')->goodsDrop($commonid_array, $_SESSION['store_id'], $_SESSION['seller_id'], $_SESSION['seller_name']);
+        $result = Logic('goods')->goodsDrop($commonid_array, $del_store_id, $_SESSION['seller_id'], $_SESSION['seller_name']);
         if ($result['state']) {
             // 添加操作日志
             $this->recordSellerLog('删除商品，SPU：'.$common_id);
@@ -791,19 +798,19 @@ class store_goods_onlineControl extends BaseSellerControl {
             case 'edit_detail':
                 if ($allow_promotion['lock'] === false) {
                     $menu_array = array(
-                        array('menu_key' => 'edit_detail',  'menu_name' => '编辑商品', 'menu_url' => urlShop('store_goods_online', 'edit_goods', array('commonid' => $_GET['commonid'], 'ref_url' => $_GET['ref_url']))),
-                        array('menu_key' => 'edit_image',   'menu_name' => '编辑图片', 'menu_url' => urlShop('store_goods_online', 'edit_image', array('commonid' => $_GET['commonid'], 'ref_url' => ($_GET['ref_url'] ? $_GET['ref_url'] : getReferer())))),
+                        array('menu_key' => 'edit_detail',  'menu_name' => '编辑商品', 'menu_url' => urlShop('store_goods_online', 'edit_goods', array('commonid' => $_GET['commonid'], 'ref_url' => $_GET['ref_url'], 'store_id' => $_GET['store_id']))),
+                        array('menu_key' => 'edit_image',   'menu_name' => '编辑图片', 'menu_url' => urlShop('store_goods_online', 'edit_image', array('commonid' => $_GET['commonid'], 'store_id' => $_GET['store_id'], 'ref_url' => ($_GET['ref_url'] ? $_GET['ref_url'] : getReferer())))),
                     );
                 }
-                if ($allow_promotion['gift'] == true) {
-                    $menu_array[] = array('menu_key' => 'add_gift', 'menu_name' => '赠送赠品', 'menu_url' => urlShop('store_goods_online', 'add_gift', array('commonid' => $_GET['commonid'], 'ref_url' => ($_GET['ref_url'] ? $_GET['ref_url'] : getReferer()))));
-                }
+                // if ($allow_promotion['gift'] == true) {
+                //     $menu_array[] = array('menu_key' => 'add_gift', 'menu_name' => '赠送赠品', 'menu_url' => urlShop('store_goods_online', 'add_gift', array('commonid' => $_GET['commonid'], 'store_id' => $_GET['store_id'], 'ref_url' => ($_GET['ref_url'] ? $_GET['ref_url'] : getReferer()))));
+                // }
                 break;
             case 'edit_class':
                 $menu_array = array(
-                    array('menu_key' => 'edit_class',   'menu_name' => '选择分类', 'menu_url' => urlShop('store_goods_online', 'edit_class', array('commonid' => $_GET['commonid'], 'ref_url' => $_GET['ref_url']))),
-                    array('menu_key' => 'edit_detail',  'menu_name' => '编辑商品', 'menu_url' => urlShop('store_goods_online', 'edit_goods', array('commonid' => $_GET['commonid'], 'ref_url' => $_GET['ref_url']))),
-                    array('menu_key' => 'edit_image',   'menu_name' => '编辑图片', 'menu_url' => urlShop('store_goods_online', 'edit_image', array('commonid' => $_GET['commonid'], 'ref_url' => ($_GET['ref_url'] ? $_GET['ref_url'] : getReferer())))),
+                    array('menu_key' => 'edit_class',   'menu_name' => '选择分类', 'menu_url' => urlShop('store_goods_online', 'edit_class', array('commonid' => $_GET['commonid'], 'store_id' => $_GET['store_id'], 'ref_url' => $_GET['ref_url']))),
+                    array('menu_key' => 'edit_detail',  'menu_name' => '编辑商品', 'menu_url' => urlShop('store_goods_online', 'edit_goods', array('commonid' => $_GET['commonid'], 'store_id' => $_GET['store_id'], 'ref_url' => $_GET['ref_url']))),
+                    array('menu_key' => 'edit_image',   'menu_name' => '编辑图片', 'menu_url' => urlShop('store_goods_online', 'edit_image', array('commonid' => $_GET['commonid'], 'store_id' => $_GET['store_id'], 'ref_url' => ($_GET['ref_url'] ? $_GET['ref_url'] : getReferer())))),
                 );
                 break;
         }

@@ -3,22 +3,18 @@
   <div id="warning"></div>
   <form id="category_form" method="post" target="_parent" action="index.php?act=store_album&op=album_edit_save">
     <input type="hidden" name="id" value="<?php echo $output['class_info']['aclass_id'];?>" />
+    <input type="hidden" name="sort" id="sort" value="<?php echo $output['class_info']['sort'];?>" />
     <dl>
-      <dt><i class="required">*</i><?php echo $lang['album_class_add_name'].$lang['nc_colon'];?></dt>
+      <dt><i class="required">*</i>相册所属店铺：</dt>
       <dd>
-        <input class="w300 text" type="text" name="name" id="name" value="<?php echo $output['class_info']['aclass_name'];?>" />
+        <input type="text" name="name" id="name" readonly="true" value="<?php echo $output['class_info']['aclass_name'];?>" />
+        <input type="hidden" name="store_id" id="album_class_store_id" value="<?php echo $output['class_info']['store_id'];?>" />
       </dd>
     </dl>
     <dl>
       <dt><?php echo $lang['album_class_add_des'].$lang['nc_colon'];?></dt>
       <dd>
         <textarea rows="3" class="textarea w300" name="description" id="description"><?php echo $output['class_info']['aclass_des'];?></textarea>
-      </dd>
-    </dl>
-    <dl>
-      <dt><?php echo $lang['album_class_add_sort'].$lang['nc_colon'];?></dt>
-      <dd>
-        <input type="text" class="text w50" name="sort" id="sort" value="<?php echo $output['class_info']['aclass_sort'];?>" />
       </dd>
     </dl>
     <div class="bottom">
@@ -30,6 +26,7 @@
 </div>
 <script type="text/javascript">
 $(function(){
+
     $('#category_form').validate({
         errorLabelContainer: $('#warning'),
         invalidHandler: function(form, validator) {

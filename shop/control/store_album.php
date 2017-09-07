@@ -27,53 +27,22 @@ class store_albumControl extends BaseSellerControl {
     public function album_cateOp(){
         $model_album = Model('album');
 
-        /**
-         * 验证是否存在默认相册
-         */
-        $return = $model_album->checkAlbum(array('album_aclass.store_id'=>$_SESSION['store_id'],'is_default'=>'1'));
-        if(!$return){
-            $album_arr = array();
-            $album_arr['aclass_name'] = Language::get('album_default_album');
-            $album_arr['store_id'] = $_SESSION['store_id'];
-            $album_arr['aclass_des'] = '';
-            $album_arr['aclass_sort'] = '255';
-            $album_arr['aclass_cover'] = '';
-            $album_arr['upload_time'] = time();
-            $album_arr['is_default'] = '1';
-            $model_album->addClass($album_arr);
-        }
 
         /**
          * 相册分类
          */
         $param = array();
-        $param['album_aclass.store_id'] = $_SESSION['store_id'];
         $param['order']                 = 'aclass_sort desc';
-        if($_GET['sort'] != ''){
-            switch ($_GET['sort']){
-                case '0':
-                    $param['order']     = 'upload_time desc';
-                    break;
-                case '1':
-                    $param['order']     = 'upload_time asc';
-                    break;
-                case '2':
-                    $param['order']     = 'aclass_name desc';
-                    break;
-                case '3':
-                    $param['order']     = 'aclass_name asc';
-                    break;
-                case '4':
-                    $param['order']     = 'aclass_sort desc';
-                    break;
-                case '5':
-                    $param['order']     = 'aclass_sort asc';
-                    break;
-            }
+        if($_GET['store_id'] != 0){
+            $param['album_aclass.store_id'] = $_GET['store_id'];
         }
         $aclass_info = $model_album->getClassList($param,$page);
         Tpl::output('aclass_info',$aclass_info);
 //      Tpl::output('show_page',$page->show());
+
+        // 商品所属店铺
+        $store_list = Model('store')->getStoreOnlineList(array());
+        Tpl::output('store_list', $store_list);
 
         Tpl::output('PHPSESSID',session_id());
         self::profile_menu('album','album');
@@ -87,9 +56,11 @@ class store_albumControl extends BaseSellerControl {
         /**
          * 实例化相册模型
          */
+        // 商品所属店铺
+        $store_list = Model('store')->getStoreOnlineList(array());
+        Tpl::output('store_list', $store_list);
         $model_album = Model('album');
-        $class_count = $model_album->countClass($_SESSION['store_id']);
-        Tpl::output('class_count',$class_count['count']);
+        
         Tpl::showpage('store_album.class_add','null_layout');
     }
     /**
@@ -101,19 +72,21 @@ class store_albumControl extends BaseSellerControl {
             /**
              * 实例化相册模型
              */
+            $store_id = $_POST['store_id'];
             $model_album = Model('album');
-            $class_count = $model_album->countClass($_SESSION['store_id']);
-            if($class_count['count'] >= 40){
-                showDialog(Language::get('album_class_save_max_20'),'index.php?act=store_album','error',empty($_GET['inajax'])?'':'CUR_DIALOG.close();');
+            $class_count = $model_album->countClass($store_id);
+            if($class_count['count'] >= 1){
+                showDialog(Language::get('album_class_add_max_1'),'index.php?act=store_album','error',empty($_GET['inajax'])?'':'CUR_DIALOG.close();');
             }
             /**
              * 实例化相册模型
              */
             $param = array();
             $param['aclass_name']   = $_POST['name'];
-            $param['store_id']      = $_SESSION['store_id'];
+            $param['store_id']      = $_POST['store_id'];
             $param['aclass_des']    = $_POST['description'];
             $param['aclass_sort']   = intval($_POST['sort']);
+            $param['is_default']    = 1;    // 默认相册
             $param['upload_time']   = time();
 
             $return = $model_album->addClass($param);
@@ -130,14 +103,16 @@ class store_albumControl extends BaseSellerControl {
         if(empty($_GET['id'])){
             echo Language::get('album_parameter_error');exit;
         }
+        $store_id = $_GET['store_id'];
         /**
          * 实例化相册模型
          */
         $model_album = Model('album');
         $param = array();
         $param['field']     = array('aclass_id','store_id');
-        $param['value']     = array(intval($_GET['id']),$_SESSION['store_id']);
+        $param['value']     = array(intval($_GET['id']), $store_id);
         $class_info = $model_album->getOneClass($param);
+        
         Tpl::output('class_info',$class_info);
 
         Tpl::showpage('store_album.class_edit','null_layout');
@@ -234,9 +209,11 @@ class store_albumControl extends BaseSellerControl {
          */
         $model_album = Model('album');
 
+        $store_id = intval($_GET['store_id']);
+
         $param = array();
         $param['aclass_id'] = intval($_GET['id']);
-        $param['album_pic.store_id']    = $_SESSION['store_id'];
+        $param['album_pic.store_id']    = $store_id;
         if($_GET['sort'] != ''){
             switch ($_GET['sort']){
                 case '0':
@@ -268,7 +245,7 @@ class store_albumControl extends BaseSellerControl {
          */
         $param = array();
         $param['album_class.un_aclass_id']  = intval($_GET['id']);
-        $param['album_aclass.store_id'] = $_SESSION['store_id'];
+        $param['album_aclass.store_id'] = $store_id;
         $class_list = $model_album->getClassList($param);
         Tpl::output('class_list',$class_list);
         /**
@@ -276,7 +253,7 @@ class store_albumControl extends BaseSellerControl {
          */
         $param = array();
         $param['field']     = array('aclass_id','store_id');
-        $param['value']     = array(intval($_GET['id']),$_SESSION['store_id']);
+        $param['value']     = array(intval($_GET['id']),$store_id);
         $class_info         = $model_album->getOneClass($param);
         Tpl::output('class_info',$class_info);
 
@@ -596,12 +573,14 @@ class store_albumControl extends BaseSellerControl {
      */
     public function replace_image_uploadOp() {
         $file = $_GET['id'];
+        $store_id= $_GET['store_id'];
+
         $tpl_array = explode('_', $file);
         $id = intval(end($tpl_array));
         $model_album = Model('album');
         $param = array();
         $param['field'] = array('apic_id', 'store_id');
-        $param['value'] = array($id, $_SESSION['store_id']);
+        $param['value'] = array($id, $store_id);
         $apic_info = $model_album->getOnePicById($param);
         if (substr(strrchr($apic_info['apic_cover'], "."), 1) != substr(strrchr($_FILES[$file]["name"], "."), 1)) {
             // 后缀名必须相同
@@ -619,7 +598,7 @@ class store_albumControl extends BaseSellerControl {
          * 上传图片
          */
         $upload = new UploadFile();
-        $upload->set('default_dir', ATTACH_GOODS . DS . $_SESSION['store_id'] . DS . $pic_cover);
+        $upload->set('default_dir', ATTACH_GOODS . DS . $store_id . DS . $pic_cover);
         $upload->set('max_size', C('image_max_filesize'));
         $upload->set('thumb_width', GOODS_IMAGES_WIDTH);
         $upload->set('thumb_height', GOODS_IMAGES_HEIGHT);
@@ -639,9 +618,9 @@ class store_albumControl extends BaseSellerControl {
          */
         // 取得图像大小
         if (!C('oss.open')) {
-            list($width, $height, $type, $attr) = getimagesize(BASE_UPLOAD_PATH . DS . ATTACH_GOODS . DS . $_SESSION['store_id'] . DS . $apic_info['apic_cover']);
+            list($width, $height, $type, $attr) = getimagesize(BASE_UPLOAD_PATH . DS . ATTACH_GOODS . DS . $store_id . DS . $apic_info['apic_cover']);
         } else {
-            list($width, $height, $type, $attr) = getimagesize(C('oss.img_url') . '/' . ATTACH_GOODS . '/' . $_SESSION['store_id'] . DS . $apic_info['apic_cover']);
+            list($width, $height, $type, $attr) = getimagesize(C('oss.img_url') . '/' . ATTACH_GOODS . '/' . $store_id . DS . $apic_info['apic_cover']);
         }
         /**
          * 更新图片分类
@@ -791,7 +770,9 @@ class store_albumControl extends BaseSellerControl {
      *
      */
     public function image_uploadOp() {
-        $store_id = $_SESSION ['store_id'];
+        
+        $store_id = $_POST['store_id'];
+
         if (! empty ( $_POST ['category_id'] )) {
             $category_id = intval ( $_POST ['category_id'] );
         } else {
@@ -899,20 +880,20 @@ class store_albumControl extends BaseSellerControl {
         switch ($menu_type) {
             case 'album':
                 $menu_array = array(
-                1=>array('menu_key'=>'album','menu_name'=>Language::get('nc_member_path_my_album'),'menu_url'=>'index.php?act=store_album'),
+                1=>array('menu_key'=>'album','menu_name'=>'相册管理','menu_url'=>'index.php?act=store_album'),
                 2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
                 );
                 break;
             case 'album_pic':
                 $menu_array = array(
-                1=>array('menu_key'=>'album','menu_name'=>Language::get('nc_member_path_my_album'),'menu_url'=>'index.php?act=store_album'),
+                1=>array('menu_key'=>'album','menu_name'=>'相册管理','menu_url'=>'index.php?act=store_album'),
                 3=>array('menu_key'=>'pic_list','menu_name'=>Language::get('nc_member_path_album_pic_list'),'menu_url'=>'index.php?act=store_album&op=album_pic_list&id='.intval($_GET['id'])),
                 2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
                 );
                 break;
             case 'album_pic_info':
                 $menu_array = array(
-                1=>array('menu_key'=>'album','menu_name'=>Language::get('nc_member_path_my_album'),'menu_url'=>'index.php?act=store_album'),
+                1=>array('menu_key'=>'album','menu_name'=>'相册管理','menu_url'=>'index.php?act=store_album'),
                 3=>array('menu_key'=>'pic_info','menu_name'=>Language::get('nc_member_path_album_pic_info'),'menu_url'=>'index.php?act=store_album&op=album_pic_info&id='.intval($_GET['id']).'&class_id='.intval($_GET['class_id'])),
                 2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
                 );

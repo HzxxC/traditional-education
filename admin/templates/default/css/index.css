@@ -2529,17 +2529,4 @@ margin: 0 auto!important; padding: 0; zoom: 1; }
 .bottom .ncbtn { font-size: 14px; vertical-align: top; padding: 8px 19px; margin: 10px auto;}
 a.disabled:hover { cursor: default; background-color: #ECF0F1; box-shadow: none; color: #777; }
 
-/*商品添加步骤二运费模板样式 by hou*/
-/* 发布商品-属性 */
-.spec-bg { background-color: #FCFCFC;}
-.spec { font-size: 0; *word-spacing:-1px/*IE6、7*/; }
-.spec li { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE6,7*/; width:25%; margin-bottom: 6px; zoom: 1;}
-.spec li span { line-height: 30px; vertical-align: middle; margin-right:6px;}
-.spec li span .text { vertical-align: middle; width: 130px;}
-.spec-div { max-height: 300px; max-width: 800px; padding: 0 0 10px 0; position: relative; z-index: 1; overflow: hidden;}
-.spec_table { background-color: #FFF; width: 98%; margin: 10px 10px 0 0; border: solid 1px #BCE8F1; box-shadow: 3px 3px 0 rgba(153,153,153,0.15);}
-.spec_table thead th { font-weight: 600; line-height: 24px; color: #3A87AD; background: #D9EDF7; white-space: nowrap; height: 24px; padding: 5px 10px;}
-.spec_table tbody td { white-space: nowrap; height: 30px; padding: 5px 10px; border-top: solid 1px #BCE8F1;}
-.spec_table .text.price,
-.spec_table .text.stock { width: 40px;}
-.spec_table .text.sku { width: 80px;}
+

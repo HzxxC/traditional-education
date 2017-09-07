@@ -9,29 +9,15 @@
     <input type="hidden" name="op" value="index" />
     <tr>
       <td>&nbsp;</td>
-      <th>供货商</th>
-      <td class="w160"><select name="sup_id" class="w150">
+      <th>所属店铺</th>
+      <td class="w160"><select name="store_id" class="w150">
         <option value="0"><?php echo $lang['nc_please_choose'];?></option>
-        <?php if (is_array($output['supplier_list'])) {?>
-        <?php foreach ($output['supplier_list'] as $val) {?>
-        <option value="<?php echo $val['sup_id'];?>" <?php if ($_GET['sup_id'] == $val['sup_id']) {?>selected<?php }?>><?php echo $val['sup_name'];?></option>
+        <?php if (is_array($output['store_list'])) {?>
+        <?php foreach ($output['store_list'] as $val) {?>
+        <option value="<?php echo $val['store_id'];?>" <?php if ($_GET['store_id'] == $val['store_id']) {?>selected<?php }?>><?php echo $val['store_name'];?></option>
         <?php }?>
         <?php }?>
       </select></td>
-      <th><?php echo $lang['store_goods_index_store_goods_class'];?></th>
-      <td class="w160"><select name="stc_id" class="w150">
-          <option value="0"><?php echo $lang['nc_please_choose'];?></option>
-          <?php if(is_array($output['store_goods_class']) && !empty($output['store_goods_class'])){?>
-          <?php foreach ($output['store_goods_class'] as $val) {?>
-          <option value="<?php echo $val['stc_id']; ?>" <?php if ($_GET['stc_id'] == $val['stc_id']){ echo 'selected=selected';}?>><?php echo $val['stc_name']; ?></option>
-          <?php if (is_array($val['child']) && count($val['child'])>0){?>
-          <?php foreach ($val['child'] as $child_val){?>
-          <option value="<?php echo $child_val['stc_id']; ?>" <?php if ($_GET['stc_id'] == $child_val['stc_id']){ echo 'selected=selected';}?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $child_val['stc_name']; ?></option>
-          <?php }?>
-          <?php }?>
-          <?php }?>
-          <?php }?>
-        </select></td>
       <th>
         <select name="search_type">
           <option value="0" <?php if ($_GET['type'] == 0) {?>selected="selected"<?php }?>><?php echo $lang['store_goods_index_goods_name'];?></option>
@@ -93,13 +79,13 @@
             </div>
             </span> </dd>
         </dl></td>
-      <td><a href="javascript:void(0)" onclick="ajax_get_confirm('','<?php echo urlShop('store_goods_offline', 'goods_show', array('commonid' => $val['goods_commonid']));?>')" class="ncbtn"><?php echo $lang['store_goods_index_show'];?></a></td>
+      <td><a href="javascript:void(0)" onclick="ajax_get_confirm('','<?php echo urlShop('store_goods_offline', 'goods_show', array('commonid' => $val['goods_commonid'], 'storeid' => $val['store_id']));?>')" class="ncbtn"><?php echo $lang['store_goods_index_show'];?></a></td>
       <td><span><?php echo $lang['currency'].ncPriceFormat($val['goods_price']); ?></span></td>
       <td><span><?php echo $output['storage_array'][$val['goods_commonid']]['sum'].$lang['piece']; ?></span></td>
       <td class="nscs-table-handle"><?php if ($val['goods_lock'] == 0) {?>
-        <span><a href="<?php echo urlShop('store_goods_online', 'edit_goods', array('commonid' => $val['goods_commonid']));?>" class="btn-bluejeans"><i class="icon-edit"></i>
+        <span><a href="<?php echo urlShop('store_goods_online', 'edit_goods', array('commonid' => $val['goods_commonid'],'store_id'=>$val['store_id']));?>" class="btn-bluejeans"><i class="icon-edit"></i>
         <p><?php echo $lang['nc_edit'];?></p>
-        </a></span> <span><a href="javascript:void(0);" onclick="ajax_get_confirm('<?php echo $lang['nc_ensure_del'];?>', '<?php echo urlShop('store_goods_online', 'drop_goods', array('commonid' => $val['goods_commonid']));?>');" class="btn-grapefruit"><i class="icon-trash"></i>
+        </a></span> <span><a href="javascript:void(0);" onclick="ajax_get_confirm('<?php echo $lang['nc_ensure_del'];?>', '<?php echo urlShop('store_goods_online', 'drop_goods', array('commonid' => $val['goods_commonid'],'store_id'=>$val['store_id']));?>');" class="btn-grapefruit"><i class="icon-trash"></i>
         <p><?php echo $lang['nc_del'];?></p>
         </a></span>
         <?php } else {?>
@@ -121,7 +107,8 @@
     <tr>
       <th class="tc"><input type="checkbox" id="all2" class="checkall"/></th>
       <th colspan="10"><label for="all2"><?php echo $lang['nc_select_all'];?></label>
-        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'drop_goods');?>" name="commonid" confirm="<?php echo $lang['nc_ensure_del'];?>"><i class="icon-trash"></i><?php echo $lang['nc_del'];?></a> <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_offline', 'goods_show');?>" name="commonid"><i class="icon-level-up"></i><?php echo $lang['store_goods_index_show'];?></a></th>
+        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'drop_goods');?>" name="commonid" confirm="<?php echo $lang['nc_ensure_del'];?>"><i class="icon-trash"></i><?php echo $lang['nc_del'];?></a> 
+        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_offline', 'goods_show');?>" name="commonid"><i class="icon-level-up"></i><?php echo $lang['store_goods_index_show'];?></a></th>
     </tr>
     <tr>
       <td colspan="20"><div class="pagination"> <?php echo $output['show_page']; ?> </div></td>

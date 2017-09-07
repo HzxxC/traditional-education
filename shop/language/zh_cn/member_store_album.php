@@ -113,6 +113,7 @@ $lang['album_class_add_name_repeat']	= "相册名称已存在";
 $lang['album_class_add_des_max']		= "描述不能超过100个字符";
 $lang['album_class_add_sort_digits']	= "排序只能填写数字";
 $lang['album_class_add_max_20']			= "最多只能添加40个相册";
+$lang['album_class_add_max_1']			= "每个店铺最多只能添加1个相册";
 $lang['album_class_save_max_20']		= "只能添加40个相册,保存相册失败!";
 
 $lang['store_goods_album_goods_pic']			= '商品图片';

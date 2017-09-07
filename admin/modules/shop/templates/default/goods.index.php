@@ -114,6 +114,7 @@
   <?php }?>
 </div>
 <script type="text/javascript">
+var ADD_GOODS_URL = "<?php echo urlShop('store_goods_add', 'add_step_one'); ?>";
 $(function(){
     $("#flexigrid").flexigrid({
         url: 'index.php?act=goods&op=get_xml&type=<?php echo $output['type'];?>',
@@ -144,7 +145,7 @@ $(function(){
             ],
         buttons : [
             {display: '<i class="fa fa-file-excel-o"></i>导出数据', name : 'csv', bclass : 'csv', title : '将选定行数据导出CVS文件', onpress : fg_operation },
-             {display: '<i class="fa fa-plus"></i>新增数据', name : 'add_step_one', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operations }      
+             {display: '<i class="fa fa-plus"></i>新增数据', name : 'add_goods', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operations }      
             ],
         searchitems : [
             {display: 'SPU', name : 'goods_commonid'},
@@ -189,8 +190,8 @@ function fg_operation(name, bDiv) {
 }
 
 function fg_operations(name, bDiv) {
-    if (name == 'add_step_one') {
-        window.location.href = 'index.php?act=goods&op=add_step_one';
+    if (name == 'add_goods') {
+        window.open(ADD_GOODS_URL);
     }
 }
 

@@ -36,7 +36,7 @@ class goodsLogic {
         if (!isset($data[$gc_id]) || isset($data[$gc_id]['child']) || isset($data[$gc_id]['childchild'])) {
             return callback(false, '您选择的分类不存在，或没有选择到最后一级，请重新选择分类。');
         }
-        
+        echo $store_id . $store_name;
         // 三方店铺验证是否绑定了该分类
         if (!checkPlatformStoreBindingAllGoodsClass($store_id, $bind_all_gc)) {
             $where = array();
@@ -53,6 +53,7 @@ class goodsLogic {
 
         // 根据参数初始化通用商品数据
         $common_array = $this->_initCommonGoodsByParam($param, $store_id, $store_name, $store_state);
+        var_dump($common_array);
         // 生成通用商品返回通用商品编号
         $common_id = $model_goods->addGoodsCommon($common_array);
         if (!$common_id) {

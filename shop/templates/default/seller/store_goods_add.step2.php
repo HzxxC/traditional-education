@@ -64,6 +64,7 @@
     <input type="hidden" name="form_submit" value="ok" />
     <input type="hidden" name="commonid" value="<?php echo $output['goods']['goods_commonid'];?>" />
     <input type="hidden" name="type_id" value="<?php echo $output['goods_class']['type_id'];?>" />
+    <input type="hidden" name="store_id" value="<?php echo $output['goods']['store_id'];?>" />
     <input type="hidden" name="ref_url" value="<?php echo $_GET['ref_url'] ? $_GET['ref_url'] : getReferer();?>" />
     <div class="ncsc-form-goods">
       <h3 id="demo1"><?php echo $lang['store_goods_index_goods_base_info']?></h3>
@@ -360,10 +361,10 @@
         <dd id="ncProductDetails">
           <div class="tabs">
             <ul class="ui-tabs-nav">
-              <li class="ui-tabs-selected"><a href="#panel-1"><i class="icon-desktop"></i> 电脑端</a></li>
-              <li class="selected"><a href="#panel-2"><i class="icon-mobile-phone"></i>手机端</a></li>
+              <!-- <li class="selected"><a href="#panel-1"><i class="icon-desktop"></i> 电脑端</a></li> -->
+              <li class="ui-tabs-selected"><a href="#panel-2"><i class="icon-mobile-phone"></i>手机端</a></li>
             </ul>
-            <div id="panel-1" class="ui-tabs-panel">
+            <div id="panel-1" class="ui-tabs-panel ui-tabs-hide">
               <?php showEditor('g_body',$output['goods']['goods_body'],'100%','480px','visibility:hidden;',"false",$output['editor_multimedia']);?>
               <div class="hr8">
                 <div class="ncsc-upload-btn"> <a href="javascript:void(0);"><span>
@@ -374,7 +375,7 @@
                 <a class="ncbtn mt5" nctype="show_desc" href="index.php?act=store_album&op=pic_list&item=des"><i class="icon-picture"></i><?php echo $lang['store_goods_album_insert_users_photo'];?></a> <a href="javascript:void(0);" nctype="del_desc" class="ncbtn mt5" style="display: none;"><i class=" icon-circle-arrow-up"></i>关闭相册</a> </div>
               <p id="des_demo"></p>
             </div>
-            <div id="panel-2" class="ui-tabs-panel ui-tabs-hide">
+            <div id="panel-2" class="ui-tabs-panel">
               <div class="ncsc-mobile-editor">
                 <div class="pannel">
                   <div class="size-tip"><span nctype="img_count_tip">图片总数不得超过<em>20</em>张</span><i>|</i><span nctype="txt_count_tip">文字不得超过<em>5000</em>字</span></div>
@@ -445,30 +446,6 @@
             </div>
           </div>
         </dd>
-      </dl>
-      <dl>
-        <dt>关联版式：</dt>
-        <dd> <span class="mr50">
-          <label>顶部版式</label>
-          <select name="plate_top">
-            <option>请选择</option>
-            <?php if (!empty($output['plate_list'][1])) {?>
-            <?php foreach ($output['plate_list'][1] as $val) {?>
-            <option value="<?php echo $val['plate_id']?>" <?php if ($output['goods']['plateid_top'] == $val['plate_id']) {?>selected="selected"<?php }?>><?php echo $val['plate_name'];?></option>
-            <?php }?>
-            <?php }?>
-          </select>
-          </span> <span class="mr50">
-          <label>底部版式</label>
-          <select name="plate_bottom">
-            <option>请选择</option>
-            <?php if (!empty($output['plate_list'][0])) {?>
-            <?php foreach ($output['plate_list'][0] as $val) {?>
-            <option value="<?php echo $val['plate_id']?>" <?php if ($output['goods']['plateid_bottom'] == $val['plate_id']) {?>selected="selected"<?php }?>><?php echo $val['plate_name'];?></option>
-            <?php }?>
-            <?php }?>
-          </select>
-          </span> </dd>
       </dl>
       <!-- 只有可发布虚拟商品才会显示 S -->
       <?php if ($output['goods_class']['gc_virtual'] == 1) {?>

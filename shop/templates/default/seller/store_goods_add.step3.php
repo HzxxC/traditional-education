@@ -26,6 +26,7 @@
 <form method="post" id="goods_image" action="<?php if ($output['edit_goods_sign']) { echo urlShop('store_goods_online', 'edit_save_image'); } else { echo urlShop('store_goods_add', 'save_image');}?>">
   <input type="hidden" name="form_submit" value="ok">
   <input type="hidden" name="commonid" value="<?php echo $output['commonid'];?>">
+  <input type="hidden" name="store_id" value="<?php if ($output['store_id']) echo $output['store_id']; else echo $_SESSION['store']['store_id'];?>">
   <input type="hidden" name="ref_url" value="<?php echo $_GET['ref_url'];?>" />
   <?php if (!empty($output['value_array'])) {?>
   <div class="ncsc-form-goods-pic">

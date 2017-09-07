@@ -5,6 +5,7 @@
   <a id="open_uploader" href="JavaScript:void(0);" class="ncbtn ncbtn-aqua"><i class="icon-cloud-upload"></i><?php echo $lang['album_class_list_img_upload'];?></a>
   <div class="upload-con" id="uploader" style="display: none;">
     <form method="post" action="" id="fileupload" enctype="multipart/form-data">
+      <input type="hidden" name="store_id" id="pic_list_store_id" value="<?php echo $output['class_info']['store_id']?>">
       <input type="hidden" name="category_id" id="category_id" value="<?php echo $output['class_info']['aclass_id']?>">
       <div class="upload-con-div">选择文件：
         <div class="ncsc-upload-btn"> <a href="javascript:void(0);"><span>

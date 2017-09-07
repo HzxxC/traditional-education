@@ -8,9 +8,10 @@
   <div class="upload-con" id="uploader" style="display: none;">
     <form method="post" action="" id="fileupload" enctype="multipart/form-data">
       <div class="upload-con-div"><?php echo $lang['album_class_list_sel_img_class'].$lang['nc_colon'];?>
+        <input type="hidden" name="store_id" id="add_img_store_id" value="<?php echo $output['aclass_info'][0]['store_id'] ?>" />
         <select name="category_id" id="category_id" class="select w80">
-          <?php foreach ($output['aclass_info'] as $v){?>
-          <option value='<?php echo $v['aclass_id']?>' class="w80"><?php echo $v['aclass_name']?></option>
+          <?php foreach ($output['aclass_info'] as $k => $v){?>
+          <option value='<?php echo $v['aclass_id']?>' class="w80" data-id="<?php echo $v['store_id']?>"><?php echo $v['aclass_name']?></option>
           <?php }?>
         </select>
       </div>
@@ -33,19 +34,21 @@
     <tbody>
       <tr>
         <td>&nbsp;</td>
-        <th><?php echo $lang['album_sort'];?></th>
-        <td class="w100"><form name="select_sort" id="select_sort" class="sortord">
+        <th>所属店铺</th>
+        <td class="w160">
+          <form name="select_store" id="select_store" class="sortord">
             <input type="hidden" name="act" value="store_album" />
             <input type="hidden" name="op" value="album_cate" />
-            <select  name="sort" id="img_sort">
-              <option value="4" <?php if($_GET['sort'] == '4' || !isset($_GET['sort'])){?>selected <?php }?> ><?php echo $lang['album_sort_desc'];?></option>
-              <option value="5" <?php if($_GET['sort'] == '5'){?>selected <?php }?> ><?php echo $lang['album_sort_asc']?></option>
-              <option value="0" <?php if($_GET['sort'] == '0'){?>selected <?php }?> ><?php echo $lang['album_sort_time_desc'];?></option>
-              <option value="1" <?php if($_GET['sort'] == '1'){?>selected <?php }?> ><?php echo $lang['album_sort_time_asc'];?></option>
-              <option value="2" <?php if($_GET['sort'] == '2'){?>selected <?php }?> ><?php echo $lang['album_sort_class_name_desc'];?></option>
-              <option value="3" <?php if($_GET['sort'] == '3'){?>selected <?php }?> ><?php echo $lang['album_sort_class_name_asc']?></option>
+            <select name="store_id" class="w150" id="store_id">
+              <option value="0"><?php echo $lang['nc_please_choose'];?></option>
+              <?php if (is_array($output['store_list'])) {?>
+              <?php foreach ($output['store_list'] as $val) {?>
+              <option value="<?php echo $val['store_id'];?>" <?php if ($_GET['store_id'] == $val['store_id']) {?>selected<?php }?>><?php echo $val['store_name'];?></option>
+              <?php }?>
+              <?php }?>
             </select>
-          </form></td>
+          </form>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -56,7 +59,7 @@
       <li class="hidden">
         <dl>
           <dt>
-            <div class="covers"><a href="index.php?act=store_album&op=album_pic_list&id=<?php echo $v['aclass_id']?>">
+            <div class="covers"><a href="index.php?act=store_album&op=album_pic_list&id=<?php echo $v['aclass_id']?>&store_id=<?php echo $v['store_id'] ?>">
               <?php if($v['aclass_cover'] != ''){ ?>
               <img id="aclass_cover" src="<?php echo cthumb($v['aclass_cover'], 240, $_SESSION['store_id']);?>">
               <?php }else{?>
@@ -66,7 +69,7 @@
             <h3 class="title"><a href="index.php?act=store_album&op=album_pic_list&id=<?php echo $v['aclass_id']?>"><?php echo $v['aclass_name'];?></a></h3>
           </dt>
           <dd class="date"><?php echo $lang['album_class_pic_altogether'];?><?php echo $v['count']?><?php echo $lang['album_class_pic_folio'];?></dd>
-          <dd class="buttons"><span nc_type="dialog" dialog_title="<?php echo $lang['album_class_deit'];?>" dialog_id='album_<?php echo $v['aclass_id'];?>' dialog_width="480" uri="index.php?act=store_album&op=album_edit&id=<?php echo $v['aclass_id'];?>"><a href="JavaScript:void(0);"><i class="icon-pencil"></i><?php echo $lang['album_class_edit'];?></a></span>
+          <dd class="buttons"><span nc_type="dialog" dialog_title="<?php echo $lang['album_class_deit'];?>" dialog_id='album_<?php echo $v['aclass_id'];?>' dialog_width="480" uri="index.php?act=store_album&op=album_edit&id=<?php echo $v['aclass_id'];?>&store_id=<?php echo $v['store_id'] ?>"><a href="JavaScript:void(0);"><i class="icon-pencil"></i><?php echo $lang['album_class_edit'];?></a></span>
             <?php if($v['is_default'] != '1'){?>
             <a href="javascript:void(0)" onclick="ajax_get_confirm('<?php echo $lang['album_class_delete_confirm_message'];?>', 'index.php?act=store_album&op=album_del&id=<?php echo $v['aclass_id'];?>');"><i class="icon-remove-sign"></i><?php echo $lang['album_class_delete'];?></a>
             <?php }?>
@@ -98,6 +101,10 @@ $(function() {
         high_opacity:"1",
         low_opacity:".5",
         timing:"200"
+    });
+
+    $('#category_id').change(function() {
+      $('#add_img_store_id').val($('#category_id option:selected').data('id'));
     });
 
     // ajax 上传图片
@@ -133,8 +140,8 @@ $(function() {
 });
 
 $(function(){
-	$("#img_sort").change(function(){
-		$('#select_sort').submit();
+	$("#store_id").change(function(){
+		$('#select_store').submit();
 	});
 });
 </script>

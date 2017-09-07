@@ -29,7 +29,7 @@ class store_goods_offlineControl extends BaseSellerControl {
         $model_goods = Model('goods');
 
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         if (intval($_GET['stc_id']) > 0) {
             $where['goods_stcids'] = array('like', '%,' . intval($_GET['stc_id']) . ',%');
         }
@@ -46,8 +46,8 @@ class store_goods_offlineControl extends BaseSellerControl {
                     break;
             }
         }
-        if (intval($_GET['sup_id']) > 0) {
-            $where['sup_id']= intval($_GET['sup_id']);
+        if (intval($_GET['store_id']) > 0) {
+            $where['store_id']= intval($_GET['store_id']);
         }
 
         //权限组对应分类权限判断
@@ -88,9 +88,9 @@ class store_goods_offlineControl extends BaseSellerControl {
         $store_goods_class = Model('store_goods_class')->getClassTree(array('store_id' => $_SESSION['store_id'], 'stc_state' => '1'));
         Tpl::output('store_goods_class', $store_goods_class);
 
-        // 供货商
-        $supplier_list = Model('store_supplier')->getStoreSupplierList(array('sup_store_id' => $_SESSION['store_id']));
-        Tpl::output('supplier_list', $supplier_list);
+        // 商品所属店铺
+        $store_list = Model('store')->getStoreOnlineList(array());
+        Tpl::output('store_list', $store_list);
 
         switch ($_GET['type']) {
             // 违规的商品
@@ -114,14 +114,17 @@ class store_goods_offlineControl extends BaseSellerControl {
      */
     public function goods_showOp() {
         $commonid = $_GET['commonid'];
+        $store_id = $_GET['storeid'];
+        $model_store = Model('store');
+        $store_info = $model_store->getStoreInfoByID($store_id);
         if (!preg_match('/^[\d,]+$/i', $commonid)) {
             showDialog(L('para_error'), '', 'error');
         }
-        if ($this->store_info['store_state'] != 1) {
+        if ($store_info['store_state'] != 1) {
             showDialog(L('store_goods_index_goods_show_fail') . '，店铺正在审核中或已经关闭', '', 'error');
         }
         $commonid_array = explode(',', $commonid);
-        $result = Logic('goods')->goodsShow($commonid_array, $this->store_info['store_id'], $_SESSION['seller_id'], $_SESSION['seller_name']);
+        $result = Logic('goods')->goodsShow($commonid_array, $store_info['store_id'], $_SESSION['seller_id'], $_SESSION['seller_name']);
         if ($result['state']) {
             showDialog(L('store_goods_index_goods_show_success'), 'reload', 'succ');
         } else {

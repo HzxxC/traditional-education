@@ -43,7 +43,7 @@ class store_goods_addControl extends BaseSellerControl {
         // 实例化商品分类模型
         $model_goodsclass = Model('goods_class');
         // 商品分类
-        $goods_class = $model_goodsclass->getGoodsClass($_SESSION['store_id'],0,1,$_SESSION['seller_group_id'],$_SESSION['seller_gc_limits']);
+        $goods_class = $model_goodsclass->getGoodsClass($_SESSION['add_goods']['store_id'],0,1,$_SESSION['add_goods']['seller_group_id'],$_SESSION['add_goods']['seller_gc_limits']);
 
         // 常用商品分类
         $model_staple = Model('goods_class_staple');
@@ -51,8 +51,13 @@ class store_goods_addControl extends BaseSellerControl {
         $param_array['member_id'] = $_SESSION['member_id'];
         $staple_array = $model_staple->getStapleList($param_array);
 
+        // 店铺列表
+        $store_list = Model('store')->getStoreOnlineList(array());
+
         Tpl::output('staple_array', $staple_array);
         Tpl::output('goods_class', $goods_class);
+        Tpl::output('store_list', $store_list);
+
         Tpl::showpage('store_goods_add.step1');
     }
 
@@ -82,7 +87,7 @@ class store_goods_addControl extends BaseSellerControl {
             //商品分类  by 33 hao.com 支持批量显示分类
             $model_bind_class = Model('store_bind_class');
             $goods_class = Model('goods_class')->getGoodsClassForCacheModel();
-            $where['store_id'] = $_SESSION['store_id'];
+            $where['store_id'] = $store_id;
             $class_2 = $goods_class[$gc_id]['gc_parent_id'];
             $class_1 = $goods_class[$class_2]['gc_parent_id'];
             $where['class_1'] =  $class_1;
@@ -116,8 +121,8 @@ class store_goods_addControl extends BaseSellerControl {
         }
 
         //权限组对应分类权限判断
-        if (!$_SESSION['seller_gc_limits']&& $_SESSION['seller_group_id']) {
-            $rs = Model('seller_group_bclass')->getSellerGroupBclassInfo(array('group_id'=>$_SESSION['seller_group_id'],'gc_id'=>$gc_id));
+        if (!$_SESSION['store']['seller_gc_limits']&& $_SESSION['store']['seller_group_id']) {
+            $rs = Model('seller_group_bclass')->getSellerGroupBclassInfo(array('group_id'=>$_SESSION['store']['seller_group_id'],'gc_id'=>$gc_id));
             if (!$rs) {
                 showMessage('您所在的组无权操作该分类下的商品', '', 'html', 'error');
             }
@@ -126,10 +131,10 @@ class store_goods_addControl extends BaseSellerControl {
         // 更新常用分类信息
         $goods_class = $model_goodsclass->getGoodsClassLineForTag($gc_id);
         Tpl::output('goods_class', $goods_class);
-        Model('goods_class_staple')->autoIncrementStaple($goods_class, $_SESSION['member_id']);
+        Model('goods_class_staple')->autoIncrementStaple($goods_class, $_SESSION['store']['member_id']);
 
         // 获取类型相关数据
-        $typeinfo = Model('type')->getAttr($goods_class['type_id'], $_SESSION['store_id'], $gc_id);
+        $typeinfo = Model('type')->getAttr($goods_class['type_id'], $_SESSION['store']['store_id'], $gc_id);
         list($spec_json, $spec_list, $attr_list, $brand_list) = $typeinfo;
         Tpl::output('sign_i', count($spec_list));
         Tpl::output('spec_list', $spec_list);
@@ -140,7 +145,7 @@ class store_goods_addControl extends BaseSellerControl {
         Tpl::output('custom_list', $custom_list);
 
         // 实例化店铺商品分类模型
-        $store_goods_class = Model('store_goods_class')->getClassTree(array('store_id' => $_SESSION ['store_id'], 'stc_state' => '1'));
+        $store_goods_class = Model('store_goods_class')->getClassTree(array('store_id' => $_SESSION['store']['store_id'], 'stc_state' => '1'));
         Tpl::output('store_goods_class', $store_goods_class);
 
         // 小时分钟显示
@@ -150,12 +155,12 @@ class store_goods_addControl extends BaseSellerControl {
         Tpl::output('minute_array', $minute_array);
 
         // 关联版式
-        $plate_list = Model('store_plate')->getStorePlateList(array('store_id' => $_SESSION['store_id']), 'plate_id,plate_name,plate_position');
+        $plate_list = Model('store_plate')->getStorePlateList(array('store_id' => $_SESSION['store']['store_id']), 'plate_id,plate_name,plate_position');
         $plate_list = array_under_reset($plate_list, 'plate_position', 2);
         Tpl::output('plate_list', $plate_list);
         
         // 供货商
-        $supplier_list = Model('store_supplier')->getStoreSupplierList(array('sup_store_id' => $_SESSION['store_id']));
+        $supplier_list = Model('store_supplier')->getStoreSupplierList(array('sup_store_id' => $_SESSION['store']['store_id']));
         Tpl::output('supplier_list', $supplier_list);
 
         Tpl::showpage('store_goods_add.step2');
@@ -169,12 +174,12 @@ class store_goods_addControl extends BaseSellerControl {
 
         $result =  $logic_goods->saveGoods(
             $_POST,
-            $_SESSION['store_id'], 
-            $_SESSION['store_name'], 
+            $_SESSION['store']['store_id'], 
+            $_SESSION['store']['store_name'], 
             $this->store_info['store_state'], 
-            $_SESSION['seller_id'], 
-            $_SESSION['seller_name'],
-            $_SESSION['bind_all_gc']
+            $_SESSION['store']['seller_id'], 
+            $_SESSION['store']['seller_name'],
+            $_SESSION['store']['bind_all_gc']
         );
 
         if(!$result['state']) {
@@ -256,7 +261,7 @@ class store_goods_addControl extends BaseSellerControl {
                     }
                     $tmp_insert = array();
                     $tmp_insert['goods_commonid']   = $common_id;
-                    $tmp_insert['store_id']         = $_SESSION['store_id'];
+                    $tmp_insert['store_id']         = $_SESSION['store']['store_id'];
                     $tmp_insert['color_id']         = $key;
                     $tmp_insert['goods_image']      = $v['name'];
                     $tmp_insert['goods_image_sort'] = ($v['default'] == 1) ? 0 : intval($v['sort']);
@@ -291,6 +296,9 @@ class store_goods_addControl extends BaseSellerControl {
         $data_array['goods_freight'] = $goods_info['goods_freight'];
         $this->storeAutoShare($data_array, 'new');
 
+        unset($_SESSION['store']);
+        var_dump($_SESSION['store']);
+
         Tpl::output('allow_gift', Model('goods')->checkGoodsIfAllowGift($goods_info));
         Tpl::output('goods_id', $goods_info['goods_id']);
         Tpl::showpage('store_goods_add.step4');
@@ -302,9 +310,11 @@ class store_goods_addControl extends BaseSellerControl {
     public function image_uploadOp() {
         $logic_goods = Logic('goods');
 
+        $store_id = isset($_POST['store_id']) && $_POST['store_id'] ? $_POST['store_id'] : $_SESSION['store']['store_id'];
+
         $result =  $logic_goods->uploadGoodsImage(
             $_POST['name'],
-            $_SESSION['store_id'],
+            $store_id,
             $this->store_grade['sg_album_limit']
         );
 
@@ -325,7 +335,7 @@ class store_goods_addControl extends BaseSellerControl {
             exit();
         }
         $model_goodsclass = Model('goods_class');
-        $list = $model_goodsclass->getGoodsClass($_SESSION['store_id'], $gc_id, $deep,$_SESSION['seller_group_id'],$_SESSION['seller_gc_limits']);
+        $list = $model_goodsclass->getGoodsClass($_SESSION['store']['store_id'], $gc_id, $deep,$_SESSION['store']['seller_group_id'],$_SESSION['store']['seller_gc_limits']);
         if (empty($list)) {
             exit();
         }
@@ -533,5 +543,61 @@ class store_goods_addControl extends BaseSellerControl {
             $brand_array = Model('brand')->getBrandPassedList($where, 'brand_id,brand_name,brand_initial', 0, 'brand_initial asc, brand_sort asc');
         }
         echo json_encode($brand_array);die();
+    }
+
+    /**
+     * 配置店铺Session
+     */ 
+    public function setStoreSessionOp() {
+
+        $store_id = $_GET['store_id'];
+
+        $model_seller = Model('seller');
+        $seller_info = $model_seller->getSellerInfo(array('seller_name' => 'admin'));
+        
+        if($seller_info) {
+
+            $model_member = Model('member');
+            $member_info = $model_member->getMemberInfo(
+                array(
+                    'member_id' => $seller_info['member_id'],
+                )
+            );
+            if($member_info) {
+
+                $model_seller_group = Model('seller_group');
+                $seller_group_info = $model_seller_group->getSellerGroupInfo(array('group_id' => $seller_info['seller_group_id']));
+
+                $model_store = Model('store');
+                $store_info = $model_store->getStoreInfoByID($store_id);
+
+                $_SESSION['store']['member_id'] = $member_info['member_id'];
+                $_SESSION['store']['member_name'] = $member_info['member_name'];
+                $_SESSION['store']['member_email'] = $member_info['member_email'];
+                $_SESSION['store']['is_buy'] = $member_info['is_buy'];
+                $_SESSION['store']['avatar'] = $member_info['member_avatar'];
+
+                $_SESSION['store']['grade_id'] = $store_info['grade_id'];
+                $_SESSION['store']['seller_id'] = $seller_info['seller_id'];
+                $_SESSION['store']['seller_name'] = $seller_info['seller_name'];
+                $_SESSION['store']['seller_is_admin'] = intval($seller_info['is_admin']);
+                $_SESSION['store']['store_id'] = intval($store_info['store_id']);
+                $_SESSION['store']['store_name'] = $store_info['store_name'];
+                $_SESSION['store']['store_avatar'] = $store_info['store_avatar'];
+                $_SESSION['store']['is_own_shop'] = (bool) $store_info['is_own_shop'];
+                $_SESSION['store']['bind_all_gc'] = (bool) $store_info['bind_all_gc'];
+                $_SESSION['store']['seller_limits'] = explode(',', $seller_group_info['limits']);
+                $_SESSION['store']['seller_group_id'] = $seller_info['seller_group_id'];
+                $_SESSION['store']['seller_gc_limits'] = $seller_group_info['gc_limits'];
+                if($seller_info['store']['is_admin']) {
+                    $_SESSION['store']['seller_group_name'] = '管理员';
+                    $_SESSION['store']['seller_smt_limits'] = false;
+                } else {
+                    $_SESSION['store']['seller_group_name'] = $seller_group_info['group_name'];
+                    $_SESSION['store']['seller_smt_limits'] = explode(',', $seller_group_info['smt_limits']);
+                }
+                echo json_encode(array('error' => 0, 'msg'=>'SESSION更新成功', 'data'=>$_SESSION['store']));die; 
+            } 
+        }         
     }
 }

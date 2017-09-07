@@ -10,29 +10,15 @@
     <input type="hidden" name="type" value="lock_up" />
     <tr>
       <td>&nbsp;</td>
-      <th>供货商</th>
-      <td class="w160"><select name="sup_id" class="w150">
+     <th>所属店铺</th>
+      <td class="w160"><select name="store_id" class="w150">
         <option value="0"><?php echo $lang['nc_please_choose'];?></option>
-        <?php if (is_array($output['supplier_list'])) {?>
-        <?php foreach ($output['supplier_list'] as $val) {?>
-        <option value="<?php echo $val['sup_id'];?>" <?php if ($_GET['sup_id'] == $val['sup_id']) {?>selected<?php }?>><?php echo $val['sup_name'];?></option>
+        <?php if (is_array($output['store_list'])) {?>
+        <?php foreach ($output['store_list'] as $val) {?>
+        <option value="<?php echo $val['store_id'];?>" <?php if ($_GET['store_id'] == $val['store_id']) {?>selected<?php }?>><?php echo $val['store_name'];?></option>
         <?php }?>
         <?php }?>
       </select></td>
-      <th><?php echo $lang['store_goods_index_store_goods_class'];?></th>
-      <td class="w160"><select name="stc_id" class="w150">
-          <option value="0"><?php echo $lang['nc_please_choose'];?></option>
-          <?php if(is_array($output['store_goods_class']) && !empty($output['store_goods_class'])){?>
-          <?php foreach ($output['store_goods_class'] as $val) {?>
-          <option value="<?php echo $val['stc_id']; ?>" <?php if ($_GET['stc_id'] == $val['stc_id']){ echo 'selected=selected';}?>><?php echo $val['stc_name']; ?></option>
-          <?php if (is_array($val['child']) && count($val['child'])>0){?>
-          <?php foreach ($val['child'] as $child_val){?>
-          <option value="<?php echo $child_val['stc_id']; ?>" <?php if ($_GET['stc_id'] == $child_val['stc_id']){ echo 'selected=selected';}?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $child_val['stc_name']; ?></option>
-          <?php }?>
-          <?php }?>
-          <?php }?>
-          <?php }?>
-        </select></td>
       <th>
         <select name="search_type">
           <option value="0" <?php if ($_GET['type'] == 0) {?>selected="selected"<?php }?>><?php echo $lang['store_goods_index_goods_name'];?></option>

@@ -31,21 +31,15 @@
       <div class="data_loading"><?php echo $lang['store_goods_step1_loading'];?></div>
     </div>
     <div class="sort_selector">
-      <div class="sort_title"><?php echo $lang['store_goods_step1_choose_common_category'];?>
-        <div class="text" id="commSelect">
-            <div><?php echo $lang['store_goods_step1_please_select'];?></div>
-            <div class="select_list" id="commListArea">
-              <ul>
-                <?php if(is_array($output['staple_array']) && !empty($output['staple_array'])) {?>
-                <?php foreach ($output['staple_array'] as $val) {?>
-                <li  data-param="{stapleid:<?php echo $val['staple_id']?>}"><span nctype="staple_name"><?php echo $val['staple_name']?></span><a href="JavaScript:void(0);" nctype="del-comm-cate" title="<?php echo $lang['nc_delete'];?>">X</a></li>
-                <?php }?>
-                <?php }?>
-                <li id="select_list_no" <?php if (!empty($output['staple_array'])) {?>style="display: none;"<?php }?>><span class="title"><?php echo $lang['store_goods_step1_no_common_category'];?></span></li>
-              </ul>
-            </div>
-        </div>
-        <i class="icon-angle-down"></i>
+      <div class="sort_title">商品所属店铺：
+        <select class="class-select" style="width: 296px;" id="store_id_change">
+          <option value="0">- 请选择 -</option>
+          <?php if(!empty($output['store_list'])){ ?>
+          <?php foreach($output['store_list'] as $k => $v){ ?>
+            <option value="<?php echo $v['store_id'];?>"><?php echo $v['store_name'];?></option>
+          <?php } ?>
+          <?php } ?>
+        </select>
       </div>
     </div>
     <div id="class_div" class="wp_sort_block">
@@ -88,7 +82,7 @@
     </dl>
   </div>
   <div class="wp_confirm">
-    <form method="get">
+    <form method="get" id="store_goods_add_step1_form">
       <?php if ($output['edit_goods_sign']) {?>
       <input type="hidden" name="act" value="store_goods_online" />
       <input type="hidden" name="op" value="edit_goods" />
@@ -100,6 +94,7 @@
       <?php }?>
       <input type="hidden" name="class_id" id="class_id" value="" />
       <input type="hidden" name="t_id" id="t_id" value="" />
+      <input type="hidden" name="store_id" id="store_id" value="0" />
       <div class="bottom tc">
       <label class="submit-border"><input disabled="disabled" nctype="buttonNextStep" value="<?php echo $lang['store_goods_add_next'];?>，填写商品信息" type="submit" class="submit"style=" width: 200px;" /></label>
       </div>

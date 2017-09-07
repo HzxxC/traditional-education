@@ -39,7 +39,7 @@ function selClass($this){
     });
 }
 function disabledButton() {
-    if ($('#class_id').val() != '') {
+    if ($('#class_id').val() != '' && $('#store_id').val() != 0) {
         $('input[nctype="buttonNextStep"]').attr('disabled', false).css('cursor', 'pointer');
     } else {
         $('input[nctype="buttonNextStep"]').attr('disabled', true).css('cursor', 'auto');
@@ -66,6 +66,18 @@ $(function(){
         $('#commoditydd').html('');
         $('.wp_search_result').hide();
         $('.wp_sort').show();
+    });
+
+    // 选择所属店铺
+    $('#store_id_change').change(function() {
+        var _store_id = $(this).val();
+        disabledButton();
+        $('#store_id').val(_store_id);
+        $.getJSON('index.php?act=store_goods_add&op=setStoreSession&store_id='+ _store_id, function(data) {
+            if (!data.err) {
+              disabledButton();
+            }
+        });
     });
     
     // 常用分类选择 展开与隐藏
