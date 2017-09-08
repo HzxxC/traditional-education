@@ -239,7 +239,7 @@ $(function (){
                          goods_info = '';
                      }
                      if(goods_id<1){
-                         show_tip();
+                         // show_tip();
                          return false;
                      }
                      var cart_count = 0;
@@ -251,7 +251,7 @@ $(function (){
                          for (var i=0; i<goodsarr.length; i++) {
                              var arr = goodsarr[i].split(',');
                              if(contains(arr,goods_id)){
-                                 show_tip();
+                                 // show_tip();
                                  return false;
                              }
                          }
@@ -262,7 +262,7 @@ $(function (){
                      addCookie('goods_cart',goods_info);
                      // 更新cookie中商品数量
                      addCookie('cart_count',cart_count);
-                     show_tip();
+                     // show_tip();
                      getCartCount();
                      $('#cart_count,#cart_count1').html('<sup>'+cart_count+'</sup>');
                      return false;
@@ -275,7 +275,7 @@ $(function (){
                           var rData = $.parseJSON(result);
                           if(checkLogin(rData.login)){
                             if(!rData.datas.error){
-                                show_tip();
+                                // show_tip();
                                 // 更新购物车中商品数量
                                 delCookie('cart_count');
                                 getCartCount();

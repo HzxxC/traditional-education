@@ -337,6 +337,34 @@ class goodsModel extends Model{
     }
 
     /**
+     * 读取列表
+     * @param array $condition
+     *
+     */
+    public function getGoodsRecommendList($condition, $limit = '', $order = '', $field = '*') {
+        return $this->field($field)->where($condition)->limit($limit)->order($order)->select();
+    }
+
+    /**
+     * 查询推荐商品(时间排序)
+     *
+     * @param int $limit 限制
+     * @return array
+     */
+    public function getGoodsRecommendAllList($limit = 4) {
+            $model_recommend = Model('goods_recommend');
+            $goods_recommend_id_list = $model_recommend->getGoodsRecommendList(array(),$limit,'rec_id desc','rec_goods_id');
+            if (!empty($goods_recommend_id_list)) {
+                $tmp = array();
+                foreach ($goods_recommend_id_list as $v) {
+                    $tmp[] = $v['rec_goods_id'];
+                }
+                $goods_commend_list = $this->getGoodsOnlineList(array('goods_id' => array('in',$tmp)), 'goods_id,goods_name,goods_jingle,goods_image,store_id,goods_promotion_price', 0, 'goods_id desc', $limit);
+            }
+        return $goods_commend_list;
+    }
+
+    /**
      * 计算商品库存
      *
      * @param array $goods_list

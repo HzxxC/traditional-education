@@ -37,7 +37,7 @@ $(function(){
             {display: '绑定所有类目', name : 'bind_all_gc', width : 120, sortable : false, align : 'left'}
             ],
         buttons : [
-			{display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operation }
+			// {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operation }
         ],
         searchitems : [
             {display: '店铺名称', name : 'store_name', isdefault: true},

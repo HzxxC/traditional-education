@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="../css/base.css">
 <link rel="stylesheet" type="text/css" href="../css/nctouch_common.css">
 <link rel="stylesheet" type="text/css" href="../css/nctouch_store.css">
+<link rel="stylesheet" type="text/css" href="../css/modify.css">
 </head>
 <body>
 <header id="header" class="nctouch-store-header fixed-Width">
@@ -43,10 +44,9 @@
     <!-- 导航条 -->
     <div id="nav_tab_con" class="nctouch-single-nav nctouch-store-nav">
       <ul id="nav_tab">
-        <li class="selected"><a href="javascript: void(0);" data-type="storeindex"><i class="store"></i>店铺首页</a></li>
-        <li><a href="javascript: void(0);" data-type="allgoods"><i class="goods"></i>全部商品</a></li>
-        <li><a href="javascript: void(0);" data-type="newgoods"><i class="new"></i>商品上新</a></li>
-        <li><a href="javascript: void(0);" data-type="storeactivity"><i class="sale"></i>店铺活动</a></li>
+        <!-- <li><a href="javascript: void(0);" data-type="storeindex"><i class="store"></i>店铺首页</a></li> -->
+        <li class="selected"><a href="javascript: void(0);" data-type="allgoods"><i class="goods"></i>全部商品</a></li>
+        <li><a href="javascript: void(0);" data-type="storecontent"><i class="store"></i>店铺介绍</a></li>
       </ul>
     </div>
     
@@ -57,7 +57,7 @@
         <div id="store_sliders" class="nctouch-store-wapper nctouch-store-sliders"></div>
       </div>
       <!-- 店铺排行榜 -->
-      <div class="nctouch-store-block nctouch-store-ranking">
+      <!-- <div class="nctouch-store-block nctouch-store-ranking">
         <div class="title">店铺排行榜</div>
         <div class="nctouch-single-nav">
           <ul id="goods_rank_tab">
@@ -67,33 +67,36 @@
         </div>
         <div class="top-list" nc_type="goodsranklist" id="goodsrank_collect"></div>
         <div class="top-list" nc_type="goodsranklist" id="goodsrank_salenum"></div>
-      </div>
+      </div> -->
       <!-- 店主推荐 -->
-      <div class="nctouch-store-block">
+      <!-- <div class="nctouch-store-block">
         <div class="title">店主推荐</div>
         <div class="nctouch-store-goods-list" id="goods_recommend"></div>
-      </div>
+      </div> -->
     </div>
     <!-- 首页e --> 
     <!-- 全部宝贝 -->
     <div id="allgoods_con"></div>
     <!-- 商品上新 -->
-    <div id="newgoods_con" class="nctouch-store-goods-list"><ul id="newgoods"></ul></div>
+    <!-- <div id="newgoods_con" class="nctouch-store-goods-list"><ul id="newgoods"></ul></div> -->
     <!-- 店铺活动 -->
-    <div id="storeactivity_con"></div>
+    <!-- <div id="storeactivity_con"></div> -->
+    <!-- 店铺介绍 -->
+    
   </div>
 </div>
 <div class="fix-block-r">
 	<a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
 </div>
 <div id="store_voucher_con"></div>
-<div class="nctouch-store-bottom fixed-Width">
+<footer id="footer"></footer>
+<!-- <div class="nctouch-store-bottom fixed-Width">
   <ul>
     <li><a id="store_intro" href="javascript:void(0);">店铺介绍</a></li>
     <li><a id="store_voucher" href="javascript: void(0);">免费领券</a></li>
     <li><a id="store_kefu" href="javascript: void(0);">联系客服</a></li>
   </ul>
-</div>
+</div> -->
 <!-- banner tpl -->
 <script type="text/html" id="store_banner_tpl">
 	<div class="store-top-bg"><span class="img" nc_type="store_banner_img"></span></div>
@@ -102,6 +105,10 @@
 	<div class="store-name"><%= store_info.store_name %></div>
 	<div class="store-favorate"><a href="javascript:void(0);" id="store_collected" class="added">已收藏</a><a href="javascript:void(0);" id="store_notcollect">收藏</a><span class="num"><input type="hidden" id="store_favornum_hide" value="<%= store_info.store_collect %>"/><em id="store_favornum"><%= store_info.store_collect %></em><p>粉丝</p></span>
 	</div>
+  <div class="store-address-phone">
+    <span class="address">店铺地址：<%= store_info.store_address %></span>
+    <span class="phone">联系方式：<%= store_info.store_phone %></span>
+  </div>
 </script>
 <!-- 轮播图 tpl -->
 <script type="text/html" id="store_sliders_tpl">
@@ -120,7 +127,7 @@
 	</ul>
 </script>
 <!-- 店铺排行榜_收藏排行 tpl -->
-<script type="text/html" id="goodsrank_collect_tpl">
+<!-- <script type="text/html" id="goodsrank_collect_tpl">
 	<% for (var i in goods_list) { var v = goods_list[i]; %>
 	<dl class="goods-item">
 		<a href="product_detail.html?goods_id=<%= v.goods_id %>">
@@ -129,9 +136,9 @@
 		</a>
 	</dl>
 	<% } %>
-</script>
+</script> -->
 <!-- 店铺排行榜_销量排行 tpl -->
-<script type="text/html" id="goodsrank_salenum_tpl">
+<!-- <script type="text/html" id="goodsrank_salenum_tpl">
 	<% for (var i in goods_list) { var v = goods_list[i]; %>
 	<dl class="goods-item">
 		<a href="product_detail.html?goods_id=<%= v.goods_id %>">
@@ -140,9 +147,9 @@
 		</a>
 	</dl>
 	<% } %>
-</script>
+</script> -->
 <!-- 店主推荐 tpl -->
-<script type="text/html" id="goods_recommend_tpl">
+<!-- <script type="text/html" id="goods_recommend_tpl">
 	<ul>
 		<% for (var i in rec_goods_list) { var g = rec_goods_list[i]; %>
 		<li class="goods-item">
@@ -156,9 +163,9 @@
 		</li>
 		<% } %>
 	</ul>
-</script>
+</script> -->
 <!-- 商品上新 tpl -->
-<script type="text/html" id="newgoods_tpl">
+<!-- <script type="text/html" id="newgoods_tpl">
   <% if(goods_list.length >0){%>
     <% for (var i in goods_list) { var v = goods_list[i]; %>
       <% if(v.goods_addtime_text_show){ %>
@@ -184,9 +191,9 @@
     </dl>
   </div>
   <% } %>
-</script>
+</script> -->
 <!-- 店铺活动 tpl -->
-<script type="text/html" id="storeactivity_tpl">
+<!-- <script type="text/html" id="storeactivity_tpl">
   <% if(promotion.mansong){ var mansong = promotion.mansong %>
   <div class="store-sale-block"><a href="store_goods.html?store_id=<%=store_id %>">
     <div class="store-sale-tit"><h3><%=mansong.mansong_name %></h3>
@@ -225,7 +232,7 @@
     </dl>
   </div>
   <% } %>
-</script>
+</script> -->
 
 <script type="text/html" id="store_voucher_con_tpl">
   <div class="nctouch-bottom-mask">

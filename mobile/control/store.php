@@ -38,6 +38,8 @@ class storeControl extends mobileHomeControl
         $store_info['member_id'] = $store_online_info['member_id'];
 		//33hao v5.2 添加QQ IM
 		$store_info['store_qq'] = $store_online_info['store_qq'];
+        $store_info['store_address'] = $store_online_info['store_address'];
+        $store_info['store_phone'] = $store_online_info['store_phone'];
 		$store_info['node_chat'] = C('node_chat');
 
         // 店铺头像

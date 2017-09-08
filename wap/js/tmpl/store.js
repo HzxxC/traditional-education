@@ -86,18 +86,23 @@ $(function() {
             }else{
                 $("#store_sliders").parent().hide();
             }
-            //联系客服
-            $('#store_kefu').click(function(){
-				if (data.store_info.node_chat) {
-					 window.location.href = WapSiteUrl+'/tmpl/member/chat_info.html?t_id=' + result.datas.store_info.member_id;
-				}else{
-                	window.location.href = "http://wpa.qq.com/msgrd?v=3&uin=" + result.datas.store_info.store_qq + "&site=qq&menu=yes";
-            	}	 
-				
+            $("#allgoods_con").load('store_goods_list.html',function(){
+                $(".goods-search-list-nav").addClass('posr');
+                $(".goods-search-list-nav").css("top","0");
+                $("#sort_inner").css("position","static");
             });
+            //联系客服
+    //         $('#store_kefu').click(function(){
+				// if (data.store_info.node_chat) {
+				// 	 window.location.href = WapSiteUrl+'/tmpl/member/chat_info.html?t_id=' + result.datas.store_info.member_id;
+				// }else{
+    //             	window.location.href = "http://wpa.qq.com/msgrd?v=3&uin=" + result.datas.store_info.store_qq + "&site=qq&menu=yes";
+    //         	}	 
+				
+    //         });
             //店主推荐
-            var html = template.render('goods_recommend_tpl', data);
-            $("#goods_recommend").html(html);
+            // var html = template.render('goods_recommend_tpl', data);
+            // $("#goods_recommend").html(html);
         }
     });
 

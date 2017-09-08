@@ -42,8 +42,6 @@
 </div>
 
 
-<div class="nctouch-home-layout" id="main-container2"></div>
-
 <div class="fix-block-r"> <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a> </div>
 
 
@@ -79,11 +77,11 @@
 <!-- 店铺细分 -->
 <script type="text/html" id="getstores_tpl">
 <% for (var i=0;i<stores_list.length;i++) {%>
- <div class="ss-list-item">
- 	<!-- <a href="<%= stores_list[i].url %>">
- 		<img src="<%= stores_list[i].goods_image %>" alt="">
- 		<span class="price">￥<%= stores_list[i].goods_promotion_price %></span>
- 	</a> -->
+ <div class="ss-list-item clearfix">
+ 	<a href="tmpl/store.html?store_id=<%= stores_list[i].store_id %>">
+ 		<img src="<%= stores_list[i].store_avatar %>" alt="">
+ 		<span class="name"><%= stores_list[i].store_name %></span>
+ 	</a>
  </div>
 <% } %>
 </script>

@@ -134,7 +134,6 @@ $(function() {
     $.ajax({
         url:ApiUrl+"/index.php?act=index&op=getstores",
         type:'get',
-        data: {store_type: 0},
         jsonp:'callback',
         dataType:'jsonp',
         success:function(result){

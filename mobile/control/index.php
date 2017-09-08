@@ -156,11 +156,8 @@ class indexControl extends mobileHomeControl{
     public function gettjOp() {
         
         $model_goods    = Model('goods');
-        $model_store    = Model('store');
 
-        // 获得自营店铺ID，自营店铺类型为1
-        $store_info = $model_store->field('store_id')->where(array('is_own_shop'=>1))->find();
-        $recommend_list = $model_goods->getGoodsCommendList($store_info['store_id'], 6);          
+        $recommend_list = $model_goods->getGoodsRecommendAllList(4);          
         
         if(!empty($recommend_list)) {
             
@@ -177,19 +174,18 @@ class indexControl extends mobileHomeControl{
     }
 
     public function getstoresOp() {
-        
-        if(isset($_GET['store_type'])) {
 
-            $model_store    = Model('store');
-            // 获得非自营店铺ID，自营店铺类型为1
-            $condition['store_state'] = 1;
-            $condition['is_own_shop'] = 0;
-            $stores_list = $model_store->field('*')->where($condition)->order('store_sort asc')->select();
+        $model_store    = Model('store');
+        $stores_list = $model_store->getStoreOnlineList(array(), null, 'is_own_shop desc, store_id asc', 'store_id, store_name, store_avatar');
 
+        if(!empty($stores_list)) {
+
+            foreach($stores_list as $k=>$v) {
+                $stores_list[$k]['store_avatar'] = $v['store_avatar'] ? UPLOAD_SITE_URL.'/'.ATTACH_STORE.'/'.$v['store_avatar'] : UPLOAD_SITE_URL.'/'.ATTACH_COMMON.DS.C('default_store_avatar');                
+            }
             output_data(array('stores_list' => $stores_list)); 
-
         } else {
-            output_error('缺少参数:店铺类型');
+            output_error('暂无数据');
         }
     }
 

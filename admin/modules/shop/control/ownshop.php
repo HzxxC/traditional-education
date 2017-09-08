@@ -107,7 +107,7 @@ class ownshopControl extends SystemControl
             showMessage('操作成功', urlAdminShop('ownshop', 'list'));
             return;
         }
-Tpl::setDirquna('shop');
+        Tpl::setDirquna('shop');
         Tpl::showpage('ownshop.add');
     }
 
@@ -163,6 +163,9 @@ Tpl::setDirquna('shop');
             $saveArray['seller_name'] = $_POST['seller_name'];
             $saveArray['bind_all_gc'] = $_POST['bind_all_gc'] ? 1 : 0;
             $saveArray['store_state'] = $_POST['store_state'] ? 1 : 0;
+            $saveArray['store_avatar'] = $_POST['store_avatar'];
+            $saveArray['store_address'] = $_POST['store_address'];
+            $saveArray['store_phone'] = $_POST['store_phone'];
             $saveArray['store_close_info'] = $_POST['store_close_info'];
 
             $storeModel->editStore($saveArray, array(

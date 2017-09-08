@@ -25,3 +25,108 @@ INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name
 [2017-09-08 10:03:59] /traditional-education/shop/index.php?act=store_goods_offline&op=goods_show&commonid=16&storeid=4&inajax=1&ajaxtarget= ( act=store_goods_offline&op=goods_show ) 
 ERR: Db Error: Column 'log_store_id' cannot be null
 INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品上架，SPU:16','1504836239','4','1',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 10:40:20] /traditional-education/shop/index.php?act=store_goods_online&op=goods_unshow&commonid=19&inajax=1&ajaxtarget= ( act=store_goods_online&op=goods_unshow ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品下架，SPU:19','1504838420','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 11:01:30] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839690600&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:01:32] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839691973&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:08] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839728183&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:08] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839728808&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:35] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839755670&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:50] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839770807&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:51] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839771766&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:52] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839772042&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:02:52] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839772264&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:03:26] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839805957&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:03:27] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839807055&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:04:23] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839862960&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:04:40] /traditional-education/mobile/index.php?act=index&op=gettj&_=1504839879900&callback=jsonp2 ( act=index&op=gettj ) 
+ERR: Db Error: Unknown column 'rec_goods_id' in 'field list'
+SELECT rec_goods_id FROM `te_goods` ORDER BY rec_id desc LIMIT 4  
+[2017-09-08 11:10:52] http://localhost/traditional-education/shop/index.php?act=store_goods_online&op=drop_goods&commonid=7&store_id=4&inajax=1&ajaxtarget= ( act=store_goods_online&op=drop_goods ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('删除商品，SPU：7','1504840252','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 11:10:57] http://localhost/traditional-education/shop/index.php?act=store_goods_online&op=drop_goods&commonid=6&store_id=4&inajax=1&ajaxtarget= ( act=store_goods_online&op=drop_goods ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('删除商品，SPU：6','1504840257','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 11:11:01] http://localhost/traditional-education/shop/index.php?act=store_goods_online&op=drop_goods&commonid=20&store_id=3&inajax=1&ajaxtarget= ( act=store_goods_online&op=drop_goods ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('删除商品，SPU：20','1504840261','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 11:30:06] /traditional-education/mobile/index.php?act=index&op=getstores&store_type=0&_=1504841406652&callback=jsonp3 ( act=index&op=getstores ) 
+ERR: Db Error: Unknown column 'id' in 'order clause'
+SELECT * FROM `te_store` WHERE ( store_state = '1' ) ORDER BY is_own_shop desc, id asc LIMIT 1000  
+[2017-09-08 11:30:27] /traditional-education/mobile/index.php?act=index&op=getstores&_=1504841427087&callback=jsonp3 ( act=index&op=getstores ) 
+ERR: Db Error: Unknown column 'id' in 'order clause'
+SELECT * FROM `te_store` WHERE ( store_state = '1' ) ORDER BY is_own_shop desc, id asc LIMIT 1000  
+[2017-09-08 11:30:58] /traditional-education/mobile/index.php?act=index&op=getstores&_=1504841458136&callback=jsonp3 ( act=index&op=getstores ) 
+ERR: Db Error: Unknown column 'id' in 'order clause'
+SELECT * FROM `te_store` WHERE ( store_state = '1' ) ORDER BY is_own_shop desc, id asc LIMIT 1000  
+[2017-09-08 11:33:07] /traditional-education/mobile/index.php?act=index&op=getstores&_=1504841587358&callback=jsonp3 ( act=index&op=getstores ) 
+ERR: Db Error: Unknown column 'id' in 'order clause'
+SELECT store_id, store_name FROM `te_store` WHERE ( store_state = '1' ) ORDER BY is_own_shop desc, id asc LIMIT 1000  
+[2017-09-08 16:22:35] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=18&key=0bfa7b4befd75e2f9bde255724caed05 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '18-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('18','1','1504858954','839','825','826','839')
+[2017-09-08 16:22:42] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=18&key=0bfa7b4befd75e2f9bde255724caed05 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '18-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('18','1','1504858962','839','825','826','839')
+[2017-09-08 16:23:20] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=18&key=0bfa7b4befd75e2f9bde255724caed05 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '18-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('18','1','1504859000','839','825','826','839')
+[2017-09-08 16:24:54] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=0fe321caa58586f968b8962655acd10d ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859094','840','825','826','840')
+[2017-09-08 16:25:03] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=0fe321caa58586f968b8962655acd10d ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859103','840','825','826','840')
+[2017-09-08 16:25:40] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859140','840','825','826','840')
+[2017-09-08 16:25:54] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859154','840','825','826','840')
+[2017-09-08 16:27:32] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859252','840','825','826','840')
+[2017-09-08 16:27:41] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859261','840','825','826','840')
+[2017-09-08 16:28:17] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859297','840','825','826','840')
+[2017-09-08 16:28:53] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859333','840','825','826','840')
+[2017-09-08 16:29:08] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=15&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '15-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('15','1','1504859348','840','825','826','840')
+[2017-09-08 16:29:16] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=18&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '18-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('18','1','1504859356','839','825','826','839')
+[2017-09-08 16:29:38] /traditional-education/mobile/index.php?act=goods&op=goods_detail&goods_id=18&key=65ae168eb68003e88f7fc0c4d0e0b8f1 ( act=goods&op=goods_detail ) 
+ERR: Db Error: Duplicate entry '18-1' for key 'PRIMARY'
+INSERT  INTO `te_goods_browse` (goods_id,member_id,browsetime,gc_id,gc_id_1,gc_id_2,gc_id_3) VALUES ('18','1','1504859378','839','825','826','839')
