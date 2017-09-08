@@ -43,8 +43,7 @@ var COOKIE_PRE = '<?php echo COOKIE_PRE;?>';var _CHARSET = '<?php echo strtolowe
 <?php } ?>
 <header class="ncsc-head-layout w">
   <div class="wrapper">
-    <div class="center-logo"> <a href="<?php echo SHOP_SITE_URL;?>" target="_blank"><img src="<?php echo UPLOAD_SITE_URL.'/'.ATTACH_COMMON.DS.C('seller_center_logo');?>" class="pngFix" alt=""/></a>
-      <h1>商家中心</h1>
+    <div class="center-logo" style="text-align: center;"> <a href="<?php echo urlShop('seller_center', 'index');?>"><h1>商家中心</h1></a>
     </div>
     <nav class="ncsc-nav">
       <dl class="<?php echo $output['current_menu']['model'] == 'index'?'current':'';?>">
@@ -152,7 +151,6 @@ $(document).ready(function(){
 <?php require_once template('footer');?>
 <div id="tbox">
   <div class="btn" id="msg"><a href="<?php echo urlShop('store_msg', 'index');?>"><i class="msg"><?php if ($output['store_msg_num'] > 0) { ?><em><?php echo $output['store_msg_num'];?></em><?php } ?></i>站内消息</a></div>
-  <div class="btn" id="im"><i class="im"><em id="new_msg" style="display:none;"></em></i><a href="javascript:void(0);">在线联系</a></div>
   <div class="btn" id="gotop" style="display:none;"><i class="top"></i><a href="javascript:void(0);">返回顶部</a></div>
 </div>
 </body>

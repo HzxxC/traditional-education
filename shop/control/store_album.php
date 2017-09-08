@@ -32,7 +32,7 @@ class store_albumControl extends BaseSellerControl {
          * 相册分类
          */
         $param = array();
-        $param['order']                 = 'aclass_sort desc';
+        $param['order']                 = 'aclass_id asc';
         if($_GET['store_id'] != 0){
             $param['album_aclass.store_id'] = $_GET['store_id'];
         }
@@ -277,6 +277,7 @@ class store_albumControl extends BaseSellerControl {
         }
         $page->setStyle('admin');
 
+        $store_id = $_GET['store_id'];
         /**
          * 实例化相册类
          */
@@ -285,7 +286,7 @@ class store_albumControl extends BaseSellerControl {
          * 图片列表
          */
         $param = array();
-        $param['album_pic.store_id']    = $_SESSION['store_id'];
+        $param['album_pic.store_id']    = $store_id;
         if(!empty($_GET) && $_GET['id'] != '0'){
             $param['aclass_id'] = intval($_GET['id']);
             /**
@@ -293,7 +294,7 @@ class store_albumControl extends BaseSellerControl {
              */
             $cparam = array();
             $cparam['field']        = array('aclass_id','store_id');
-            $cparam['value']        = array(intval($_GET['id']),$_SESSION['store_id']);
+            $cparam['value']        = array(intval($_GET['id']),$store_id);
             $cinfo          = $model_album->getOneClass($cparam);
             Tpl::output('class_name',$cinfo['aclass_name']);
         }
@@ -304,7 +305,7 @@ class store_albumControl extends BaseSellerControl {
          * 分类列表
          */
         $param = array();
-        $param['album_aclass.store_id'] = $_SESSION['store_id'];
+        $param['album_aclass.store_id'] = $store_id;
         $class_info         = $model_album->getClassList($param);
         Tpl::output('class_list',$class_info);
 
@@ -338,6 +339,7 @@ class store_albumControl extends BaseSellerControl {
         if(empty($_GET['id'])) {
             showDialog(Language::get('nc_common_op_fail'));
         }
+        $store_id = $_GET['store_id'];
         /**
          * 实例化相册类
          */
@@ -347,9 +349,9 @@ class store_albumControl extends BaseSellerControl {
          */
         $param = array();
         $param['field']     = array('apic_id','store_id');
-        $param['value']     = array(intval($_GET['id']),$_SESSION['store_id']);
+        $param['value']     = array(intval($_GET['id']), $store_id);
         $pic_info           = $model_album->getOnePicById($param);
-        $return = $model_album->checkAlbum(array('album_aclass.store_id'=>$_SESSION['store_id'],'album_aclass.aclass_id'=>$pic_info['aclass_id']));
+        $return = $model_album->checkAlbum(array('album_aclass.store_id'=>$store_id,'album_aclass.aclass_id'=>$pic_info['aclass_id']));
         if($return){
             $re = $model_album->updateClass(array('aclass_cover'=>$pic_info['apic_cover']),$pic_info['aclass_id']);
             if($re){
@@ -881,21 +883,21 @@ class store_albumControl extends BaseSellerControl {
             case 'album':
                 $menu_array = array(
                 1=>array('menu_key'=>'album','menu_name'=>'相册管理','menu_url'=>'index.php?act=store_album'),
-                2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
+                // 2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
                 );
                 break;
             case 'album_pic':
                 $menu_array = array(
                 1=>array('menu_key'=>'album','menu_name'=>'相册管理','menu_url'=>'index.php?act=store_album'),
                 3=>array('menu_key'=>'pic_list','menu_name'=>Language::get('nc_member_path_album_pic_list'),'menu_url'=>'index.php?act=store_album&op=album_pic_list&id='.intval($_GET['id'])),
-                2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
+                // 2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
                 );
                 break;
             case 'album_pic_info':
                 $menu_array = array(
                 1=>array('menu_key'=>'album','menu_name'=>'相册管理','menu_url'=>'index.php?act=store_album'),
                 3=>array('menu_key'=>'pic_info','menu_name'=>Language::get('nc_member_path_album_pic_info'),'menu_url'=>'index.php?act=store_album&op=album_pic_info&id='.intval($_GET['id']).'&class_id='.intval($_GET['class_id'])),
-                2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
+                // 2=>array('menu_key'=>'watermark','menu_name'=>Language::get('nc_member_path_watermark'),'menu_url'=>'index.php?act=store_album&op=store_watermark')
                 );
                 break;
         }

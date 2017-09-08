@@ -45,7 +45,8 @@
     <tr>
       <td class="tc"><input type="checkbox" id="all" class="checkall"/></td>
       <td colspan="10"><label for="all"><?php echo $lang['nc_select_all'];?></label>
-        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'drop_goods');?>" name="commonid" confirm="<?php echo $lang['nc_ensure_del'];?>"><i class="icon-trash"></i><?php echo $lang['nc_del'];?></a> <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_offline', 'goods_show');?>" name="commonid"><i class="icon-level-up"></i><?php echo $lang['store_goods_index_show'];?></a>
+        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'drop_goods');?>" name="commonid" confirm="<?php echo $lang['nc_ensure_del'];?>"><i class="icon-trash"></i><?php echo $lang['nc_del'];?></a> 
+        <!-- <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_offline', 'goods_show');?>" name="commonid"><i class="icon-level-up"></i><?php echo $lang['store_goods_index_show'];?></a> -->
     </tr>
     <?php } ?>
   </thead>
@@ -73,11 +74,11 @@
             <?php }?>
             <a href="<?php echo urlShop('goods', 'index', array('goods_id' => $output['storage_array'][$val['goods_commonid']]['goods_id']));?>" target="_blank"><?php echo $val['goods_name']; ?></a></dt>
           <dd><?php echo $lang['store_goods_index_goods_no'].$lang['nc_colon'];?><?php echo $val['goods_serial'];?></dd>
-          <dd class="serve"> <span class="<?php if ($val['goods_commend'] == 1) { echo 'open';}?>" title="店铺推荐商品"><i class="commend">荐</i></span> <span class="<?php if ($val['mobile_body'] != '') { echo 'open';}?>" title="手机端商品详情"><i class="icon-tablet"></i></span> <span class="" title="商品页面二维码"><i class="icon-qrcode"></i>
+          <dd class="serve"> <span class="<?php if ($val['goods_commend'] == 1) { echo 'open';}?>" title="店铺推荐商品"><i class="commend">荐</i></span> <span class="<?php if ($val['mobile_body'] != '') { echo 'open';}?>" title="手机端商品详情"><i class="icon-tablet"></i></span> <!-- <span class="" title="商品页面二维码"><i class="icon-qrcode"></i>
             <div class="QRcode"><a target="_blank" href="<?php echo goodsQRCode(array('goods_id' => $output['storage_array'][$val['goods_commonid']]['goods_id'], 'store_id' => $_SESSION['store_id']));?>">下载标签</a>
               <p><img src="<?php echo goodsQRCode(array('goods_id' => $output['storage_array'][$val['goods_commonid']]['goods_id'], 'store_id' => $_SESSION['store_id']));?>"/></p>
             </div>
-            </span> </dd>
+            </span> --> </dd>
         </dl></td>
       <td><a href="javascript:void(0)" onclick="ajax_get_confirm('','<?php echo urlShop('store_goods_offline', 'goods_show', array('commonid' => $val['goods_commonid'], 'storeid' => $val['store_id']));?>')" class="ncbtn"><?php echo $lang['store_goods_index_show'];?></a></td>
       <td><span><?php echo $lang['currency'].ncPriceFormat($val['goods_price']); ?></span></td>
@@ -85,7 +86,7 @@
       <td class="nscs-table-handle"><?php if ($val['goods_lock'] == 0) {?>
         <span><a href="<?php echo urlShop('store_goods_online', 'edit_goods', array('commonid' => $val['goods_commonid'],'store_id'=>$val['store_id']));?>" class="btn-bluejeans"><i class="icon-edit"></i>
         <p><?php echo $lang['nc_edit'];?></p>
-        </a></span> <span><a href="javascript:void(0);" onclick="ajax_get_confirm('<?php echo $lang['nc_ensure_del'];?>', '<?php echo urlShop('store_goods_online', 'drop_goods', array('commonid' => $val['goods_commonid'],'store_id'=>$val['store_id']));?>');" class="btn-grapefruit"><i class="icon-trash"></i>
+        </a></span> <span><a href="javascript:void(0);" onclick="ajax_get_confirm('<?php echo $lang['nc_ensure_del'];?>', '<?php echo urlShop('store_goods_online', 'drop_goods', array('commonid' => $val['goods_commonid']));?>');" class="btn-grapefruit"><i class="icon-trash"></i>
         <p><?php echo $lang['nc_del'];?></p>
         </a></span>
         <?php } else {?>
@@ -108,7 +109,7 @@
       <th class="tc"><input type="checkbox" id="all2" class="checkall"/></th>
       <th colspan="10"><label for="all2"><?php echo $lang['nc_select_all'];?></label>
         <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'drop_goods');?>" name="commonid" confirm="<?php echo $lang['nc_ensure_del'];?>"><i class="icon-trash"></i><?php echo $lang['nc_del'];?></a> 
-        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_offline', 'goods_show');?>" name="commonid"><i class="icon-level-up"></i><?php echo $lang['store_goods_index_show'];?></a></th>
+       <!--  <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_offline', 'goods_show');?>" name="commonid"><i class="icon-level-up"></i><?php echo $lang['store_goods_index_show'];?></a></th> -->
     </tr>
     <tr>
       <td colspan="20"><div class="pagination"> <?php echo $output['show_page']; ?> </div></td>

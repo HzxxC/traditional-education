@@ -61,7 +61,7 @@
           <dt>
             <div class="covers"><a href="index.php?act=store_album&op=album_pic_list&id=<?php echo $v['aclass_id']?>&store_id=<?php echo $v['store_id'] ?>">
               <?php if($v['aclass_cover'] != ''){ ?>
-              <img id="aclass_cover" src="<?php echo cthumb($v['aclass_cover'], 240, $_SESSION['store_id']);?>">
+              <img id="aclass_cover" src="<?php echo cthumb($v['aclass_cover'], 240, $v['store_id']);?>">
               <?php }else{?>
               <i class="icon-camera-retro"></i>
               <?php }?>

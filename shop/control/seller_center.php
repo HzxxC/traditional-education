@@ -55,7 +55,7 @@ class seller_centerControl extends BaseSellerControl {
         // 销售情况统计
         $field = ' COUNT(*) as ordernum,SUM(order_amount) as orderamount ';
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         // 昨日销量
         $where['order_add_time'] = array('between',array(strtotime(date('Y-m-d',(time()-3600*24))),strtotime(date('Y-m-d',time()))-1));
@@ -72,7 +72,7 @@ class seller_centerControl extends BaseSellerControl {
         $stime = strtotime(date('Y-m-d',(time()-3600*24))) - (86400*29);//30天前
         $etime = strtotime(date('Y-m-d',time())) - 1;//昨天23:59
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',array($stime,$etime));
         $field = ' goods_id,min(goods_name) as goods_name,SUM(goods_num) as goodsnum,min(goods_image) as goods_image ';
@@ -81,33 +81,33 @@ class seller_centerControl extends BaseSellerControl {
         unset($stime,$etime,$where,$field,$orderby);
         Tpl::output('goods_list', $goods_list);
 
-        if (!checkPlatformStore()) {
-            if (C('groupbuy_allow') == 1){
-                // 抢购套餐
-                $groupquota_info = Model('groupbuy_quota')->getGroupbuyQuotaCurrent($_SESSION['store_id']);
-                Tpl::output('groupquota_info', $groupquota_info);
-            }
-            if (intval(C('promotion_allow')) == 1){
-                // 限时折扣套餐
-                $xianshiquota_info = Model('p_xianshi_quota')->getXianshiQuotaCurrent($_SESSION['store_id']);
-                Tpl::output('xianshiquota_info', $xianshiquota_info);
-                // 满即送套餐
-                $mansongquota_info = Model('p_mansong_quota')->getMansongQuotaCurrent($_SESSION['store_id']);
-                Tpl::output('mansongquota_info', $mansongquota_info);
-                // 优惠套装套餐
-                $binglingquota_info = Model('p_bundling')->getBundlingQuotaInfoCurrent($_SESSION['store_id']);
-                Tpl::output('binglingquota_info', $binglingquota_info);
-                // 推荐展位套餐
-                $boothquota_info = Model('p_booth')->getBoothQuotaInfoCurrent($_SESSION['store_id']);
-                Tpl::output('boothquota_info', $boothquota_info);
-            }
-            if (C('voucher_allow') == 1){
-                $voucherquota_info = Model('voucher')->getCurrentQuota($_SESSION['store_id']);
-                Tpl::output('voucherquota_info', $voucherquota_info);
-            }
-        } else {
-            Tpl::output('isOwnShop', true);
-        }
+        // if (!checkPlatformStore()) {
+        //     if (C('groupbuy_allow') == 1){
+        //         // 抢购套餐
+        //         $groupquota_info = Model('groupbuy_quota')->getGroupbuyQuotaCurrent($_SESSION['store_id']);
+        //         Tpl::output('groupquota_info', $groupquota_info);
+        //     }
+        //     if (intval(C('promotion_allow')) == 1){
+        //         // 限时折扣套餐
+        //         $xianshiquota_info = Model('p_xianshi_quota')->getXianshiQuotaCurrent($_SESSION['store_id']);
+        //         Tpl::output('xianshiquota_info', $xianshiquota_info);
+        //         // 满即送套餐
+        //         $mansongquota_info = Model('p_mansong_quota')->getMansongQuotaCurrent($_SESSION['store_id']);
+        //         Tpl::output('mansongquota_info', $mansongquota_info);
+        //         // 优惠套装套餐
+        //         $binglingquota_info = Model('p_bundling')->getBundlingQuotaInfoCurrent($_SESSION['store_id']);
+        //         Tpl::output('binglingquota_info', $binglingquota_info);
+        //         // 推荐展位套餐
+        //         $boothquota_info = Model('p_booth')->getBoothQuotaInfoCurrent($_SESSION['store_id']);
+        //         Tpl::output('boothquota_info', $boothquota_info);
+        //     }
+        //     if (C('voucher_allow') == 1){
+        //         $voucherquota_info = Model('voucher')->getCurrentQuota($_SESSION['store_id']);
+        //         Tpl::output('voucherquota_info', $voucherquota_info);
+        //     }
+        // } else {
+        //     Tpl::output('isOwnShop', true);
+        // }
         $phone_array = explode(',',C('site_phone'));
         Tpl::output('phone_array',$phone_array);
 
@@ -150,28 +150,28 @@ class seller_centerControl extends BaseSellerControl {
 
         $model_goods = Model('goods');
         // 全部商品数
-        $goodscount = $model_goods->getGoodsCommonCount(array('store_id' => $_SESSION['store_id']));
+        $goodscount = $model_goods->getGoodsCommonCount(array());
         // 出售中的商品
-        $goods_online = $model_goods->getGoodsCommonOnlineCount(array('store_id' => $_SESSION['store_id']));
+        $goods_online = $model_goods->getGoodsCommonOnlineCount(array());
         if (C('goods_verify')) {
             // 等待审核的商品
-            $goods_waitverify = $model_goods->getGoodsCommonWaitVerifyCount(array('store_id' => $_SESSION['store_id']));
+            $goods_waitverify = $model_goods->getGoodsCommonWaitVerifyCount(array());
             // 审核失败的商品
-            $goods_verifyfail = $model_goods->getGoodsCommonVerifyFailCount(array('store_id' => $_SESSION['store_id']));
+            $goods_verifyfail = $model_goods->getGoodsCommonVerifyFailCount(array());
         }
         // 仓库待上架的商品
-        $goods_offline = $model_goods->getGoodsCommonOfflineCount(array('store_id' => $_SESSION['store_id']));
+        $goods_offline = $model_goods->getGoodsCommonOfflineCount(array());
         // 违规下架的商品
-        $goods_lockup = $model_goods->getGoodsCommonLockUpCount(array('store_id' => $_SESSION['store_id']));
+        $goods_lockup = $model_goods->getGoodsCommonLockUpCount(array());
         // 等待回复商品咨询
         if (C('dbdriver') == 'mysqli') {
-            $consult = Model('consult')->getConsultCount(array('store_id' => $_SESSION['store_id'], 'consult_reply' => ''));
+            $consult = Model('consult')->getConsultCount(array('consult_reply' => ''));
         } else {
-            $consult = Model('consult')->getConsultCount(array('store_id' => $_SESSION['store_id'], 'consult_reply' => array('exp', 'consult_reply IS NULL')));
+            $consult = Model('consult')->getConsultCount(array('consult_reply' => array('exp', 'consult_reply IS NULL')));
         }
 
         // 商品图片数量
-        $imagecount = Model('album')->getAlbumPicCount(array('store_id' => $_SESSION['store_id']));
+        $imagecount = Model('album')->getAlbumPicCount(array());
 
         $model_order = Model('order');
         // 交易中的订单
@@ -184,42 +184,36 @@ class seller_centerControl extends BaseSellerControl {
         $model_refund_return = Model('refund_return');
         // 售前退款
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
         $condition['refund_type'] = 1;
         $condition['order_lock'] = 2;
         $condition['refund_state'] = array('lt', 3);
         $refund_lock = $model_refund_return->getRefundReturnCount($condition);
         // 售后退款
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
         $condition['refund_type'] = 1;
         $condition['order_lock'] = 1;
         $condition['refund_state'] = array('lt', 3);
         $refund = $model_refund_return->getRefundReturnCount($condition);
         // 售前退货
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
         $condition['refund_type'] = 2;
         $condition['order_lock'] = 2;
         $condition['refund_state'] = array('lt', 3);
         $return_lock = $model_refund_return->getRefundReturnCount($condition);
         // 售后退货
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
         $condition['refund_type'] = 2;
         $condition['order_lock'] = 1;
         $condition['refund_state'] = array('lt', 3);
         $return = $model_refund_return->getRefundReturnCount($condition);
 
         $condition = array();
-        $condition['accused_id'] = $_SESSION['store_id'];
         $condition['complain_state'] = array(array('gt',10),array('lt',90),'and');
         $complain = Model()->table('complain')->where($condition)->count();
 
         //待确认的结算账单
         $model_bill = Model('bill');
         $condition = array();
-        $condition['ob_store_id'] = $_SESSION['store_id'];
         $condition['ob_state'] = BILL_STATE_CREATE;
         $bill_confirm_count = $model_bill->getOrderBillCount($condition);
 

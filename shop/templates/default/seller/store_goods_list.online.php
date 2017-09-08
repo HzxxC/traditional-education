@@ -2,7 +2,7 @@
 
 <div class="tabmenu">
   <?php include template('layout/submenu');?>
-    <a title="批量生成商品二维码" class="ncbtn ncbtn-aqua" href="index.php?act=store_goods_online&amp;op=maker_qrcode" style="right:100px" onclick="return confirm('全部生成二维码可能超时失败，确定要生成吗？');">生成所有商品二维码</a>
+    <!-- <a title="批量生成商品二维码" class="ncbtn ncbtn-aqua" href="index.php?act=store_goods_online&amp;op=maker_qrcode" style="right:100px" onclick="return confirm('全部生成二维码可能超时失败，确定要生成吗？');">生成所有商品二维码</a> -->
   <a href="<?php echo urlShop('store_goods_add');?>" class="ncbtn ncbtn-mint" title="<?php echo $lang['store_goods_index_add_goods'];?>"> <?php echo $lang['store_goods_index_add_goods'];?></a> </div>
 <form method="get" action="index.php">
   <table class="search-form">
@@ -51,7 +51,7 @@
         <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'goods_unshow');?>" name="commonid"><i class="icon-level-down"></i><?php echo $lang['store_goods_index_unshow'];?></a> 
         <!-- <a href="javascript:void(0);" class="ncbtn-mini" nctype="batch" data-param="{url:'<?php echo urlShop('store_goods_online', 'edit_jingle');?>', sign:'jingle'}"><i></i>设置广告词</a> 
         <a href="javascript:void(0);" class="ncbtn-mini" nctype="batch" data-param="{url:'<?php echo urlShop('store_goods_online', 'edit_plate');?>', sign:'plate'}"><i></i>设置关联版式</a>  -->
-        <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'edit_qrcode');?>" name="commonid" confirm="你确定要更新嘛？">更新二维码</a></td>
+        <!-- <a href="javascript:void(0);" class="ncbtn-mini" nc_type="batchbutton" uri="<?php echo urlShop('store_goods_online', 'edit_qrcode');?>" name="commonid" confirm="你确定要更新嘛？">更新二维码</a></td> -->
     </tr>
     <?php } ?>
   </thead>
@@ -78,11 +78,11 @@
             <?php }?>
             <a href="<?php echo urlShop('goods', 'index', array('goods_id' => $output['storage_array'][$val['goods_commonid']]['goods_id']));?>" target="_blank"><?php echo $val['goods_name']; ?></a></dt>
           <dd><?php echo $lang['store_goods_index_goods_no'].$lang['nc_colon'];?><?php echo $val['goods_serial'];?></dd>
-          <dd class="serve"> <span class="<?php if ($val['goods_commend'] == 1) { echo 'open';}?>" title="店铺推荐商品"><i class="commend">荐</i></span> <span class="<?php if ($val['mobile_body'] != '') { echo 'open';}?>" title="手机端商品详情"><i class="icon-tablet"></i></span> <span class="" title="商品页面二维码"><i class="icon-qrcode"></i>
+          <dd class="serve"> <span class="<?php if ($val['goods_commend'] == 1) { echo 'open';}?>" title="店铺推荐商品"><i class="commend">荐</i></span> <span class="<?php if ($val['mobile_body'] != '') { echo 'open';}?>" title="手机端商品详情"><i class="icon-tablet"></i></span> <!-- <span class="" title="商品页面二维码"><i class="icon-qrcode"></i>
             <div class="QRcode"><a target="_blank" href="<?php echo goodsQRCode(array('goods_id' => $output['storage_array'][$val['goods_commonid']]['goods_id'], 'store_id' => $_SESSION['store_id']));?>">下载标签</a>
               <p><img src="<?php echo goodsQRCode(array('goods_id' => $output['storage_array'][$val['goods_commonid']]['goods_id'], 'store_id' => $_SESSION['store_id']));?>"/></p>
             </div>
-            </span>
+            </span> -->
             <?php if ($val['is_fcode'] ==1) {?>
             <span><a class="ncbtn-mini ncbtn-grapefruit" href="<?php echo urlShop('store_goods_online', 'download_f_code_excel', array('commonid' => $val['goods_commonid']));?>">下载F码</a></span>
             <?php }?>
@@ -94,7 +94,7 @@
       <td class="nscs-table-handle"><?php if ($val['goods_lock'] == 0) {?>
         <span><a href="<?php echo urlShop('store_goods_online', 'edit_goods', array('commonid' => $val['goods_commonid'], 'store_id' => $val['store_id']));?>" class="btn-bluejeans"><i class="icon-edit"></i>
         <p><?php echo $lang['nc_edit'];?></p>
-        </a></span> <span><a href="javascript:void(0);" onclick="ajax_get_confirm('<?php echo $lang['nc_ensure_del'];?>', '<?php echo urlShop('store_goods_online', 'drop_goods', array('commonid' => $val['goods_commonid'], 'store_id' => $val['store_id']));?>');" class="btn-grapefruit"><i class="icon-trash"></i>
+        </a></span> <span><a href="javascript:void(0);" onclick="ajax_get_confirm('<?php echo $lang['nc_ensure_del'];?>', '<?php echo urlShop('store_goods_online', 'drop_goods', array('commonid' => $val['goods_commonid']));?>');" class="btn-grapefruit"><i class="icon-trash"></i>
         <p><?php echo $lang['nc_del'];?></p>
         </a></span>
         <?php } else {?>

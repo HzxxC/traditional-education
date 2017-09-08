@@ -27,7 +27,6 @@ class store_msgControl extends BaseSellerControl {
      */
     public function msg_listOp() {
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
         if (!$_SESSION['seller_is_admin']) {
             $where['smt_code'] = array('in', $_SESSION['seller_smt_limits']);
         }

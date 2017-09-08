@@ -419,10 +419,9 @@ class store_goods_onlineControl extends BaseSellerControl {
      * 删除商品
      */
     public function drop_goodsOp() {
-        $del_store_id = $_GET['store_id'];
         $common_id = $this->checkRequestCommonId($_GET['commonid']);
         $commonid_array = explode(',', $common_id);
-        $result = Logic('goods')->goodsDrop($commonid_array, $del_store_id, $_SESSION['seller_id'], $_SESSION['seller_name']);
+        $result = Logic('goods')->goodsDrop($commonid_array, $_SESSION['seller_id'], $_SESSION['seller_name']);
         if ($result['state']) {
             // 添加操作日志
             $this->recordSellerLog('删除商品，SPU：'.$common_id);
@@ -438,7 +437,7 @@ class store_goods_onlineControl extends BaseSellerControl {
         $common_id = $this->checkRequestCommonId($_GET['commonid']);
 
         $goods_array = Model()->table('goods')->where(array('goods_commonid'=>array('in',$common_id)))->field('goods_id')->select();
-         $goods_array_list = array();
+        $goods_array_list = array();
         foreach ($goods_array as &$value) {
             $url = BASE_UPLOAD_PATH.DS.ATTACH_STORE.DS.$_SESSION['store_id'].DS.$value.'.png';
             if(file_exists($url)){
@@ -466,7 +465,7 @@ class store_goods_onlineControl extends BaseSellerControl {
     public function goods_unshowOp() {
         $common_id = $this->checkRequestCommonId($_GET['commonid']);
         $commonid_array = explode(',', $common_id);
-        $result = Logic('goods')->goodsUnShow($commonid_array, $this->store_info['store_id'], $_SESSION['seller_id'], $_SESSION['seller_name']);
+        $result = Logic('goods')->goodsUnShow($commonid_array, $_SESSION['seller_id'], $_SESSION['seller_name']);
         if ($result['state']) {
             showDialog(L('store_goods_index_goods_unshow_success'), getReferer() ? getReferer() : 'index.php?act=store_goods_online&op=goods_list', 'succ', '', 2);
         } else {

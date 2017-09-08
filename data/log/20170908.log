@@ -1,0 +1,27 @@
+[2017-09-08 09:48:11] /traditional-education/shop/index.php?act=store_goods_online&op=goods_unshow&commonid=17&inajax=1&ajaxtarget= ( act=store_goods_online&op=goods_unshow ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品下架，SPU:17','1504835291','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 09:48:36] /traditional-education/shop/index.php?act=store_goods_online&op=goods_unshow&commonid=16,15&inajax=1&ajaxtarget= ( act=store_goods_online&op=goods_unshow ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品下架，SPU:16,15','1504835315','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 09:50:06] http://localhost/traditional-education/shop/index.php?act=store_goods_online&op=drop_goods&commonid=14&inajax=1&ajaxtarget= ( act=store_goods_online&op=drop_goods ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('删除商品，SPU：14','1504835406','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 09:51:56] http://localhost/traditional-education/shop/index.php?act=store_goods_online&op=drop_goods&commonid=10&inajax=1&ajaxtarget= ( act=store_goods_online&op=drop_goods ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('删除商品，SPU：10','1504835516','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 10:00:09] /traditional-education/shop/index.php?act=store_goods_offline&op=goods_show&commonid=17&storeid=5&inajax=1&ajaxtarget= ( act=store_goods_offline&op=goods_show ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品上架，SPU:17','1504836009','5','1',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 10:00:15] /traditional-education/shop/index.php?act=store_goods_offline&op=goods_show&commonid=15&storeid=3&inajax=1&ajaxtarget= ( act=store_goods_offline&op=goods_show ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品上架，SPU:15','1504836015','3','1',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 10:00:47] http://localhost/traditional-education/shop/index.php?act=store_goods_online&op=drop_goods&commonid=12,3&inajax=1&ajaxtarget= ( act=store_goods_online&op=drop_goods ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('删除商品，SPU：12,3','1504836047','1','admin',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 10:03:55] /traditional-education/shop/index.php?act=store_goods_offline&op=goods_show&commonid=13&storeid=1&inajax=1&ajaxtarget= ( act=store_goods_offline&op=goods_show ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品上架，SPU:13','1504836235','1','1',NULL,'','goodsLogic&saveGoods','1')
+[2017-09-08 10:03:59] /traditional-education/shop/index.php?act=store_goods_offline&op=goods_show&commonid=16&storeid=4&inajax=1&ajaxtarget= ( act=store_goods_offline&op=goods_show ) 
+ERR: Db Error: Column 'log_store_id' cannot be null
+INSERT  INTO `te_seller_log` (log_content,log_time,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state) VALUES ('商品上架，SPU:16','1504836239','4','1',NULL,'','goodsLogic&saveGoods','1')

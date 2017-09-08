@@ -656,11 +656,11 @@ class goodsLogic {
      * @param unknown $seller_name
      * @return multitype:unknown
      */
-    public function goodsShow($commonid_array, $store_id, $seller_id, $seller_name) {
-        $return = Model('goods')->editProducesOnline(array('goods_commonid' => array('in', $commonid_array), 'store_id' => $store_id));
+    public function goodsShow($commonid_array, $seller_id, $seller_name) {
+        $return = Model('goods')->editProducesOnline(array('goods_commonid' => array('in', $commonid_array)));
         if ($return) {
             // 添加操作日志
-            $this->_recordLog('商品上架，SPU:'.implode(',', $commonid_array), $seller_id, $seller_name, $store_id);
+            $this->_recordLog('商品上架，SPU:'.implode(',', $commonid_array), $seller_id, $seller_name);
             return callback(true);
         } else {
             return callback(false, '商品上架失败');
@@ -675,11 +675,10 @@ class goodsLogic {
      * @param unknown $seller_name
      * @return multitype:unknown
      */
-    public function goodsUnShow($commonid_array, $store_id, $seller_id, $seller_name) {
+    public function goodsUnShow($commonid_array, $seller_id, $seller_name) {
         $model_goods = Model('goods');
         $where = array();
         $where['goods_commonid'] = array('in', $commonid_array);
-        $where['store_id'] = $store_id;
         $return = Model('goods')->editProducesOffline($where);
         if ($return) {
             // 更新优惠套餐状态关闭
@@ -692,18 +691,18 @@ class goodsLogic {
                 Model('p_bundling')->editBundlingCloseByGoodsIds(array('goods_id' => array('in', $goodsid_array)));
             }
             // 添加操作日志
-            $this->_recordLog('商品下架，SPU:'.implode(',', $commonid_array), $seller_id, $seller_name, $store_id);
+            $this->_recordLog('商品下架，SPU:'.implode(',', $commonid_array), $seller_id, $seller_name);
             return callback(true);
         } else {
             return callback(false, '商品下架失败');
         }
     }
     
-    public function goodsDrop($commonid_array, $store_id, $seller_id, $seller_name) {
-        $return = Model('goods')->delGoodsNoLock(array('goods_commonid' => array('in', $commonid_array), 'store_id' => $store_id));
+    public function goodsDrop($commonid_array, $seller_id, $seller_name) {
+        $return = Model('goods')->delGoodsNoLock(array('goods_commonid' => array('in', $commonid_array)));
         if ($return) {
             // 添加操作日志
-            $this->_recordLog('删除商品，SPU：'.implode(',', $commonid_array), $seller_id, $seller_name, $store_id);
+            $this->_recordLog('删除商品，SPU：'.implode(',', $commonid_array), $seller_id, $seller_name);
             return callback(true);
         } else {
             return callback(false, '商品删除失败');

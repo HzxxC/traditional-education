@@ -326,7 +326,7 @@ a:focus, a:active { text-decoration: none;}
 .ncsc-seller-info dt, .ncsc-seller-info dd { color: #999; position: absolute; z-index: 1;}
 .ncsc-seller-info dd strong { font-weight: normal; color: #555; position: relative; z-index: 1;}
 .ncsc-seller-info dd strong a { line-height: 16px; color: #FFF; background-color: #DA542E; white-space: nowrap; padding: 1px 6px; border-radius: 4px; position: absolute; z-index: 1; top: -20px; right: -10px;}
-.ncsc-seller-info .seller-name { font-size: 0; *word-spacing:-1px/*IE6、7*/; width: 360px; height: 36px; top: -10px; left: 220px;}
+.ncsc-seller-info .seller-name { font-size: 0; *word-spacing:-1px/*IE6、7*/; width: 360px; height: 36px; top: -10px; left: 0;}
 .ncsc-seller-info .seller-name h3 { font: normal 18px/36px "microsoft yahei"; color: #333; vertical-align: bottom; letter-spacing: normal; word-spacing: normal;  display: inline-block; *display: inline/*IE6,7*/;}
 .ncsc-seller-info .seller-name h5 { font-size: 12px; line-height: 28px; color: #999; vertical-align: bottom; letter-spacing: normal; word-spacing: normal;  display: inline-block; *display: inline/*IE6,7*/; margin-left: 12px;}
 .ncsc-seller-info .store-logo { top: 0; left: 0;}
@@ -336,11 +336,11 @@ a:focus, a:active { text-decoration: none;}
 .ncsc-seller-info .store-logo a { font-weight: normal; color: #999; display: block; text-align: center;}
 .ncsc-seller-info .store-logo a:hover { text-decoration: none; color: #DA542E;}
 .ncsc-seller-info .store-logo a i { font-size: 14px; margin-right: 4px; vertical-align: middle;}
-.ncsc-seller-info .seller-permission { top: 34px; left: 220px;}
-.ncsc-seller-info .seller-last-login { top: 34px; left: 420px;}
+.ncsc-seller-info .seller-permission { top: 34px; left: 0;}
+.ncsc-seller-info .seller-last-login { top: 34px; left: 164px;}
 .ncsc-seller-info .store-name { width: 190px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; top: 60px; left: 220px;  }
 .ncsc-seller-info .store-grade { top: 60px; left: 420px;}
-.ncsc-seller-info .store-validity { top: 60px; left: 600px;}
+.ncsc-seller-info .store-validity { top: 60px; left: 0;}
 
 .ncsc-index .detail-rate { color: #999; width: 182px; padding: 5px; margin: 0 auto; float: right;}
 .ncsc-index .detail-rate h5 { font-size: 14px; line-height: 20px; padding-bottom: 8px; border-bottom: dotted 1px #E7E7E7;}

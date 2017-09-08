@@ -5,7 +5,6 @@
     <?php }?>
     </span><span class="r">
     <select name="jumpMenu" id="jump_menu" style="width:100px;">
-      <option value="0" style="width:80px;"><?php echo $lang['nc_please_choose'];?></option>
       <?php foreach($output['class_list'] as $val) { ?>
       <option style="width:80px;" value="<?php echo $val['aclass_id']; ?>" <?php if($val['aclass_id']==$_GET['id']){echo 'selected';}?>><?php echo $val['aclass_name']; ?></option>
       <?php } ?>

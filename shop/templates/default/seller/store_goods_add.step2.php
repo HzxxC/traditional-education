@@ -254,7 +254,8 @@
                   </span>
                   <p><i class="icon-upload-alt"></i>图片上传</p>
                   </a> </div>
-                <a class="ncbtn mt5" nctype="show_image" href="<?php echo urlShop('store_album', 'pic_list', array('item'=>'goods'));?>"><i class="icon-picture"></i>从图片空间选择</a> <a href="javascript:void(0);" nctype="del_goods_demo" class="ncbtn mt5" style="display: none;"><i class="icon-circle-arrow-up"></i>关闭相册</a></div>
+                <?php $album_store_id = isset($output['goods']['goods_image']) ? $output['goods']['goods_image'] : $_SESSION['store']['store_id'];  ?>
+                <a class="ncbtn mt5" nctype="show_image" href="<?php echo urlShop('store_album', 'pic_list', array('item'=>'goods', 'store_id'=> $album_store_id));?>"><i class="icon-picture"></i>从图片空间选择</a> <a href="javascript:void(0);" nctype="del_goods_demo" class="ncbtn mt5" style="display: none;"><i class="icon-circle-arrow-up"></i>关闭相册</a></div>
             </div>
           </div>
           <div id="demo"></div>

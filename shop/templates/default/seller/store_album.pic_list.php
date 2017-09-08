@@ -25,7 +25,7 @@
     <dt class="album-name"><?php echo $output['class_info']['aclass_name']?></dt>
     <dd class="album-covers">
       <?php if($output['class_info']['aclass_cover'] != ''){ ?>
-      <img id="aclass_cover" src="<?php echo cthumb($output['class_info']['aclass_cover'], 60,$_SESSION['store_id']);?>">
+      <img id="aclass_cover" src="<?php echo cthumb($output['class_info']['aclass_cover'], 60, $output['class_info']['store_id']);?>">
       <?php }else{?>
       <i class="icon-picture"></i>
       <?php }?>
@@ -104,7 +104,7 @@
                 <div class="upload-button"><i class="icon-upload-alt"></i><?php echo $lang['album_plist_replace_upload'];?></div>
                 <input id="submit_button" style="display:none" type="button" value="<?php echo $lang['store_slide_image_upload'];?>" onClick="submit_form($(this))" />
                 </a></div>
-              <a href="JavaScript:void(0);" nc_type="dialog" dialog_title="<?php echo $lang['album_plist_move_album'];?>" uri="index.php?act=store_album&op=album_pic_move&cid=<?php echo $output['class_info']['aclass_id']?>&id=<?php echo $v['apic_id']?>"><i class="icon-move"></i><?php echo $lang['album_plist_move_album'];?></a> <a href="JavaScript:void(0);" onclick="cover(<?php echo $v['apic_id'];?>)"><i class="icon-picture"></i><?php echo $lang['album_plist_set_to_cover'];?></a> <a href="javascript:void(0)" onclick="ajax_get_confirm('<?php echo $lang['album_plist_delete_confirm_message'];?>','index.php?act=store_album&op=album_pic_del&id=<?php echo $v['apic_id'];?>');"><i class="icon-trash"></i><?php echo $lang['album_plist_delete_img'];?></a> </dd>
+              <a href="JavaScript:void(0);" nc_type="dialog" dialog_title="<?php echo $lang['album_plist_move_album'];?>" uri="index.php?act=store_album&op=album_pic_move&cid=<?php echo $output['class_info']['aclass_id']?>&id=<?php echo $v['apic_id']?>"><i class="icon-move"></i><?php echo $lang['album_plist_move_album'];?></a> <a href="JavaScript:void(0);" onclick="cover(<?php echo $v['apic_id'];?>, <?php echo $v['store_id'] ?>)"><i class="icon-picture"></i><?php echo $lang['album_plist_set_to_cover'];?></a> <a href="javascript:void(0)" onclick="ajax_get_confirm('<?php echo $lang['album_plist_delete_confirm_message'];?>','index.php?act=store_album&op=album_pic_del&id=<?php echo $v['apic_id'];?>');"><i class="icon-trash"></i><?php echo $lang['album_plist_delete_img'];?></a> </dd>
           </dl>
         </li>
         <?php }?>
@@ -263,9 +263,9 @@ function submit_form(type){
 	ajaxpost('checkboxform', '', '', 'onerror');
 }
 // 相册封面
-function cover(id){
+function cover(id, store_id){
 	if($('#aclass_cover').attr('src') != $('#img_'+id).attr('src')){
-		ajaxget('index.php?act=store_album&op=change_album_cover&id='+id);
+		ajaxget('index.php?act=store_album&op=change_album_cover&id='+id+'&store_id='+store_id);
 	}else{
 		showError('<?php echo $lang['album_plist_not_set_same_image'];?>');
 	}

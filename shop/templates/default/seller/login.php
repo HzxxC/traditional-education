@@ -103,7 +103,7 @@ $(document).ready(function() {
 <div class="ncsc-login-container">
   <div class="ncsc-login-title">
     <h2>商家管理中心</h2>
-    <h4><a href="<?php echo urlChain('login');?>">门店管理登录</a></h4>
+    <!-- <h4><a href="<?php echo urlChain('login');?>">门店管理登录</a></h4> -->
     <span>请使用入驻申请时填写的“商家用户名”作为登录用户名<br/>
     登录密码则商城用户密码一致</span></div>
   <form id="form_login" action="index.php?act=seller_login&op=login" method="post" >
@@ -131,7 +131,7 @@ $(document).ready(function() {
       <span class="ico"><i class="icon-qrcode"></i></span>
       <input type="submit" class="login-submit" value="确认登录">
     </div>
-    <div class="mt10 fr"><a href="<?php echo SHOP_SITE_URL;?>" title="返回首页">返回首页</a></div>
+    <div class="mt10 fr"><a href="<?php ?>" title="返回首页">返回后台管理中心</a></div>
   </form>
   <!--<div class="copyright">Powered by <?php echo $output['setting_config']['33hao_version'];?> © 2005-2016 <a href="http://www.33hao.com/" target="_blank">33hao.com</a> </div>-->
 </div>
