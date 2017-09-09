@@ -1,16 +1,16 @@
 $(function() {
-	//v5 返利
-	var uid = window.location.href.split("#V5");
-	var  fragment = uid[1];
-	if(fragment){
-		if (fragment.indexOf("V5") == 0) {
-				addCookie("uid", "0");
-			}else {
-				addCookie("uid", fragment);
-		}
-	}
+    //v5 返利
+    var uid = window.location.href.split("#V5");
+    var fragment = uid[1];
+    if (fragment) {
+        if (fragment.indexOf("V5") == 0) {
+            addCookie("uid", "0");
+        } else {
+            addCookie("uid", fragment);
+        }
+    }
     var headerClone = $('#header').clone();
-    $(window).scroll(function(){
+    $(window).scroll(function() {
         if ($(window).scrollTop() <= $('#main-container1').height()) {
             headerClone = $('#header').clone();
             $('#header').remove();
@@ -80,8 +80,8 @@ $(function() {
                     transitionEnd: function(index, elem) {}
                 });
             });
-			
-	    $('.xianshi-list').each(function() {
+
+            $('.xianshi-list').each(function() {
                 if ($(this).find('.item').length < 2) {
                     return;
                 }
@@ -100,46 +100,48 @@ $(function() {
 
         }
     });
-    
-    
+
+
     $.ajax({
-    	url:ApiUrl+"/index.php?act=index&op=getgg",
-    	type:'get',
-    	data:{ac_id:1},
-    	jsonp:'callback',
-    	dataType:'jsonp',
-    	success:function(result){
-    		var data = result.datas;
-    		data.WapSiteUrl = WapSiteUrl;
-    		var html = template.render('getgg_tpl', data);				
-    		$("#getgg").html(html);
-    	}
+        url: ApiUrl + "/index.php?act=index&op=getgg",
+        type: 'get',
+        data: {
+            ac_id: 1
+        },
+        jsonp: 'callback',
+        dataType: 'jsonp',
+        success: function(result) {
+            var data = result.datas;
+            data.WapSiteUrl = WapSiteUrl;
+            var html = template.render('getgg_tpl', data);
+            $("#getgg").html(html);
+        }
     });
 
     // 平台自营商品推荐
     $.ajax({
-        url:ApiUrl+"/index.php?act=index&op=gettj",
-        type:'get',
-        jsonp:'callback',
-        dataType:'jsonp',
-        success:function(result){
+        url: ApiUrl + "/index.php?act=index&op=gettj",
+        type: 'get',
+        jsonp: 'callback',
+        dataType: 'jsonp',
+        success: function(result) {
             var data = result.datas;
             data.WapSiteUrl = WapSiteUrl;
-            var html = template.render('gettj_tpl', data);              
+            var html = template.render('gettj_tpl', data);
             $("#gettj").html(html);
         }
     });
 
     // 非平台自营店铺列表
     $.ajax({
-        url:ApiUrl+"/index.php?act=index&op=getstores",
-        type:'get',
-        jsonp:'callback',
-        dataType:'jsonp',
-        success:function(result){
+        url: ApiUrl + "/index.php?act=index&op=getstores",
+        type: 'get',
+        jsonp: 'callback',
+        dataType: 'jsonp',
+        success: function(result) {
             var data = result.datas;
             data.WapSiteUrl = WapSiteUrl;
-            var html = template.render('getstores_tpl', data);              
+            var html = template.render('getstores_tpl', data);
             $("#getstores").html(html);
             console.log(data);
         }
@@ -148,55 +150,56 @@ $(function() {
 });
 
 function takeCount() {
-	setTimeout("takeCount()", 1E3);
-	$(".time-remain").each(function() {
-		var b = $(this),
-			a = b.attr("count_down");
-		if (0 < a) {
-			var a = parseInt(a) - 1,
-				e = Math.floor(a / 86400),
-				c = Math.floor(a / 3600) % 24,
-				g = Math.floor(a / 60) % 60,
-				f = Math.floor(a / 1) % 60;
-			0 > e && (e = 0);
-			0 > c && (c = 0);
-			0 > g && (g = 0);
-			0 > f && (f = 0);
-			b.find("[time_id='d']").html(e);
-			b.find("[time_id='h']").html(c);
-			b.find("[time_id='m']").html(g);
-			b.find("[time_id='s']").html(f);
-			b.attr("count_down", a)
-		}
-	})
+    setTimeout("takeCount()", 1E3);
+    $(".time-remain").each(function() {
+        var b = $(this),
+            a = b.attr("count_down");
+        if (0 < a) {
+            var a = parseInt(a) - 1,
+                e = Math.floor(a / 86400),
+                c = Math.floor(a / 3600) % 24,
+                g = Math.floor(a / 60) % 60,
+                f = Math.floor(a / 1) % 60;
+            0 > e && (e = 0);
+            0 > c && (c = 0);
+            0 > g && (g = 0);
+            0 > f && (f = 0);
+            b.find("[time_id='d']").html(e);
+            b.find("[time_id='h']").html(c);
+            b.find("[time_id='m']").html(g);
+            b.find("[time_id='s']").html(f);
+            b.attr("count_down", a)
+        }
+    })
 }
 
 $(function() {
-	setTimeout("takeCount()", 1E3);
-	$('.xianshi-list').each(function() {
-	if ($(this).find('.item').length < 2) {
-				 $(".xianshi").jfocus({
-				time: 8E3
-			});
-		}
-	});
+    setTimeout("takeCount()", 1E3);
+    $('.xianshi-list').each(function() {
+        if ($(this).find('.item').length < 2) {
+            $(".xianshi").jfocus({
+                time: 8E3
+            });
+        }
+    });
 });
-				//首页公告滚动
-				var rollText_k = 5; //循环公告总数
-				var rollText_i = 1; //循环公告默认值
-				rollText_tt = setInterval("rollText(1)", 8000);
-				function rollText(a) {
-					clearInterval(rollText_tt);
-					rollText_tt = setInterval("rollText(1)", 8000);
-					rollText_i += a;
-					if(rollText_i > rollText_k) {
-						rollText_i = 1;
-					}
-					if(rollText_i == 0) {
-						rollText_i = rollText_k;
-					}
-					for(var j = 1; j <= rollText_k; j++) {
-						document.getElementById("rollTextMenu" + j).style.display = "none";
-					}
-					document.getElementById("rollTextMenu" + rollText_i).style.display = "block";
-				}
+//首页公告滚动
+var rollText_k = 5; //循环公告总数
+var rollText_i = 1; //循环公告默认值
+rollText_tt = setInterval("rollText(1)", 8000);
+
+function rollText(a) {
+    clearInterval(rollText_tt);
+    rollText_tt = setInterval("rollText(1)", 8000);
+    rollText_i += a;
+    if (rollText_i > rollText_k) {
+        rollText_i = 1;
+    }
+    if (rollText_i == 0) {
+        rollText_i = rollText_k;
+    }
+    for (var j = 1; j <= rollText_k; j++) {
+        document.getElementById("rollTextMenu" + j).style.display = "none";
+    }
+    document.getElementById("rollTextMenu" + rollText_i).style.display = "block";
+}

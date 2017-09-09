@@ -443,7 +443,7 @@ i.cart { background-image: url(../images/cart_b.png); background-size: cover; op
 i.member { background-image: url(../images/member_b.png); background-size: cover; opacity: 0.5;}
 /*加红*/
 i.home2 { background-image: url(../images/home_b_2.png); background-size: cover; opacity: 1;}
-i.categroy2 { background-image: url(../images/browse_list_2.png); background-size: cover;opacity: 1;}
+i.categroy2 { background-image: url(../images/browse_grid_2.png); background-size: cover;opacity: 1;}
 i.search2 { background-image: url(../images/search_ico_2.png); background-size: cover;opacity: 1;}
 i.cart2 { background-image: url(../images/cart_b_2.png); background-size: cover;opacity: 1;}
 i.member2 { background-image: url(../images/member_b_2.png); background-size: cover;opacity: 1;}

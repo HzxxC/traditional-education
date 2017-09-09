@@ -45,7 +45,7 @@ class goods_classControl extends mobileHomeControl{
             } else {
                 $class_list[$key]['image'] = '';
             }
-
+            $class_list[$key]['url'] = 'product_list.html?gc_id='.$value['gc_id'];
             $class_list[$key]['text'] = '';
             $child_class_string = $goods_class_array[$value['gc_id']]['child'];
             $child_class_array = explode(',', $child_class_string);

@@ -1,5 +1,4 @@
 $(function() {
-    var myScroll;
     $("#header").on('click', '.header-inp', function(){
         location.href = WapSiteUrl + '/tmpl/search.html';
     });
@@ -7,31 +6,33 @@ $(function() {
 		var data = result.datas;
 		data.WapSiteUrl = WapSiteUrl;
 		var html = template.render('category-one', data);
+        console.log(data);
 		$("#categroy-cnt").html(html);
-		myScroll = new IScroll('#categroy-cnt', { mouseWheel: true, click: true });
+        $('.pre-loading').hide();
+		// myScroll = new IScroll('#categroy-cnt', { mouseWheel: true, click: true });
 	});
 	
-	get_brand_recommend();
+	// get_brand_recommend();
 	
-	$('#categroy-cnt').on('click','.category', function(){
-	    $('.pre-loading').show();
-	    $(this).parent().addClass('selected').siblings().removeClass("selected");
-	    var gc_id = $(this).attr('date-id');
-	    $.getJSON(ApiUrl + '/index.php?act=goods_class&op=get_child_all', {gc_id:gc_id}, function(result){
-	        var data = result.datas;
-            data.WapSiteUrl = WapSiteUrl;
-            var html = template.render('category-two', data);
-            $("#categroy-rgt").html(html);
-            $('.pre-loading').hide();
-            new IScroll('#categroy-rgt', { mouseWheel: true, click: true });
-	    });
-        myScroll.scrollToElement(document.querySelector('.categroy-list li:nth-child(' + ($(this).parent().index()+1) + ')'), 1000);
-	});
+	// $('#categroy-cnt').on('click','.category', function(){
+	//     $('.pre-loading').show();
+	//     $(this).parent().addClass('selected').siblings().removeClass("selected");
+	//     var gc_id = $(this).attr('date-id');
+	//     $.getJSON(ApiUrl + '/index.php?act=goods_class&op=get_child_all', {gc_id:gc_id}, function(result){
+	//         var data = result.datas;
+ //            data.WapSiteUrl = WapSiteUrl;
+ //            var html = template.render('category-two', data);
+ //            $("#categroy-rgt").html(html);
+ //            $('.pre-loading').hide();
+ //            new IScroll('#categroy-rgt', { mouseWheel: true, click: true });
+	//     });
+ //        myScroll.scrollToElement(document.querySelector('.categroy-list li:nth-child(' + ($(this).parent().index()+1) + ')'), 1000);
+	// });
 
-    $('#categroy-cnt').on('click','.brand', function(){
-        $('.pre-loading').show();
-        get_brand_recommend();
-    });
+    // $('#categroy-cnt').on('click','.brand', function(){
+    //     $('.pre-loading').show();
+    //     get_brand_recommend();
+    // });
 });
 
 function get_brand_recommend() {
