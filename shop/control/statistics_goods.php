@@ -62,7 +62,7 @@ class statistics_goodsControl extends BaseSellerControl {
         //查询订单商品表下单商品数
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         if($this->choose_gcid > 0){
             $gc_depth = $this->gc_arr[$this->choose_gcid]['depth'];
@@ -132,7 +132,7 @@ class statistics_goodsControl extends BaseSellerControl {
         $where = array();
         $where['goods_id'] = $goods_id;
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
 
         $field = ' min(goods_id) as goods_id,min(goods_name) as goods_name,COUNT(DISTINCT order_id) as ordernum,SUM(goods_num) as ordergoodsnum,SUM(goods_pay_price) as ordergamount,MONTH(FROM_UNIXTIME(order_add_time)) as monthval,DAY(FROM_UNIXTIME(order_add_time)) as dayval ';
@@ -195,7 +195,7 @@ class statistics_goodsControl extends BaseSellerControl {
         //获得搜索的开始时间和结束时间
         $searchtime_arr = $model->getStarttimeAndEndtime($this->search_arr);
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',$searchtime_arr);
         //商品分类
@@ -273,7 +273,7 @@ class statistics_goodsControl extends BaseSellerControl {
         $searchtime_arr = $model->getStarttimeAndEndtime($this->search_arr);
         $model = Model('stat');
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',$searchtime_arr);
 

@@ -30,7 +30,7 @@ class store_deliverControl extends BaseSellerControl {
         $order_state = str_replace(array('deliverno','delivering','delivered'),
                 array(ORDER_STATE_PAY,ORDER_STATE_SEND,ORDER_STATE_SUCCESS),$_GET['state']);
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $condition['order_state'] = $order_state;
         if ($_GET['buyer_name'] != '') {
             $condition['buyer_name'] = $_GET['buyer_name'];
@@ -84,7 +84,7 @@ class store_deliverControl extends BaseSellerControl {
         $model_order = Model('order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $model_order->getOrderInfo($condition,array('order_common','order_goods'));
         $if_allow_send = intval($order_info['lock_state']) || !in_array($order_info['order_state'],array(ORDER_STATE_PAY,ORDER_STATE_SEND));
         if ($if_allow_send) {
@@ -148,7 +148,7 @@ class store_deliverControl extends BaseSellerControl {
         $model_order = Model('order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_common_info = $model_order->getOrderCommonInfo($condition);
         if (!$order_common_info) return false;
         $order_common_info['reciver_info'] = @unserialize($order_common_info['reciver_info']);
@@ -167,7 +167,7 @@ class store_deliverControl extends BaseSellerControl {
         $data['reciver_info'] = $this->_get_reciver_info();
         $condition = array();
         $condition['order_id'] = intval($_POST['order_id']);
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $result = $model_order->editOrderCommon($data, $condition);
         if($result) {
             echo 'true';
@@ -225,7 +225,7 @@ class store_deliverControl extends BaseSellerControl {
         $data['daddress_id'] = intval($daddress_id);
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         return $model_order->editOrderCommon($data, $condition);
     }
 
@@ -240,7 +240,7 @@ class store_deliverControl extends BaseSellerControl {
         if (!preg_match('/^\d{10,20}$/',$_GET['order_sn'])) showMessage(Language::get('wrong_argument'),'','html','error');
         $model_order    = Model('order');
         $condition['order_sn'] = $order_sn;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $model_order->getOrderInfo($condition,array('order_common','order_goods'));
         if (empty($order_info) || $order_info['shipping_code'] == '') {
             showMessage('未找到信息','','html','error');
@@ -271,7 +271,7 @@ class store_deliverControl extends BaseSellerControl {
         $model_order = Model('order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $condition['lock_state'] = 0;
         $order_info = $model_order->getOrderInfo($condition);
 

@@ -68,7 +68,7 @@ class statistics_saleControl extends BaseSellerControl {
         }
 
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         if(trim($_GET['order_type']) != ''){
             $where['order_state'] = trim($_GET['order_type']);
@@ -277,7 +277,7 @@ class statistics_saleControl extends BaseSellerControl {
             $searchtime_arr[] = intval($v);
         }
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',$searchtime_arr);
         if(trim($_GET['order_type']) != ''){
             $where['order_state'] = trim($_GET['order_type']);
@@ -359,7 +359,7 @@ class statistics_saleControl extends BaseSellerControl {
         //获得搜索的开始时间和结束时间
         $searchtime_arr = $model->getStarttimeAndEndtime($this->search_arr);
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',$searchtime_arr);
         $memberlist = array();
@@ -463,7 +463,7 @@ class statistics_saleControl extends BaseSellerControl {
          * 客单价分布
          */
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',$searchtime_arr);
         $field = '1';
@@ -519,7 +519,7 @@ class statistics_saleControl extends BaseSellerControl {
 
         //购买时段分布
         $where = array();
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',$searchtime_arr);
         $field = ' HOUR(FROM_UNIXTIME(order_add_time)) as hourval,COUNT(*) as ordernum ';

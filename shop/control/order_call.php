@@ -23,7 +23,7 @@ class order_callControl extends BaseSellerControl {
 	public function indexOp() {
         $model_order = Model('order');
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         if ($_GET['order_sn'] != '') {
             $condition['order_sn'] = $_GET['order_sn'];
         }
@@ -117,7 +117,7 @@ class order_callControl extends BaseSellerControl {
 	{
 		$model_order = Model('order');
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         if ($_GET['order_sn'] != '') {
             $condition['order_sn'] = $_GET['order_sn'];
         }
@@ -236,7 +236,7 @@ class order_callControl extends BaseSellerControl {
 	    $model_order = Model('order');
 	    $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
 	    $order_info = $model_order->getOrderInfo($condition,array('order_common','order_goods','member'));
 	    if (empty($order_info)) {
 	        showMessage(Language::get('store_order_none_exist'),'','html','error');
@@ -337,7 +337,7 @@ class order_callControl extends BaseSellerControl {
 		$model_order = Model('order');
 		$condition = array();
 		$condition['order_id'] = $order_id;
-		$condition['store_id'] = $_SESSION['store_id'];
+		// $condition['store_id'] = $_SESSION['store_id'];
 		$order_info	= $model_order->getOrderInfo($condition);
 
 		if ($_GET['state_type'] == 'order_cancel') {

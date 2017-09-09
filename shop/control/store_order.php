@@ -28,7 +28,7 @@ class store_orderControl extends BaseSellerControl {
         if (!$_GET['state_type']) {
             $_GET['state_type'] = 'store_order';
         }
-        $order_list = $model_order->getStoreOrderList($_SESSION['store_id'], $_GET['order_sn'], $_GET['buyer_name'], $_GET['state_type'], $_GET['query_start_date'], $_GET['query_end_date'], $_GET['skip_off'], '*', array('order_goods','order_common','member'));
+        $order_list = $model_order->getStoreOrderList($_GET['order_sn'], $_GET['buyer_name'], $_GET['state_type'], $_GET['query_start_date'], $_GET['query_end_date'], $_GET['skip_off'], '*', array('order_goods','order_common','member'));
 
         Tpl::output('order_list',$order_list);
         Tpl::output('show_page',$model_order->showpage());
@@ -50,7 +50,7 @@ class store_orderControl extends BaseSellerControl {
         $model_order = Model('order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $model_order->getOrderInfo($condition,array('order_common','order_goods','member'));
         if (empty($order_info)) {
             showMessage(Language::get('store_order_none_exist'),'','html','error');
@@ -164,7 +164,7 @@ class store_orderControl extends BaseSellerControl {
         $model_order = Model('order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $model_order->getOrderInfo($condition);
 
         //取得其它订单类型的信息
@@ -275,7 +275,7 @@ class store_orderControl extends BaseSellerControl {
         }
         $order_model = Model('order');
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $order_model->getOrderInfo($condition,array('order_common','order_goods'));
         if (empty($order_info)){
             showMessage(Language::get('member_printorder_ordererror'),'','html','error');
@@ -305,7 +305,7 @@ class store_orderControl extends BaseSellerControl {
         $model_order = Model('order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $goods_new_list = array();
         $goods_all_num = 0;
         $goods_total_price = 0;

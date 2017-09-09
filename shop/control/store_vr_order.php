@@ -27,7 +27,7 @@ class store_vr_orderControl extends BaseSellerControl {
         $model_vr_order = Model('vr_order');
 
         $condition = array();
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         if (preg_match('/^\d{10,20}$/',$_GET['order_sn'])) {
             $condition['order_sn'] = $_GET['order_sn'];
         }
@@ -93,7 +93,7 @@ class store_vr_orderControl extends BaseSellerControl {
         $model_vr_order = Model('vr_order');
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $model_vr_order->getOrderInfo($condition);
         if (empty($order_info)) {
             showMessage(Language::get('store_order_none_exist'),'','html','error');
@@ -137,7 +137,7 @@ class store_vr_orderControl extends BaseSellerControl {
         $model_vr_order = Model('vr_order');
         $condition = array();
         $condition['order_id'] = intval($_GET['order_id']);
-        $condition['store_id'] = $_SESSION['store_id'];
+        // $condition['store_id'] = $_SESSION['store_id'];
         $order_info = $model_vr_order->getOrderInfo($condition);
         if ($_GET['state_type'] == 'order_cancel') {
             $result = $this->_order_cancel($order_info,$_POST);

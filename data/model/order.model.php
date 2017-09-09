@@ -92,9 +92,9 @@ class orderModel extends Model {
      * @param string $skip_off 跳过已关闭订单
      * @return array $order_list
      */
-    public function getStoreOrderList($store_id, $order_sn, $buyer_name, $state_type, $query_start_date, $query_end_date, $skip_off, $fields = '*', $extend = array(),$chain_id = null) {
+    public function getStoreOrderList($order_sn, $buyer_name, $state_type, $query_start_date, $query_end_date, $skip_off, $fields = '*', $extend = array(),$chain_id = null) {
         $condition = array();
-        $condition['store_id'] = $store_id;
+        // $condition['store_id'] = $store_id;
         if (preg_match('/^\d{10,20}$/',$order_sn)) {
             $condition['order_sn'] = $order_sn;
         }

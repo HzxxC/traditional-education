@@ -35,7 +35,7 @@ class statistics_generalControl extends BaseSellerControl {
         //查询订单表下单量、下单金额、下单客户数
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         $field = ' COUNT(*) as ordernum, SUM(order_amount) as orderamount, COUNT(DISTINCT buyer_id) as ordermembernum, AVG(order_amount) as avgorderamount ';
         $stat_order = $model->getoneByStatorder($where, $field);
@@ -48,7 +48,7 @@ class statistics_generalControl extends BaseSellerControl {
         //下单高峰期
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         $field = ' HOUR(FROM_UNIXTIME(order_add_time)) as hourval,COUNT(*) as ordernum ';
         if (C('dbdriver') == 'mysqli') {
@@ -72,7 +72,7 @@ class statistics_generalControl extends BaseSellerControl {
         //查询订单商品表下单商品数
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         $field = ' SUM(goods_num) as ordergoodsnum, AVG(goods_pay_price/goods_num) as avggoodsprice ';
         $stat_ordergoods = $model->getoneByStatordergoods($where, $field);
@@ -103,7 +103,7 @@ class statistics_generalControl extends BaseSellerControl {
         }
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         $field = ' min(order_add_time) as order_add_time,SUM(order_amount) as orderamount,MONTH(FROM_UNIXTIME(order_add_time)) as monthval,DAY(FROM_UNIXTIME(order_add_time)) as dayval ';
         if (C('dbdriver') == 'mysqli') {
@@ -133,7 +133,7 @@ class statistics_generalControl extends BaseSellerControl {
         $etime = $stat_time + 86400 - 1;//今天24点
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
-        $where['store_id'] = $_SESSION['store_id'];
+        // $where['store_id'] = $_SESSION['store_id'];
         $where['order_add_time'] = array('between',array($stime,$etime));
         $field = ' sum(goods_num) as ordergoodsnum, goods_id, min(goods_name) as goods_name ';
         $goodstop30_arr = $model->statByStatordergoods($where, $field, 0, 30,'ordergoodsnum desc', 'goods_id');
@@ -144,7 +144,7 @@ class statistics_generalControl extends BaseSellerControl {
         $where = array();
         $where['order_isvalid'] = 1;//计入统计的有效订单
         $where['order_add_time'] = array('between',array($stime,$etime));
-        $where['store_id'] = array('neq',$_SESSION['store_id']);
+        // $where['store_id'] = array('neq',$_SESSION['store_id']);
         if (!checkPlatformStore()) {//如果不是平台店铺，则查询店铺经营类目的同行数据
             //查询店铺经营类目
             $store_bindclass = Model('store_bind_class')->getStoreBindClassList(array('store_id'=>$_SESSION['store_id']));
