@@ -183,6 +183,58 @@
       ),
     ),
   ),
+  'distribute' => 
+  array (
+    'name' => '分销',
+    'child' => 
+    array (
+      0 => 
+      array (
+        'name' => '设置',
+        'child' => 
+        array (
+          'setting' => '分销设置',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => '视频',
+        'child' => 
+        array (
+          'videos' => '视频管理',
+          'videos_class' => '分类管理',
+        ),
+      ),
+      2 => 
+      array (
+        'name' => '会员',
+        'child' => 
+        array (
+          'member' => '会员管理',
+          'commission' => '分销佣金',
+        ),
+      ),
+      3 => 
+      array (
+        'name' => '交易',
+        'child' => 
+        array (
+          'order' => '视频订单',
+        ),
+      ),
+      4 => 
+      array (
+        'name' => '统计',
+        'child' => 
+        array (
+          'stat_general' => '概述与设置',
+          'stat_industry' => '视频分析',
+          'stat_member' => '会员统计',
+          'stat_trade' => '销量分析',
+        ),
+      ),
+    ),
+  ),
   'mobile' => 
   array (
     'name' => '手机端',

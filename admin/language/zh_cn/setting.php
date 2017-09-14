@@ -36,6 +36,16 @@ $lang['ftp_set_help1']   	= 'FTP设置测试通过后，请更改data/config/con
 $lang['ftp_set_help2']   	= '如果服务器已配置NFS等网络文件系统，建议关闭FTP存储，使用NFS等文件系统实现图片共享。';
 $lang['pointssettings']   = '积分规则';
 
+// 分销设置
+$lang['fx_set']  = '分销设置';
+$lang['fx_video_price']  = '会员费用';
+$lang['fx_first_ratio']  = '一级分成比例';
+$lang['fx_second_ratio']  = '二级分成比例';
+
+$lang['fx_video_price_notice'] = '此为用户购买全部视频查看资格';
+
+// 分销设置 END
+
 $lang['email_set']		= '邮件设置';
 $lang['email_tpl']		= '消息模板';
 $lang['message_tpl']	= '站内信模板';

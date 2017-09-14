@@ -153,8 +153,8 @@ function call_back(picname){
       </div>
     </div>
     <ul class="operate nc-row">
-      <li style="display: none !important;" nctype="pending_matters"><a class="toast show-option" href="javascript:void(0);" onclick="$.cookie('commonPendingMatters', 0, {expires : -1});ajax_form('pending_matters', '待处理事项', '<?php echo urlAdmin('common', 'pending_matters');?>', '480');" title="查看待处理事项">&nbsp;<em>0</em></a></li>
-      <li><a class="time" href="<?php echo ADMIN_SITE_URL?>/modules/system/index.php?act=setting&op=exetarget" target="workspace"  title="手动计划任务触发">&nbsp;</a></li>
+      <!-- <li style="display: none !important;" nctype="pending_matters"><a class="toast show-option" href="javascript:void(0);" onclick="$.cookie('commonPendingMatters', 0, {expires : -1});ajax_form('pending_matters', '待处理事项', '<?php echo urlAdmin('common', 'pending_matters');?>', '480');" title="查看待处理事项">&nbsp;<em>0</em></a></li>
+      <li><a class="time" href="<?php echo ADMIN_SITE_URL?>/modules/system/index.php?act=setting&op=exetarget" target="workspace"  title="手动计划任务触发">&nbsp;</a></li> -->
       <li><a class="sitemap show-option" nctype="map_on" href="javascript:void(0);" title="查看全部管理菜单">&nbsp;</a></li>
       <li><a class="style-color show-option" id="trace_show" href="javascript:void(0);" title="给管理中心换个颜色">&nbsp;</a></li>
       <li><a class="homepage show-option" target="_blank" href="<?php echo SHOP_SITE_URL;?>" title="新窗口打开商城首页">&nbsp;</a></li>

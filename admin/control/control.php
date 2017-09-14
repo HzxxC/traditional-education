@@ -104,7 +104,6 @@ class SystemControl{
         $act = $_GET['act'] ? $_GET['act'] : $_POST['act'];
         $act = $act == '' ? 'index' : $act;
         $permission = $this->getPermission();
-        
         if (!defined('MODULE_NAME')) return true;//modules目录外的不需要验证
         if (is_array($permission[MODULE_NAME]) && in_array($act, $permission[MODULE_NAME])){
             return true;

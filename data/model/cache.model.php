@@ -259,6 +259,9 @@ class cacheModel extends Model {
         if (file_exists(BASE_PATH.DS.ADMIN_MODULES_SHOP.'/include/menu.php')) {
             require(BASE_PATH.DS.ADMIN_MODULES_SHOP.'/include/menu.php');
         }
+        if (file_exists(BASE_PATH.DS.ADMIN_MODULES_DISTRIBUTE.'/include/menu.php')) {
+            require(BASE_PATH.DS.ADMIN_MODULES_DISTRIBUTE.'/include/menu.php');
+        }
         if (file_exists(BASE_PATH.DS.ADMIN_MODULES_CMS.'/include/menu.php')) {
             require(BASE_PATH.DS.ADMIN_MODULES_CMS.'/include/menu.php');
         }
@@ -271,6 +274,7 @@ class cacheModel extends Model {
         if (file_exists(BASE_PATH.DS.ADMIN_MODULES_MOBILE.'/include/menu.php')) {
             require(BASE_PATH.DS.ADMIN_MODULES_MOBILE.'/include/menu.php');
         }
+
         return $_menu;
     }
     /**

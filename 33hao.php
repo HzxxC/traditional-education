@@ -93,6 +93,7 @@ define('ADMIN_MODULES_CMS', 'modules/cms');
 define('ADMIN_MODULES_CIECLE', 'modules/circle');
 define('ADMIN_MODULES_MICEOSHOP', 'modules/microshop');
 define('ADMIN_MODULES_MOBILE', 'modules/mobile');
+define('ADMIN_MODULES_DISTRIBUTE', 'modules/distribute');
 /*
  * 商家入驻状态定义
  */
