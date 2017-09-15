@@ -19,7 +19,7 @@ class videosModel extends Model{
         parent::__construct('videos');
     }
 
-    const STATE1 = 1;       // 出售中
+    const STATE1 = 1;       // 上架
     const STATE0 = 0;       // 下架
 
     /**
@@ -31,9 +31,7 @@ class videosModel extends Model{
     public function addVideos($insert) {
         $result = $this->table('videos')->insert($insert);
         if ($result) {
-            $this->_dGoodsCache($result);
-            $this->_dGoodsCommonCache($insert['goods_commonid']);
-            $this->_dGoodsSpecCache($insert['goods_commonid']);
+            $this->_dVideosCache($result);
         }
         return $result;
     }
@@ -43,7 +41,7 @@ class videosModel extends Model{
      *
      * @param unknown $insert
      */
-    public function addGoodsImagesAll($insert) {
+    public function addVideosImagesAll($insert) {
         $result = $this->table('goods_images')->insertAll($insert);
         if ($result) {
             $commonid_array = array();
@@ -55,7 +53,7 @@ class videosModel extends Model{
             }
             if (C('cache_open') && !empty($commonid_array)) {
                 $commonid_array = array_unique($commonid_array);
-                $goodsid_list = $this->getGoodsList(array('goods_commonid' => array('in', $commonid_array)), 'goods_id');
+                $goodsid_list = $this->getVideosList(array('goods_commonid' => array('in', $commonid_array)), 'goods_id');
                 foreach ($goodsid_list as $val) {
                     $this->_dGoodsCache($val['goods_id']);
                 }
@@ -64,66 +62,20 @@ class videosModel extends Model{
         return $result;
     }
 
-    /**
-     * 获取指定分类指定店铺下的随机商品列表
+     /**
+     * 商品SKU列表
      *
-     * @param int $gcId 一级分类ID
-     * @param int $storeId 店铺ID
-     * @param int $notEqualGoodsId 此商品ID除外
-     * @param int $size 列表最大长度
-     *
-     * @return array|null
+     * @param array $condition 条件
+     * @param string $field 字段
+     * @param string $group 分组
+     * @param string $order 排序
+     * @param int $limit 限制
+     * @param int $page 分页
+     * @return array 二维数组
      */
-    public function getGoodsGcStoreRandList($gcId, $storeId, $notEqualGoodsId = 0, $size = 4) {
-        $condition = array(
-            'store_id' => (int) $storeId,
-            'gc_id_1' => (int) $gcId,
-        );
-
-        if ($notEqualGoodsId > 0) {
-            $condition['goods_id'] = array('neq', (int) $notEqualGoodsId);
-        }
-
-        return $this->getGoodsOnlineList($condition, '*', 0, 'rand()', $size);
+    public function getVideosList($condition, $field = '*', $group = '',$order = '', $limit = 0, $page = 0, $count = 0) {
+        return $this->table('videos')->field($field)->where($condition)->group($group)->order($order)->limit($limit)->page($page, $count)->select();
     }
-
-    /**
-     * 出售中的商品SKU列表（只显示不同颜色的商品，前台商品索引，店铺也商品列表等使用）
-     * @param array $condition
-     * @param string $field
-     * @param string $order
-     * @param number $page
-     * @param number $limit
-     * @return array
-     */
-    public function getGoodsListByColorDistinct($condition, $field = '*', $order = 'goods_id asc', $page = 0, $limit = 0) {
-        $condition['goods_state']   = self::STATE1;
-        $condition['goods_verify']  = self::VERIFY1;
-        $condition = $this->_getRecursiveClass($condition);
-        if (C('dbdriver') == 'mysqli') {
-            //33hao v5.3 去掉重复的SKU
-	    //$_field = "CONCAT(goods_commonid,',',color_id)";
-	    $_field = "CONCAT(goods_commonid) as nc_distinct ," . $field;
-            $_distinct = 'nc_distinct';
-        }
-        
-        // 只查询固定条数不分页时，不计算商品总数
-        if ($limit == 0) {
-	     //33hao v5.3 去掉重复的SKU
-            //$count = $this->getGoodsOnlineCount($condition,"distinct ".$_field);
-	    $count = $this->getGoodsOnlineCount($condition,"distinct CONCAT(goods_commonid)");
-            if ($count == 0) {
-                pagecmd('settotalpagebynum',0);
-                return array();
-            }
-        }
-        $goods_list = array();
-        if (C('dbdriver') == 'mysqli') {
-            $goods_list = $this->getGoodsOnlineList($condition, $_field.' nc_distinct,'.$field, $page, $order, $limit, $_distinct, false, $count);
-        }
-        return $goods_list;
-    }
-
     /**
      * 普通列表，即不包括虚拟商品、F码商品、预售商品、预定商品
      *
@@ -141,7 +93,7 @@ class videosModel extends Model{
         $condition['is_fcode']      = 0;
         $condition['is_presell']    = 0;
         $condition['is_book']       = 0;
-        return $this->getGoodsList($condition, $field, '', $order, 0, $page, 0);
+        return $this->getVideosList($condition, $field, '', $order, 0, $page, 0);
     }
 
     /**
@@ -177,7 +129,7 @@ class videosModel extends Model{
     public function getGoodsOnlineList($condition, $field = '*', $page = 0, $order = 'goods_id desc', $limit = 0, $group = '', $lock = false, $count = 0) {
         $condition['goods_state']   = self::STATE1;
         $condition['goods_verify']  = self::VERIFY1;
-        return $this->getGoodsList($condition, $field, $group, $order, $limit, $page, $count);
+        return $this->getVideosList($condition, $field, $group, $order, $limit, $page, $count);
     }
 
     /**
@@ -190,7 +142,6 @@ class videosModel extends Model{
      * @return array
      */
     public function getVideosCommonList($condition, $field = '*', $page = 10, $order = 'videos_id desc', $limit = '') {
-        $condition = $this->_getRecursiveClass($condition);
         return $this->table('videos')->field($field)->where($condition)->order($order)->limit($limit)->page($page)->select();
     }
 
@@ -206,7 +157,7 @@ class videosModel extends Model{
     public function getGoodsCommonOnlineList($condition, $field = '*', $page = 10, $order = "goods_commonid desc") {
         $condition['goods_state']   = self::STATE1;
         $condition['goods_verify']  = self::VERIFY1;
-        return $this->getGoodsCommonList($condition, $field, $page, $order);
+        return $this->getVideosCommonList($condition, $field, $page, $order);
     }
 
     /**
@@ -216,7 +167,7 @@ class videosModel extends Model{
         $condition['is_virtual']    = 0;
         $condition['goods_state']   = self::STATE1;
         $condition['goods_verify']  = self::VERIFY1;
-        return $this->getGoodsCommonList($condition, $field, $page);
+        return $this->getVideosCommonList($condition, $field, $page);
     }
 
     /**
@@ -226,11 +177,12 @@ class videosModel extends Model{
         $condition['is_virtual']    = 1;
         $condition['goods_state']   = self::STATE1;
         $condition['goods_verify']  = self::VERIFY1;
-        return $this->getGoodsCommonList($condition, $field, $page);
+        return $this->getVideosCommonList($condition, $field, $page);
     }
 
+
     /**
-     * 仓库中的商品列表 卖家中心使用
+     * 下架视频列表
      *
      * @param array $condition 条件
      * @param array $field 字段
@@ -238,72 +190,9 @@ class videosModel extends Model{
      * @param string $order 排序
      * @return array
      */
-    public function getGoodsCommonOfflineList($condition, $field = '*', $page = 10, $order = "goods_commonid desc") {
-        $condition['goods_state']   = self::STATE0;
-        $condition['goods_verify']  = self::VERIFY1;
-        return $this->getGoodsCommonList($condition, $field, $page, $order);
-    }
-
-    /**
-     * 违规的商品列表 卖家中心使用
-     *
-     * @param array $condition 条件
-     * @param array $field 字段
-     * @param string $page 分页
-     * @param string $order 排序
-     * @return array
-     */
-    public function getGoodsCommonLockUpList($condition, $field = '*', $page = 10, $order = "goods_commonid desc", $limit = '') {
-        $condition['goods_state']   = self::STATE10;
-        $condition['goods_verify']  = self::VERIFY1;
-        return $this->getGoodsCommonList($condition, $field, $page, $order, $limit);
-    }
-
-    /**
-     * 等待审核或审核失败的商品列表 卖家中心使用
-     *
-     * @param array $condition 条件
-     * @param array $field 字段
-     * @param string $page 分页
-     * @param string $order 排序
-     * @return array
-     */
-    public function getGoodsCommonWaitVerifyList($condition, $field = '*', $page = 10, $order = "goods_commonid desc", $limit = '') {
-        if (!isset($condition['goods_verify'])) {
-            $condition['goods_verify']  = array('neq', self::VERIFY1);
-        }
-        return $this->getGoodsCommonList($condition, $field, $page, $order, $limit);
-    }
-
-    /**
-     * 查询商品SUK及其店铺信息
-     *
-     * @param array $condition
-     * @param string $field
-     * @return array
-     */
-    public function getGoodsStoreList($condition, $field = '*') {
-        $condition = $this->_getRecursiveClass($condition);
-        return $this->table('goods,store')->field($field)->join('inner')->on('goods.store_id = store.store_id')->where($condition)->select();
-    }
-
-    /**
-     * 查询推荐商品(随机排序)
-     *
-     * @param int $store_id 店铺
-     * @param int $limit 限制
-     * @return array
-     */
-    public function getGoodsCommendList($store_id, $limit = 5) {
-            $goods_commend_list = $this->getGoodsOnlineList(array('store_id' => $store_id, 'goods_commend' => 1), 'goods_id,goods_name,goods_jingle,goods_image,store_id,goods_promotion_price', 0, 'rand()', $limit, 'goods_commonid');
-            if (!empty($goods_id_list)) {
-                $tmp = array();
-                foreach ($goods_id_list as $v) {
-                    $tmp[] = $v['goods_id'];
-                }
-                $goods_commend_list = $this->getGoodsOnlineList(array('goods_id' => array('in',$tmp)), 'goods_id,goods_name,goods_jingle,goods_image,store_id,goods_promotion_price', 0, 'rand()', $limit);
-            }
-        return $goods_commend_list;
+    public function getVideosLockUpList($condition, $field = '*', $page = 10, $order = "videos_id desc", $limit = '') {
+        $condition['videos_state']   = self::STATE0;
+        return $this->getVideosCommonList($condition, $field, $page, $order, $limit);
     }
 
     /**
@@ -315,52 +204,6 @@ class videosModel extends Model{
         return $this->field($field)->where($condition)->limit($limit)->order($order)->select();
     }
 
-    /**
-     * 查询推荐商品(时间排序)
-     *
-     * @param int $limit 限制
-     * @return array
-     */
-    public function getGoodsRecommendAllList($limit = 4) {
-            $model_recommend = Model('goods_recommend');
-            $goods_recommend_id_list = $model_recommend->getGoodsRecommendList(array(),$limit,'rec_id desc','rec_goods_id');
-            if (!empty($goods_recommend_id_list)) {
-                $tmp = array();
-                foreach ($goods_recommend_id_list as $v) {
-                    $tmp[] = $v['rec_goods_id'];
-                }
-                $goods_commend_list = $this->getGoodsOnlineList(array('goods_id' => array('in',$tmp)), 'goods_id,goods_name,goods_jingle,goods_image,store_id,goods_promotion_price', 0, 'goods_id desc', $limit);
-            }
-        return $goods_commend_list;
-    }
-
-    /**
-     * 计算商品库存
-     *
-     * @param array $goods_list
-     * @return array|boolean
-     */
-    public function calculateStorage($goods_list) {
-        // 计算库存
-        if (!empty($goods_list)) {
-            $goodsid_array = array();
-            foreach ($goods_list as $value) {
-                $goodscommonid_array[] = $value['goods_commonid'];
-            }
-            $goods_storage = $this->getGoodsList(array('goods_commonid' => array('in', $goodscommonid_array)), 'goods_storage,goods_commonid,goods_id,goods_storage_alarm', '', '', false);
-            $storage_array = array();
-            foreach ($goods_storage as $val) {
-                if ($val['goods_storage_alarm'] != 0 && $val['goods_storage'] <= $val['goods_storage_alarm']) {
-                    $storage_array[$val['goods_commonid']]['alarm'] = true;
-                }
-                $storage_array[$val['goods_commonid']]['sum'] += $val['goods_storage'];
-                $storage_array[$val['goods_commonid']]['goods_id'] = $val['goods_id'];
-            }
-            return $storage_array;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * 更新商品SUK数据
@@ -369,16 +212,16 @@ class videosModel extends Model{
      * @param array $condition 条件
      * @return boolean
      */
-    public function editGoods($update, $condition, $updateXS = false) {
-        $goods_list = $this->getGoodsList($condition, 'goods_id');
-        if (empty($goods_list)) {
+    public function editVideos($update, $condition, $updateXS = false) {
+        $videos_list = $this->getVideosList($condition, 'videos_id');
+        if (empty($videos_list)) {
             return true;
         }
         $goodsid_array = array();
-        foreach ($goods_list as $value) {
-            $goodsid_array[] = $value['goods_id'];
+        foreach ($videos_list as $value) {
+            $goodsid_array[] = $value['videos_id'];
         }
-        return $this->editGoodsById($update, $goodsid_array, $updateXS);
+        return $this->editVideosById($update, $goodsid_array, $updateXS);
     }
 
     /**
@@ -387,133 +230,22 @@ class videosModel extends Model{
      * @param int|array $goodsid_array
      * @return boolean|unknown
      */
-    public function editGoodsById($update, $goodsid_array, $updateXS = false) {
+    public function editVideosById($update, $goodsid_array, $updateXS = false) {
         if (empty($goodsid_array)) {
             return true;
         }
-        $condition['goods_id'] = array('in', $goodsid_array);
-        $update['goods_edittime'] = TIMESTAMP;
-        $result = $this->table('goods')->where($condition)->update($update);
+        $condition['videos_id'] = array('in', $goodsid_array);
+        $update['videos_edittime'] = TIMESTAMP;
+        $result = $this->table('videos')->where($condition)->update($update);
         if ($result) {
             foreach ((array)$goodsid_array as $value) {
-                $this->_dGoodsCache($value);
+                $this->_dVideosCache($value);
             }
             if (C('fullindexer.open') && $updateXS) {
                 QueueClient::push('updateXS', $goodsid_array);
             }
         }
         return $result;
-    }
-
-    /**
-     * 更新商品促销价 (需要验证抢购和限时折扣是否进行)
-     *
-     * @param array $update 更新数据
-     * @param array $condition 条件
-     * @return boolean
-     */
-    public function editGoodsPromotionPrice($condition) {
-        $goods_list = $this->getGoodsList($condition, '*');
-        $goods_array = array();
-        foreach ($goods_list as $val) {
-            $goods_array[$val['goods_commonid']][$val['goods_id']] = $val;
-        }
-        $model_groupbuy = Model('groupbuy');
-        $model_xianshigoods = Model('p_xianshi_goods');
-        foreach ($goods_array as $key => $val) {
-            // 验证预定商品是否进行
-            foreach ($val as $k => $v) {
-                if ($v['is_book'] == '1') {
-                    if ($v['book_down_time'] > time()) {
-                        // 更新价格
-                        $this->editGoodsById(array('goods_promotion_price' => ($v['book_down_payment'] + $v['book_final_payment']), 'goods_promotion_type' => 0), $k);
-                    } else {
-                        $this->editGoodsById(array('is_book' => 0, 'book_down_payment' => 0, 'book_final_payment' => 0, 'book_down_time' => 0), $k);
-                    }
-                }
-            }
-            // 查询抢购是否进行
-            $groupbuy = $model_groupbuy->getGroupbuyOnlineInfo(array('goods_commonid' => $key));
-            if (!empty($groupbuy)) {
-                // 更新价格
-                $this->editGoods(array('goods_promotion_price' => $groupbuy['groupbuy_price'], 'goods_promotion_type' => 1), array('goods_commonid' => $key, 'is_book' => 0));
-                continue;
-            }
-            foreach ($val as $k => $v) {
-                if ($v['is_book'] == '1') {
-                    continue;
-                }
-                // 查询限时折扣是否进行
-                $xianshigoods = $model_xianshigoods->getXianshiGoodsInfo(array('goods_id' => $k, 'start_time' => array('lt', TIMESTAMP), 'end_time' => array('gt', TIMESTAMP)));
-                if (!empty($xianshigoods)) {
-                    // 更新价格
-                    $this->editGoodsById(array('goods_promotion_price' => $xianshigoods['xianshi_price'], 'goods_promotion_type' => 2), $k);
-                    continue;
-                }
-
-                // 没有促销使用原价
-                $this->editGoodsById(array('goods_promotion_price' => array('exp', 'goods_price'), 'goods_promotion_type' => 0), $k);
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 更新商品数据
-     * @param array $update 更新数据
-     * @param array $condition 条件
-     * @return boolean
-     */
-    public function editGoodsCommon($update, $condition) {
-        $common_list = $this->getGoodsCommonList($condition, 'goods_commonid', 0);
-        if (empty($common_list)) {
-            return false;
-        }
-        $commonid_array = array();
-        foreach ($common_list as $val) {
-            $commonid_array[] = $val['goods_commonid'];
-        }
-        return $this->editGoodsCommonById($update, $commonid_array);
-    }
-
-    /**
-     * 更新商品数据
-     * @param array $update
-     * @param int|array $commonid_array
-     * @return boolean|unknown
-     */
-    public function editGoodsCommonById($update, $commonid_array) {
-        if (empty($commonid_array)) {
-            return true;
-        }
-        $condition['goods_commonid'] = array('in', $commonid_array);
-        $result = $this->table('goods_common')->where($condition)->update($update);
-        if ($result) {
-            foreach ((array)$commonid_array as $val) {
-                $this->_dGoodsCommonCache($val);
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * 锁定商品
-     * @param unknown $condition
-     * @return boolean
-     */
-    public function editGoodsCommonLock($condition) {
-        $update = array('goods_lock' => 1);
-        return $this->editGoodsCommon($update, $condition);
-    }
-
-     /**
-     * 解锁商品
-     * @param unknown $condition
-     * @return boolean
-     */
-    public function editGoodsCommonUnlock($condition) {
-        $update = array('goods_lock' => 0);
-        return $this->editGoodsCommon($update, $condition);
     }
 
     /**
@@ -524,58 +256,15 @@ class videosModel extends Model{
      * @param array $update2
      * @return boolean
      */
-    public function editProduces($condition, $update1, $update2 = array(), $updateXS = false) {
-        $update2 = empty($update2) ? $update1 : $update2;
-        $goods_array = $this->getGoodsCommonList($condition, 'goods_commonid', 0);
-        if (empty($goods_array)) {
-            return true;
-        }
-        $commonid_array = array();
-        foreach ($goods_array as $val) {
-            $commonid_array[] = $val['goods_commonid'];
-        }
-        $return1 = $this->editGoodsCommonById($update1, $commonid_array);
-        $return2 = $this->editGoods($update2, array('goods_commonid' => array('in', $commonid_array)), $updateXS);
-        if ($return1 && $return2) {
+    public function editProduces($condition, $update1, $updateXS = false) {
+        $return = $this->editVideos($update1, $condition, $updateXS);
+        if ($return) {
             return true;
         } else {
             return false;
         }
     }
 
-    /**
-     * 更新商品信息（审核失败）
-     *
-     * @param array $condition
-     * @param array $update1
-     * @param array $update2
-     * @return boolean
-     */
-    public function editProducesVerifyFail($condition, $update1, $update2 = array()) {
-        $result = $this->editProduces($condition, $update1, $update2);
-        if ($result) {
-            $commonlist = $this->getGoodsCommonList($condition, 'goods_commonid,store_id,goods_verifyremark', 0);
-            foreach ($commonlist as $val) {
-                $param = array();
-                $param['common_id'] = $val['goods_commonid'];
-                $param['remark']= $val['goods_verifyremark'];
-                $this->_sendStoreMsg('goods_verify', $val['store_id'], $param);
-            }
-        }
-    }
-
-    /**
-     * 更新未锁定商品信息
-     *
-     * @param array $condition
-     * @param array $update1
-     * @param array $update2
-     * @return boolean
-     */
-    public function editProducesNoLock($condition, $update1, $update2 = array(), $updateXS = false) {
-        $condition['goods_lock'] = 0;
-        return $this->editProduces($condition, $update1, $update2, $updateXS);
-    }
 
     /**
      * 商品下架
@@ -583,7 +272,7 @@ class videosModel extends Model{
      * @return boolean
      */
     public function editProducesOffline($condition) {
-        $update = array('goods_state' => self::STATE0);
+        $update = array('videos_state' => self::STATE0);
         return $this->editProducesNoLock($condition, $update, array(), true);
     }
 
@@ -593,10 +282,9 @@ class videosModel extends Model{
      * @return boolean
      */
     public function editProducesOnline($condition) {
-        $update = array('goods_state' => self::STATE1);
+        $update = array('videos_state' => self::STATE1);
         // 禁售商品、审核失败商品不能上架。
-        $condition['goods_state'] = self::STATE0;
-        $condition['goods_verify'] = array('neq', self::VERIFY0);
+        $condition['videos_state'] = self::STATE0;
         return $this->editProduces($condition, $update);
     }
 
@@ -608,18 +296,10 @@ class videosModel extends Model{
      * @return boolean
      */
     public function editProducesLockUp($update, $condition) {
-        $update_param['goods_state'] = self::STATE10;
+        $update_param['videos_state'] = self::STATE0;
         $update = array_merge($update, $update_param);
-        $return = $this->editProduces($condition, $update, $update_param, true);
+        $return = $this->table('videos') -> where($condition) -> update($update);
         if ($return) {
-            // 商品违规下架发送店铺消息
-            $common_list = $this->getGoodsCommonList($condition, 'goods_commonid,store_id,goods_stateremark', 0);
-            foreach ($common_list as $val) {
-                $param = array();
-                $param['remark'] = $val['goods_stateremark'];
-                $param['common_id'] = $val['goods_commonid'];
-                $this->_sendStoreMsg('goods_violation', $val['store_id'], $param);
-            }
             return true;
         } else {
             return false;
@@ -633,8 +313,8 @@ class videosModel extends Model{
      * @param string $field
      * @return array
      */
-    public function getGoodsInfo($condition, $field = '*') {
-        return $this->table('goods')->field($field)->where($condition)->find();
+    public function getVideosInfo($condition, $field = '*') {
+        return $this->table('videos')->field($field)->where($condition)->find();
     }
 
     /**
@@ -875,7 +555,7 @@ class videosModel extends Model{
      * @return boolean
      */
     public function delGoods($condition) {
-        $goods_list = $this->getGoodsList($condition, 'goods_id,goods_commonid,store_id');
+        $goods_list = $this->getVideosList($condition, 'goods_id,goods_commonid,store_id');
         if (!empty($goods_list)) {
             $goodsid_array = array();
             // 删除商品二维码
@@ -943,28 +623,9 @@ class videosModel extends Model{
      * @param   array $condition 列表条件
      * @return boolean
      */
-    public function delGoodsAll($condition) {
-        $common_list = $this->getGoodsCommonList($condition, 'goods_commonid,store_id');
-        if (empty($common_list)) {
-            return false;
-        }
-        $commonid_array = array();
-        foreach ($common_list as $val) {
-            $commonid_array[] = $val['goods_commonid'];
-            // 商品公共缓存
-            $this->_dGoodsCommonCache($val['goods_commonid']);
-            // 商品规格缓存
-            $this->_dGoodsSpecCache($val['goods_commonid']);
-        }
-        $commonid_array = array_unique($commonid_array);
-
+    public function delVideosAll($condition) {
         // 删除商品表数据
-        $this->delGoods(array('goods_commonid' => array('in', $commonid_array)));
-        // 删除商品公共表数据
-        $this->table('goods_common')->where(array('goods_commonid' => array('in', $commonid_array)))->delete();
-        // 删除商品图片表数据
-        $this->delGoodsImages(array('goods_commonid' => array('in', $commonid_array)));
-        return true;
+        return $this->table('videos')->where($condition)->delete();
     }
 
     /**
@@ -973,7 +634,7 @@ class videosModel extends Model{
      */
     public function delGoodsNoLock($condition) {
         $condition['goods_lock'] = 0;
-        $common_array = $this->getGoodsCommonList($condition, 'goods_commonid', 0);
+        $common_array = $this->getVideosCommonList($condition, 'goods_commonid', 0);
         $common_array = array_under_reset($common_array, 'goods_commonid');
         $commonid_array = array_keys($common_array);
         return $this->delGoodsAll(array('goods_commonid' => array('in', $commonid_array)));
@@ -996,13 +657,10 @@ class videosModel extends Model{
       */
     private function _getRecursiveClass($condition){
         if (isset($condition['vc_id']) && !is_array($condition['vc_id'])) {
-            $gc_list = Model('videos_class')->getGoodsClassForCacheModel();
-            if (!empty($gc_list[$condition['vc_id']])) {
-                $gc_id[] = $condition['vc_id'];
-                $gcchild_id = empty($gc_list[$condition['vc_id']]['child']) ? array() : explode(',', $gc_list[$condition['vc_id']]['child']);
-                $gcchildchild_id = empty($gc_list[$condition['vc_id']]['childchild']) ? array() : explode(',', $gc_list[$condition['vc_id']]['childchild']);
-                $gc_id = array_merge($gc_id, $gcchild_id, $gcchildchild_id);
-                $condition['vc_id'] = array('in', $gc_id);
+            $vc_list = Model('videos_class')->getVideosClassForCacheModel();
+            if (!empty($vc_list[$condition['vc_id']])) {
+                $vc_id[] = $condition['vc_id'];
+                $condition['vc_id'] = array('in', $vc_id);
             }
         }
         return $condition;
@@ -1044,14 +702,15 @@ class videosModel extends Model{
      * @param string $fields 需要取得的缓存键值, 例如：'*','goods_name,store_name'
      * @return array
      */
-    public function getGoodsInfoByID($goods_id, $fields = '*') {
-        $goods_info = $this->_rGoodsCache($goods_id, $fields);
-        if (empty($goods_info)) {
-            $goods_info = $this->getGoodsInfo(array('goods_id'=>$goods_id));
-            $this->_wGoodsCache($goods_id, $goods_info);
+    public function getVideosInfoByID($videos_id, $fields = '*') {
+        $videos_info = $this->_rVideosCache($videos_id, $fields);
+        if (empty($videos_info)) {
+            $videos_info = $this->getVideosInfo(array('videos_id'=>$videos_id));
+            $this->_wVideosCache($videos_id, $videos_info);
         }
-        return $goods_info;
+        return $videos_info;
     }
+
 
     /**
      * 验证是否为普通商品
@@ -1091,7 +750,7 @@ class videosModel extends Model{
     public function getGoodsSpecListByCommonId($common_id) {
         $spec_list = $this->_rGoodsSpecCache($common_id);
         if (empty($spec_list)) {
-            $spec_array = $this->getGoodsList(array('goods_commonid' => $common_id), 'goods_spec,goods_id,store_id,goods_image,color_id');
+            $spec_array = $this->getVideosList(array('goods_commonid' => $common_id), 'goods_spec,goods_id,store_id,goods_image,color_id');
             $spec_list['spec'] = serialize($spec_array);
             $this->_wGoodsSpecCache($common_id, $spec_list);
         }
@@ -1118,132 +777,46 @@ class videosModel extends Model{
     }
 
     /**
-     * 读取商品缓存
-     * @param int $goods_id
+     * 读取视频缓存
+     * @param int $videos_id
      * @param string $fields
      * @return array
      */
-    private function _rGoodsCache($goods_id, $fields) {
-        return rcache($goods_id, 'goods', $fields);
+    private function _rVideosCache($videos_id, $fields) {
+        return rcache($videos_id, 'videos', $fields);
     }
 
     /**
-     * 写入商品缓存
-     * @param int $goods_id
+     * 写入视频缓存
+     * @param int $videos_id
      * @param array $goods_info
      * @return boolean
      */
-    private function _wGoodsCache($goods_id, $goods_info) {
-        return wcache($goods_id, $goods_info, 'goods');
+    private function _wVideosCache($videos_id, $vidoes_info) {
+        return wcache($videos_id, $vidoes_info, 'videos');
     }
 
     /**
      * 删除商品缓存
-     * @param int $goods_id
+     * @param int $videos_id
      * @return boolean
      */
-    private function _dGoodsCache($goods_id) {
-        return dcache($goods_id, 'goods');
+    private function _dVideosCache($videos_id) {
+        return dcache($videos_id, 'videos');
     }
 
-    /**
-     * 读取商品公共缓存
-     * @param int $goods_commonid
-     * @param string $fields
-     * @return array
-     */
-    private function _rGoodsCommonCache($goods_commonid, $fields) {
-        return rcache($goods_commonid, 'goods_common', $fields);
-    }
-
-    /**
-     * 写入商品公共缓存
-     * @param int $goods_commonid
-     * @param array $common_info
-     * @return boolean
-     */
-    private function _wGoodsCommonCache($goods_commonid, $common_info) {
-        return wcache($goods_commonid, $common_info, 'goods_common');
-    }
-
-    /**
-     * 删除商品公共缓存
-     * @param int $goods_commonid
-     * @return boolean
-     */
-    private function _dGoodsCommonCache($goods_commonid) {
-        return dcache($goods_commonid, 'goods_common');
-    }
-
-    /**
-     * 读取商品规格缓存
-     * @param int $goods_commonid
-     * @param string $fields
-     * @return array
-     */
-    private function _rGoodsSpecCache($goods_commonid) {
-        return rcache($goods_commonid, 'goods_spec');
-    }
-
-    /**
-     * 写入商品规格缓存
-     * @param int $goods_commonid
-     * @param array $spec_list
-     * @return boolean
-     */
-    private function _wGoodsSpecCache($goods_commonid, $spec_list) {
-        return wcache($goods_commonid, $spec_list, 'goods_spec');
-    }
-
-    /**
-     * 删除商品规格缓存
-     * @param int $goods_commonid
-     * @return boolean
-     */
-    private function _dGoodsSpecCache($goods_commonid) {
-        return dcache($goods_commonid, 'goods_spec');
-    }
-
-    /**
-     * 读取商品图片缓存
-     * @param int $key ($goods_commonid .'|'. $color_id)
-     * @param string $fields
-     * @return array
-     */
-    private function _rGoodsImageCache($key) {
-        return rcache($key, 'goods_image');
-    }
-
-    /**
-     * 写入商品图片缓存
-     * @param int $key ($goods_commonid .'|'. $color_id)
-     * @param array $image_list
-     * @return boolean
-     */
-    private function _wGoodsImageCache($key, $image_list) {
-        return wcache($key, $image_list, 'goods_image');
-    }
-
-    /**
-     * 删除商品图片缓存
-     * @param int $key ($goods_commonid .'|'. $color_id)
-     * @return boolean
-     */
-    private function _dGoodsImageCache($key) {
-        return dcache($key, 'goods_image');
-    }
 
     /**
      * 获取单条商品信息
      *
-     * @param int $goods_id
+     * @param int $videos_id
      * @return array
      */
-    public function getGoodsDetail($goods_id) {
-        if($goods_id <= 0) {
+    public function getVideosDetail($videos_id) {
+        if($videos_id <= 0) {
             return null;
         }
-        $result1 = $this->getGoodsInfoAndPromotionById($goods_id);
+        $result1 = $this->getGoodsInfoAndPromotionById($videos_id);
 
         if (empty($result1)) {
             return null;

@@ -79,6 +79,8 @@ define('ATTACH_MICROSHOP','microshop');
 define('ATTACH_DELIVERY','delivery');
 define('ATTACH_CHAIN', 'chain');
 define('ATTACH_ADMIN_AVATAR','admin/avatar');
+define('ATTACH_DISTRIBUTE','distribute/images');
+define('ATTACH_DISTRIBUTE_VIDEO','distribute/videos');
 define('TPL_SHOP_NAME','default');
 define('TPL_CIRCLE_NAME', 'default');
 define('TPL_MICROSHOP_NAME', 'default');

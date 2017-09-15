@@ -207,30 +207,15 @@ class videos_classModel extends Model
      * @param array $gcids
      * @return boolean
      */
-    public function delVideosClassByGcIdString($gcids) {
-        $gcids = explode(',', $gcids);
-        if (empty($gcids)) {
+    public function delVideosClassByGcIdString($vcids) {
+        $vcids = explode(',', $vcids);
+        if (empty($vcids)) {
             return false;
         }
-        $goods_class = $this->getGoodsClassForCacheModel();
-        $gcid_array = array();
-        foreach ($gcids as $gc_id) {
-            $child = (!empty($goods_class[$gc_id]['child'])) ? explode(',', $goods_class[$gc_id]['child']) : array();
-            $childchild = (!empty($goods_class[$gc_id]['childchild'])) ? explode(',', $goods_class[$gc_id]['childchild']) : array();
-            $gcid_array = array_merge($gcid_array, array($gc_id), $child, $childchild);
-        }
         // 删除商品分类
-        $this->delGoodsClass(array('gc_id' => array('in', $gcid_array)));
-        // 删除常用商品分类
-        Model('goods_class_staple')->delStaple(array('gc_id_1|gc_id_2|gc_id_3' => array('in', $gcid_array)));
-        // 删除分类tag表
-        Model('goods_class_tag')->delGoodsClassTag(array('gc_id_1|gc_id_2|gc_id_3' => array('in', $gcid_array)));
-        // 删除店铺绑定分类
-        Model('store_bind_class')->delStoreBindClass(array('class_1|class_2|class_3' => array('in', $gcid_array)));
-        //删除商家权限组绑定的分类
-        Model('seller_group_bclass')->delSellerGroupBclass(array('class_1|class_2|class_3' => array('in', $gcid_array)));
-        // 商品下架
-        Model('goods')->editProducesLockUp(array('goods_stateremark' => '商品分类被删除，需要重新选择分类'), array('gc_id' => array('in', $gcid_array)));
+        $this->delVideosClass(array('vc_id' => array('in', $vcids)));
+        // 视频下架
+        // Model('Videos')->editProducesLockUp(array('videos_stateremark' => '视频分类被删除，需要重新选择分类'), array('vc_id' => array('in', $vcids)));
         return true;
     }
 

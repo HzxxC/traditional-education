@@ -34,7 +34,7 @@
             <dt>视频标题</dt>
             <dd>
               <label>
-                <input type="text" value="" name="goods_name" id="goods_name" class="s-input-txt" placeholder="输入商品全称或关键字">
+                <input type="text" value="" name="vidoes_title" id="vidoes_title" class="s-input-txt" placeholder="输入视频标题全称或关键字">
               </label>
             </dd>
           </dl>
@@ -45,9 +45,9 @@
               <input type="hidden" id="cate_id" name="cate_id" value="" class="mls_id" />
               <select class="class-select">
                 <option value="0"><?php echo $lang['nc_please_choose'];?></option>
-                <?php if(!empty($output['gc_list'])){ ?>
-                <?php foreach($output['gc_list'] as $k => $v){ ?>
-                <option value="<?php echo $v['gc_id'];?>"><?php echo $v['gc_name'];?></option>
+                <?php if(!empty($output['vc_list'])){ ?>
+                <?php foreach($output['vc_list'] as $k => $v){ ?>
+                <option value="<?php echo $v['vc_id'];?>"><?php echo $v['vc_name'];?></option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -57,24 +57,10 @@
             <dt>视频状态</dt>
             <dd>
               <label>
-                <select name="goods_state" class="s-select">
+                <select name="videos_state" class="s-select">
                   <option value=""><?php echo $lang['nc_please_choose'];?></option>
-                  <option value="1">出售中</option>
-                  <option value="0">仓库中</option>
-                  <option value="10">违规下架</option>
-                </select>
-              </label>
-            </dd>
-          </dl>
-          <dl>
-            <dt>审核状态</dt>
-            <dd>
-              <label>
-                <select name="goods_verify" class="s-select">
-                  <option value=""><?php echo $lang['nc_please_choose'];?></option>
-                  <option value="1">通过</option>
-                  <option value="0">未通过</option>
-                  <option value="10">审核中</option>
+                  <option value="1">上架</option>
+                  <option value="0">下架</option>
                 </select>
               </label>
             </dd>
@@ -93,81 +79,58 @@
 <script type="text/javascript">
 $(function(){
     $("#flexigrid").flexigrid({
-        url: 'index.php?act=goods&op=get_xml&type=<?php echo $output['type'];?>',
+        url: 'index.php?act=videos&op=get_xml&type=<?php echo $output['type'];?>',
         colModel : [
-            {display: '操作', name : 'operation', width : 150, sortable : false, align: 'center', className: 'handle'},
-            {display: '视频标题', name : 'videos_name', width : 150, sortable : false, align: 'left'},
-            {display: '分类ID', name : 'gc_id', width : 60, sortable : true, align: 'center'},
-            {display: '分类名称', name : 'gc_name', width : 180, sortable : true, align: 'center'},
-            {display: '视频状态', name : 'videos_state', width : 60, sortable : true, align: 'center'},
-            {display: '发布时间', name : 'goods_addtime', width : 100, sortable : true, align: 'center'}
+            {display: '操作', name : 'operation', width : 180, sortable : false, align: 'center', className: 'handle'},
+            {display: '视频标题', name : 'videos_title', width : 300, sortable : false, align: 'left'},
+            {display: '视频图片', name : 'videos_image', width : 60, sortable : true, align: 'center'},
+            {display: '分类ID', name : 'vc_id', width : 60, sortable : true, align: 'center'},
+            {display: '分类名称', name : 'vc_name', width : 180, sortable : true, align: 'center'},
+            {display: '视频状态', name : 'videos_state', width : 120, sortable : true, align: 'center'},
+            {display: '发布时间', name : 'videos_addtime', width : 100, sortable : true, align: 'center'}
             ],
         buttons : [
-             {display: '<i class="fa fa-plus"></i>新增数据', name : 'add_goods', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operations }      
+             {display: '<i class="fa fa-plus"></i>新增数据', name : 'add_videos', bclass : 'add', title : '添加一条新数据到列表', onpress : fg_operations }      
             ],
         searchitems : [
-            {display: '视频标题', name : 'goods_name'},
-            {display: '分类ID', name : 'gc_id'},
-            {display: '分类名称', name : 'store_name'}
+            {display: '视频标题', name : 'videos_title'},
+            {display: '分类ID', name : 'vc_id'},
+            {display: '分类名称', name : 'vc_name'}
             ],
-        sortname: "goods_commonid",
+        sortname: "videos_id",
         sortorder: "desc",
-        title: '商品列表'
+        title: '视频列表'
     });
 
 
     // 高级搜索提交
     $('#ncsubmit').click(function(){
-        $("#flexigrid").flexOptions({url: 'index.php?act=goods&op=get_xml&'+$("#formSearch").serialize(),query:'',qtype:''}).flexReload();
+        $("#flexigrid").flexOptions({url: 'index.php?act=videos&op=get_xml&'+$("#formSearch").serialize(),query:'',qtype:''}).flexReload();
     });
 
     // 高级搜索重置
     $('#ncreset').click(function(){
-        $("#flexigrid").flexOptions({url: 'index.php?act=goods&op=get_xml'}).flexReload();
+        $("#flexigrid").flexOptions({url: 'index.php?act=videos&op=get_xml'}).flexReload();
         $("#formSearch")[0].reset();
     });
 });
 
-function fg_operation(name, bDiv) {
-    if (name == 'csv') {
-        if ($('.trSelected', bDiv).length == 0) {
-            if (!confirm('您确定要下载全部数据吗？')) {
-                return false;
-            }
-        }
-        var itemids = new Array();
-        $('.trSelected', bDiv).each(function(i){
-            itemids[i] = $(this).attr('data-id');
-        });
-        fg_csv(itemids);
-    }
-}
-
 function fg_operations(name, bDiv) {
-    if (name == 'add_goods') {
-        window.open(ADD_GOODS_URL);
+    if (name == 'add_videos') {
+        window.location.href = 'index.php?act=videos&op=videos_add';
     }
 }
-
-function fg_csv(ids) {
-    id = ids.join(',');
-    window.location.href = $("#flexigrid").flexSimpleSearchQueryString()+'&op=export_csv&type=<?php echo $output['type'];?>&id=' + id;
-}
-
 
 //视频下架
 function fg_lonkup(ids) {
-    _uri = "index.php?act=goods&op=goods_lockup&id=" + ids;
-    CUR_DIALOG = ajax_form('goods_lockup', '违规下架理由', _uri, 640);
+    _uri = "index.php?act=videos&op=videos_lockup&id=" + ids;
+    CUR_DIALOG = ajax_form('videos_lockup', '违规下架理由', _uri, 640);
 }
 
-function fg_sku(commonid) {
-    CUR_DIALOG = ajax_form('login','商品"' + commonid +'"的SKU列表','<?php echo urlAdminShop('goods', 'get_goods_sku_list');?>&commonid=' + commonid, 480);
-}
 // 删除
 function fg_del(id) {
     if(confirm('删除后将不能恢复，确认删除这项吗？')){
-        $.getJSON('index.php?act=goods&op=goods_del', {id:id}, function(data){
+        $.getJSON('index.php?act=videos&op=videos_del', {id:id}, function(data){
             if (data.state) {
                 $("#flexigrid").flexReload();
             } else {
@@ -176,9 +139,5 @@ function fg_del(id) {
         });
     }
 }
-// 商品审核
-function fg_verify(ids) {
-    _uri = "index.php?act=goods&op=goods_verify&id=" + ids;
-    CUR_DIALOG = ajax_form('goods_verify', '审核商品', _uri, 640);
-}
+
 </script> 

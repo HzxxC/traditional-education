@@ -2,7 +2,7 @@
 
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="index.php?act=goods_class&op=goods_class" title="返回商品分类列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+    <div class="item-title"><a class="back" href="index.php?act=videos_class&op=videos_class" title="返回视频分类列表"><i class="fa fa-arrow-circle-o-left"></i></a>
       <div class="subject">
         <h3>视频分类管理 - <?php echo $lang['nc_new'];?></h3>
         <h5>视频分类管理 - 添加，编辑，删除</h5>
@@ -44,14 +44,14 @@
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label>状态</label>
+          <label>分类状态</label>
         </dt>
         <dd class="opt">
           <div class="onoff">
-          <label for="vc_state_enabled" class="cb-enable selected" title="是">是</label>
-          <label for="vc_state_disabled" class="cb-disable" title="否">否</label>
-          <input id="gc_state_enabled" name="vc_state" checked="checked" value="1" type="radio">
-          <input id="vc_state_disabled" name="vc_state" value="0" type="radio">
+          <label for="vc_state_enabled" class="cb-enable selected" title="显示">显示</label>
+          <label for="vc_state_disabled" class="cb-disable" title="隐藏">隐藏</label>
+          <input id="vc_state_enabled" name="vc_status" checked="checked" value="1" type="radio">
+          <input id="vc_state_disabled" name="vc_status" value="0" type="radio">
           </div>
           <p class="notic"></p>
         </dd>
@@ -73,7 +73,7 @@ $(function(){
 
 //表单验证	
 	$('#videos_class_form').validate({
-        errorPlacement: function(error, element){
+      errorPlacement: function(error, element){
 			var error_td = element.parent('dd').children('span.err');
             error_td.append(error);
         },

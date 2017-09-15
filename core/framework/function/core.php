@@ -2266,6 +2266,9 @@ function urlAdminMobile($act = '', $op = '', $args = array()){
 function urlAdminCircle($act = '', $op = '', $args = array()){
     return url($act, $op, $args, false, ADMIN_SITE_URL.DS.ADMIN_MODULES_CIECLE);
 }
+function urlAdminDistribute($act = '', $op = '', $args = array()){
+    return url($act, $op, $args, false, ADMIN_SITE_URL.DS.ADMIN_MODULES_DISTRIBUTE);
+}
 /**
  * CMS使用的URL链接函数，强制使用动态传参数模式
  *

@@ -1,14 +1,14 @@
 <?php defined('In33hao') or exit('Access Invalid!');?>
 
-<form method="post" name="form1" id="form1" action="<?php echo urlAdminShop('goods', 'goods_lockup');?>">
+<form method="post" name="form1" id="form1" action="<?php echo urlAdminDistribute('videos', 'videos_lockup');?>">
   <input type="hidden" name="form_submit" value="ok" />
-  <input type="hidden" value="<?php echo $output["common_info"]["goods_commonid"];?>" name="commonid">
+  <input type="hidden" value="<?php echo $output["videos_info"]["videos_id"];?>" name="videos_id">
 
   <div class="ncap-form-default">
   <dl class="row">
-      <dt class="tit">违规商品货号</dt><dd class="opt"><?php echo $output['common_info']['goods_commonid'];?></dd></dl>
+      <dt class="tit">违规商品货号</dt><dd class="opt"><?php echo $output['videos_info']['videos_id'];?></dd></dl>
       <dl class="row">
-      <dt class="tit">违规商品名称</dt><dd class="opt"><?php echo $output['common_info']['goods_name'];?></dd></dl>
+      <dt class="tit">违规商品名称</dt><dd class="opt"><?php echo $output['videos_info']['videos_title'];?></dd></dl>
     <dl class="row">
       <dt class="tit">
         <label for="close_reason">违规下架理由</label>

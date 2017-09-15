@@ -43,7 +43,7 @@
         <tr data-id="<?php echo $v['vc_id'];?>">
           <td class="sign"><i class="ico-check"></i></td>
           <td class="handle">
-            <a class="btn red" href="javascript:void(0);" onclick="fg_del(<?php echo $v['vc_id'];?>);"><i class="fa fa-trash-o"></i><?php echo $lang['nc_del'];?></a>
+            <a class="btn red" href="javascript:void(0);" onclick="fv_del(<?php echo $v['vc_id'];?>);"><i class="fa fa-trash-o"></i><?php echo $lang['nc_del'];?></a>
             <a class="btn blue" href="index.php?act=videos_class&op=videos_class_edit&vc_id=<?php echo $v['vc_id'];?>"><i class="fa fa-pencil-square-o"></i>编辑</a>
           </td>
           <td class="sort"><span title="<?php echo $lang['nc_editable'];?>" column_id="<?php echo $v['vc_id'];?>" fieldname="vc_sort" nc_type="inline_edit" class="editable "><?php echo $v['vc_sort'];?></span></td>
