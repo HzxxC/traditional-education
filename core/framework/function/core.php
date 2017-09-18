@@ -969,7 +969,19 @@ function getStoreAvatarForID($id) {
 		return UPLOAD_SITE_URL.'/'.ATTACH_COMMON.DS.C('default_store_avatar');
 	}
 }
-
+/**
+ * 取得视频主图
+ *
+ * @param string $img 图片名
+ * @return string
+ */
+function getVideosImage($img){
+    if (empty($img)) {
+        return UPLOAD_SITE_URL.DS.ATTACH_COMMON.DS.C('default_image');
+    } else {
+        return UPLOAD_SITE_URL.DS.ATTACH_DISTRIBUTE.DS.$img;
+    }
+}
 /**
  * 获取文章URL
  */

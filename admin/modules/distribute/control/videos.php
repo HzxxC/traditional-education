@@ -108,10 +108,10 @@ class videosControl extends SystemControl{
             $update_array['videos_title'] = trim($_POST['videos_title']);
             $update_array['videos_body'] = trim($_POST['videos_body']);
             $update_array['videos_body2'] = trim($_POST['videos_body2']);
-            $update_array['videos_state'] = trim($_POST['videos_state']);
+            $update_array['videos_state'] = intval($_POST['videos_state']);
 
             if (!empty($_POST['videos_image'])){
-                $insert_array['videos_image'] = $_POST['videos_image'];
+                $update_array['videos_image'] = $_POST['videos_image'];
             }
 
             $result = $model_videos->editVideos($update_array, $where);
@@ -122,21 +122,20 @@ class videosControl extends SystemControl{
 
             $url = array(
                 array(
-                    'url'=>'index.php?act=videos&op=videos_edit&vc_id='.intval($_POST['videos_id']),
+                    'url'=>'index.php?act=videos&op=videos_edit&videos_id='.intval($_POST['videos_id']),
                     'msg'=>$lang['videos_batch_edit_again'],
                 ),
                 array(
-                    'url'=>'index.php?act=videos_class&op=videos_class',
+                    'url'=>'index.php?act=videos&op=index',
                     'msg'=>$lang['videos_add_back_to_list'],
                 )
             );
-            $this->log(L('nc_edit,videos_index_class').'['.$_POST['gc_name'].']',1);
+            $this->log(L('nc_edit,videos_index_class').'['.$_POST['videos_title'].']',1);
             showMessage($lang['videos_batch_edit_ok'],$url,'html','succ',1,5000);
         }
 
         $vc_list = Model('videos_class')->getVideosClassList(array());
         $videos_info = $model_videos -> getVideosInfo($where); 
-       
         Tpl::output('top_link',$this->sublink($this->links,'videos_class_edit'));
 
         Tpl::output('vc_list', $vc_list);        
@@ -242,8 +241,8 @@ class videosControl extends SystemControl{
                     break;
             }
             $operation .= "<span class='btn'><em><i class='fa fa-cog'></i>设置 <i class='arrow'></i></em><ul>";
-            $operation .= "<li><a href='" . urlAdminDistribute('videos', 'videos_edit', array('videos_id' => $value['videos_id'])) . "' target=\"_blank\">编辑</a></li>";
-            // $operation .= "<li><a href='" . urlAdminDistribute('videos', 'index', array('videos_id' => $value['videos_id'])) . "' target=\"_blank\">查看视频详细</a></li>";
+            $operation .= "<li><a href='" . urlAdminDistribute('videos', 'videos_edit', array('videos_id' => $value['videos_id'])) . "'>编辑</a></li>";
+            $operation .= "<li><a href='" . urlAdminDistribute('videos', 'index', array('videos_id' => $value['videos_id'])) . "' target=\"_blank\">查看视频详细</a></li>";
             $operation .= "</ul>";
             $param['operation'] = $operation;
             $param['videos_title'] = $value['videos_title'];

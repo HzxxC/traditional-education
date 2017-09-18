@@ -217,32 +217,32 @@ class videosModel extends Model{
         if (empty($videos_list)) {
             return true;
         }
-        $goodsid_array = array();
+        $videoids_array = array();
         foreach ($videos_list as $value) {
-            $goodsid_array[] = $value['videos_id'];
+            $videoids_array[] = $value['videos_id'];
         }
-        return $this->editVideosById($update, $goodsid_array, $updateXS);
+        return $this->editVideosById($update, $videoids_array, $updateXS);
     }
 
     /**
      * 更新商品SUK数据
      * @param array $update
-     * @param int|array $goodsid_array
+     * @param int|array $videoids_array
      * @return boolean|unknown
      */
-    public function editVideosById($update, $goodsid_array, $updateXS = false) {
-        if (empty($goodsid_array)) {
+    public function editVideosById($update, $videoids_array, $updateXS = false) {
+        if (empty($videoids_array)) {
             return true;
         }
-        $condition['videos_id'] = array('in', $goodsid_array);
-        $update['videos_edittime'] = TIMESTAMP;
+        $condition['videos_id'] = array('in', $videoids_array);
+        $update['videos_addtime'] = TIMESTAMP;
         $result = $this->table('videos')->where($condition)->update($update);
         if ($result) {
-            foreach ((array)$goodsid_array as $value) {
+            foreach ((array)$videoids_array as $value) {
                 $this->_dVideosCache($value);
             }
             if (C('fullindexer.open') && $updateXS) {
-                QueueClient::push('updateXS', $goodsid_array);
+                QueueClient::push('updateXS', $videoids_array);
             }
         }
         return $result;

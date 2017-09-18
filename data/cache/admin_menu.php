@@ -211,7 +211,8 @@
         'child' => 
         array (
           'member' => '会员管理',
-          'commission' => '分销佣金',
+          'commission' => '佣金明细',
+          'withdraw' => '提现明细',
         ),
       ),
       3 => 

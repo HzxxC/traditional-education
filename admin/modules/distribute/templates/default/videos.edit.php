@@ -4,13 +4,14 @@
   <div class="fixed-bar">
     <div class="item-title"><a class="back" href="index.php?act=videos&op=index" title="返回视频列表"><i class="fa fa-arrow-circle-o-left"></i></a>
       <div class="subject">
-        <h3>视频管理 - <?php echo $lang['nc_new'];?>“<?php echo $output['videos_info']['videos_title'];?>”</h3>
+        <h3>视频管理 - 编辑“<?php echo $output['videos_info']['videos_title'];?>”</h3>
         <h5>视频管理 - 添加，编辑，删除</h5>
       </div>
     </div>
   </div>
   <form id="videos_form" enctype="multipart/form-data" method="post">
     <input type="hidden" name="form_submit" value="ok" />
+    <input type="hidden" name="videos_id" value="<?php echo $output['videos_info']['videos_id']; ?>" />
     <div class="ncap-form-default">
       <dl class="row">
         <dt class="tit">
@@ -21,12 +22,12 @@
             <option value="0"><?php echo $lang['nc_please_choose'];?></option>
             <?php if(!empty($output['vc_list']) && is_array($output['vc_list'])){ ?>
             <?php foreach($output['vc_list'] as $k => $v){ ?>
-            <option <?php if($output['vc_id'] == $v['vc_id']){ ?>selected='selected'<?php } ?> value="<?php echo $v['vc_id'];?>"><?php echo $v['vc_name'];?></option>
+            <option <?php if($output['videos_info']['vc_id'] == $v['vc_id']){ ?>selected='selected'<?php } ?> value="<?php echo $v['vc_id'];?>"><?php echo $v['vc_name'];?></option>
             <?php } ?>
             <?php } ?>
           </select>
-          <input type="hidden" name="vc_name" value="" id="vc_name" />
-          <input type="hidden" name="vc_id" value="0" id="vc_id" />
+          <input type="hidden" name="vc_name" value="<?php echo $output['videos_info']['vc_name']; ?>" id="vc_name" />
+          <input type="hidden" name="vc_id" value="<?php echo $output['videos_info']['vc_id']; ?>" id="vc_id" />
           <span class="err"></span>
           <p class="notic">视频所属分类</p>
         </dd>
@@ -36,7 +37,7 @@
           <label for="videos_title"><em>*</em>视频标题</label>
         </dt>
         <dd class="opt">
-          <input type="text" value="" name="videos_title" id="videos_title" maxlength="20" class="input-txt">
+          <input type="text" value="<?php echo $output['videos_info']['videos_title'];?>" name="videos_title" id="videos_title" maxlength="20" class="input-txt">
           <span class="err"></span>
           <p class="notic">视频标题，不超过30个字</p>
         </dd>
@@ -45,8 +46,8 @@
         <dt class="tit">视频图片</dt>
         <dd class="opt">
           <div class="ncsc-upload-thumb store-sns-pic">
-          <p><img nctype="normal_img" src="<?php echo SHOP_TEMPLATES_URL?>/images/member/default_image.png"/></p>
-          <input type="hidden" name="videos_image" id="videos_image" value="" />
+          <p><img nctype="normal_img" src="<?php echo getVideosImage($output['videos_info']['videos_image']); ?>"/></p>
+          <input type="hidden" name="videos_image" id="videos_image" value="<?php echo $output['videos_info']['videos_image'];?>" />
         </div>
         <div class="handle">
           <div class="ncsc-upload-btn"> <a href="javascript:void(0);"><span>
@@ -78,7 +79,7 @@
           <label><em>*</em>学习公告</label>
         </dt>
         <dd class="opt">
-          <?php showEditor('videos_body');?>
+          <?php showEditor('videos_body',$output['videos_info']['videos_body']);?>
           <span class="err"></span>
           <p class="notic"></p>
         </dd>
@@ -88,7 +89,7 @@
           <label><em>*</em>推广赚钱</label>
         </dt>
         <dd class="opt">
-          <?php showEditor('videos_body2');?>
+          <?php showEditor('videos_body2',$output['videos_info']['videos_body2']);?>
           <span class="err"></span>
           <p class="notic"></p>
         </dd>
@@ -99,10 +100,10 @@
         </dt>
         <dd class="opt">
           <div class="onoff">
-          <label for="vc_state_enabled" class="cb-enable selected" title="上架">上架</label>
-          <label for="vc_state_disabled" class="cb-disable" title="下架">下架</label>
-          <input id="vc_state_enabled" name="videos_state" checked="checked" value="1" type="radio">
-          <input id="vc_state_disabled" name="videos_state" value="0" type="radio">
+          <label for="vc_state_enabled" class="cb-enable <?php if($output['videos_info']['videos_state']) echo "selected"; ?>" title="上架">上架</label>
+          <label for="vc_state_disabled" class="cb-disable <?php if(!$output['videos_info']['videos_state']) echo "selected"; ?>" title="下架">下架</label>
+          <input id="vc_state_enabled" name="videos_state" <?php if($output['videos_info']['videos_state']) echo "checked"; ?> value="1" type="radio">
+          <input id="vc_state_disabled" name="videos_state" <?php if(!$output['videos_info']['videos_state']) echo "checked"; ?> value="0" type="radio">
           </div>
           <p class="notic"></p>
         </dd>

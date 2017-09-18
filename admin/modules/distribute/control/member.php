@@ -1,6 +1,6 @@
 <?php
 /**
- * 会员管理
+ * 会员佣金
  *
  *
  *
@@ -29,7 +29,7 @@ class memberControl extends SystemControl{
      * 会员管理
      */
     public function memberOp(){
-		Tpl::setDirquna('shop');
+		Tpl::setDirquna('distribute');
         Tpl::showpage('member.index');
     }
 
@@ -198,22 +198,21 @@ class memberControl extends SystemControl{
      */
     public function get_xmlOp() {
         $model_member = Model('member');
-        $member_grade = $model_member->getMemberGradeArr();
         $condition = array();
         if ($_POST['query'] != '') {
             $condition[$_POST['qtype']] = array('like', '%' . $_POST['query'] . '%');
         }
         $order = '';
-        $param = array('member_id','member_name','member_avatar','member_email','member_mobile','member_sex','member_truename','member_birthday'
-                ,'member_time','member_login_time','member_login_ip','member_points','member_exppoints','member_grade','available_predeposit'
-                ,'freeze_predeposit','available_rc_balance','freeze_rc_balance','inform_allow','is_buy','is_allowtalk','member_state'
+        $param = array('member_id','member_name','member_avatar', 'member_mobile', 'member_time','member_login_time','member_login_ip','member_state',
+            'commission_money', 'have_withdraw_money', 'no_withdraw_money'
         );
         if (in_array($_POST['sortname'], $param) && in_array($_POST['sortorder'], array('asc', 'desc'))) {
             $order = $_POST['sortname'] . ' ' . $_POST['sortorder'];
         }
         $page = $_POST['rp'];
-        $member_list = $model_member->getMemberList($condition, '*', $page, $order);
-
+        
+        $member_list = $model_member->getMemberCommissionInfo($condition, '*', $page, $order);
+        // 获得会员佣金列表
         $sex_array = $this->get_sex();
 
         $data = array();
@@ -221,27 +220,14 @@ class memberControl extends SystemControl{
         $data['total_num'] = $model_member->gettotalnum();
         foreach ($member_list as $value) {
             $param = array();
-            $param['operation'] = "<a class='btn blue' href='index.php?act=member&op=member_edit&member_id=" . $value['member_id'] . "'><i class='fa fa-pencil-square-o'></i>编辑</a>";
+            // $param['operation'] = "<a class='btn red' href='javascript:void(0);' onclick=\"fg_del('" . $value['videos_id'] . "')\"><i class='fa fa-trash-o'></i>查看</a>";
             $param['member_id'] = $value['member_id'];
             $param['member_name'] = "<img src=".getMemberAvatarForID($value['member_id'])." class='user-avatar' onMouseOut='toolTip()' onMouseOver='toolTip(\"<img src=".getMemberAvatarForID($value['member_id']).">\")'>".$value['member_name'];
-            $param['member_email'] = $value['member_email'];
             $param['member_mobile'] = $value['member_mobile'];
-            $param['member_sex'] = $sex_array[$value['member_sex']];
-            $param['member_truename'] = $value['member_truename'];
-            $param['member_birthday'] = $value['member_birthday'];
-            $param['member_time'] = date('Y-m-d', $value['member_time']);
-            $param['member_login_time'] = date('Y-m-d', $value['member_login_time']);
-            $param['member_login_ip'] = $value['member_login_ip'];
-            $param['member_points'] = $value['member_points'];
-            $param['member_exppoints'] = $value['member_exppoints'];
-            $param['member_grade'] = ($t = $model_member->getOneMemberGrade($value['member_exppoints'], false, $member_grade))?$t['level_name']:'';
-            $param['available_predeposit'] = ncPriceFormat($value['available_predeposit']);
-            $param['freeze_predeposit'] = ncPriceFormat($value['freeze_predeposit']);
-            $param['available_rc_balance'] = ncPriceFormat($value['available_rc_balance']);
-            $param['freeze_rc_balance'] = ncPriceFormat($value['freeze_rc_balance']);
-            $param['inform_allow'] = $value['inform_allow'] ==  '1' ? '<span class="yes"><i class="fa fa-check-circle"></i>是</span>' : '<span class="no"><i class="fa fa-ban"></i>否</span>';
-            $param['is_buy'] = $value['is_buy'] ==  '1' ? '<span class="yes"><i class="fa fa-check-circle"></i>是</span>' : '<span class="no"><i class="fa fa-ban"></i>否</span>';
-            $param['is_allowtalk'] = $value['is_allowtalk'] ==  '1' ? '<span class="yes"><i class="fa fa-check-circle"></i>是</span>' : '<span class="no"><i class="fa fa-ban"></i>否</span>';
+            $param['commission_money'] = $value['commission_money'];
+            $param['no_withdraw_money'] = $value['no_withdraw_money'];
+            $param['have_withdraw_money'] = $value['have_withdraw_money'];
+            $param['member_state'] = $value['member_state'] ==  '1' ? '<span class="yes"><i class="fa fa-check-circle"></i>可用</span>' : '<span class="no"><i class="fa fa-ban"></i>不可用</span>';
             $data['list'][$value['member_id']] = $param;
         }
         echo Tpl::flexigridXML($data);exit();
@@ -258,117 +244,5 @@ class memberControl extends SystemControl{
         $array[3] = '保密';
         return $array;
     }
-    /**
-     * csv导出
-     */
-    public function export_csvOp() {
-        $model_member = Model('member');
-        $condition = array();
-        $limit = false;
-        if ($_GET['id'] != '') {
-            $id_array = explode(',', $_GET['id']);
-            $condition['member_id'] = array('in', $id_array);
-        }
-        if ($_GET['query'] != '') {
-            $condition[$_GET['qtype']] = array('like', '%' . $_GET['query'] . '%');
-        }
-        $order = '';
-        $param = array('member_id','member_name','member_avatar','member_email','member_mobile','member_sex','member_truename','member_birthday'
-                ,'member_time','member_login_time','member_login_ip','member_points','member_exppoints','member_grade','available_predeposit'
-                ,'freeze_predeposit','available_rc_balance','freeze_rc_balance','inform_allow','is_buy','is_allowtalk','member_state'
-        );
-        if (in_array($_GET['sortname'], $param) && in_array($_GET['sortorder'], array('asc', 'desc'))) {
-            $order = $_GET['sortname'] . ' ' . $_GET['sortorder'];
-        }
-        if (!is_numeric($_GET['curpage'])){
-            $count = $model_member->getMemberCount($condition);
-            if ($count > self::EXPORT_SIZE ){   //显示下载链接
-                $array = array();
-                $page = ceil($count/self::EXPORT_SIZE);
-                for ($i=1;$i<=$page;$i++){
-                    $limit1 = ($i-1)*self::EXPORT_SIZE + 1;
-                    $limit2 = $i*self::EXPORT_SIZE > $count ? $count : $i*self::EXPORT_SIZE;
-                    $array[$i] = $limit1.' ~ '.$limit2 ;
-                }
-                Tpl::output('list',$array);
-                Tpl::output('murl','index.php?act=member&op=index');
-				Tpl::setDirquna('shop');
-                Tpl::showpage('export.excel');
-                exit();
-            }
-        } else {
-            $limit1 = ($_GET['curpage']-1) * self::EXPORT_SIZE;
-            $limit2 = self::EXPORT_SIZE;
-            $limit = $limit1 .','. $limit2;
-        }
-
-        $member_list = $model_member->getMemberList($condition, '*', null, $order, $limit);
-        $this->createCsv($member_list);
-    }
-    /**
-     * 生成csv文件
-     */
-    private function createCsv($member_list) {
-        $model_member = Model('member');
-        $member_grade = $model_member->getMemberGradeArr();
-        // 性别
-        $sex_array = $this->get_sex();
-        $data = array();
-        foreach ($member_list as $value) {
-            $param = array();
-            $param['member_id'] = $value['member_id'];
-            $param['member_name'] = $value['member_name'];
-            $param['member_avatar'] = getMemberAvatarForID($value['member_id']);
-            $param['member_email'] = $value['member_email'];
-            $param['member_mobile'] = $value['member_mobile'];
-            $param['member_sex'] = $sex_array[$value['member_sex']];
-            $param['member_truename'] = $value['member_truename'];
-            $param['member_birthday'] = $value['member_birthday'];
-            $param['member_time'] = date('Y-m-d', $value['member_time']);
-            $param['member_login_time'] = date('Y-m-d', $value['member_login_time']);
-            $param['member_login_ip'] = $value['member_login_ip'];
-            $param['member_points'] = $value['member_points'];
-            $param['member_exppoints'] = $value['member_exppoints'];
-            $param['member_grade'] = ($t = $model_member->getOneMemberGrade($value['member_exppoints'], false, $member_grade))?$t['level_name']:'';
-            $param['available_predeposit'] = ncPriceFormat($value['available_predeposit']);
-            $param['freeze_predeposit'] = ncPriceFormat($value['freeze_predeposit']);
-            $param['available_rc_balance'] = ncPriceFormat($value['available_rc_balance']);
-            $param['freeze_rc_balance'] = ncPriceFormat($value['freeze_rc_balance']);
-            $param['inform_allow'] = $value['inform_allow'] ==  '1' ? '是' : '否';
-            $param['is_buy'] = $value['is_buy'] ==  '1' ? '是' : '否';
-            $param['is_allowtalk'] = $value['is_allowtalk'] ==  '1' ? '是' : '否';
-            $param['member_state'] = $value['member_state'] ==  '1' ? '是' : '否';
-            $data[$value['member_id']] = $param;
-        }
-
-        $header = array(
-                'member_id' => '会员ID',
-                'member_name' => '会员名称',
-                'member_avatar' => '会员头像',
-                'member_email' => '会员邮箱',
-                'member_mobile' => '会员手机',
-                'member_sex' => '会员性别',
-                'member_truename' => '真实姓名',
-                'member_birthday' => '出生日期',
-                'member_time' => '注册时间',
-                'member_login_time' => '最后登录时间',
-                'member_login_ip' => '最后登录IP',
-                'member_points' => '会员积分',
-                'member_exppoints' => '会员经验',
-                'member_grade' => '会员等级',
-                'available_predeposit' => '可用预存款(元)',
-                'freeze_predeposit' => '冻结预存款(元)',
-                'available_rc_balance' => '可用充值卡(元)',
-                'freeze_rc_balance' => '冻结充值卡(元)',
-                'inform_allow' => '允许举报',
-                'is_buy' => '允许购买',
-                'is_allowtalk' => '允许咨询',
-                'member_state' => '允许登录'
-        );
-       array_unshift($data, $header);
-		$csv = new Csv();
-	    $export_data = $csv->charset($data,CHARSET,'gbk');
-	    $csv->filename = $csv->charset('member_list',CHARSET).$_GET['curpage'] . '-'.date('Y-m-d');
-	    $csv->export($data);   
-    }
+   
 }

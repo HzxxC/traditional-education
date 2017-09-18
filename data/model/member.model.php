@@ -647,4 +647,46 @@ class memberModel extends Model {
         }
         return $grade_arr;
     }
+
+    public function getMemberCommissionInfo($condition, $field = '', $page = null, $order = 'member_id desc', $limit = '') {
+        
+        $member_list = $this->table('member')->field($field)->where($condition)->page($page)->order($order)->limit($limit)->select();
+        foreach ($member_list as $key => $value) {
+            # code...
+            $total_money = $this->getMemberMoneyById($value['member_id'], 1);
+            $withdraw_money = $this->getMemberMoneyById($value['member_id'], 2);
+            $member_list[$key]['commission_money'] = $total_money; 
+            $member_list[$key]['have_withdraw_money'] = $withdraw_money;
+            $member_list[$key]['no_withdraw_money'] = $total_money - $withdraw_money;
+        }
+        return $member_list;
+    }
+
+    public function getMemberMoneyById($member_id, $type = 1) {
+        
+        $condition['member_id'] = $member_id;
+        $condition['c_type'] = $type;
+        $condition['c_state'] = 1;
+
+        $money = $this->table('member_commission')->where($condition)->sum('c_money');
+        return empty($money) ? 0 : $money;
+    }
+
+    public function getMemberCommissionList($condition, $field = '', $page = null, $order = 'member_id desc', $limit = '') {
+
+        $commission_list = $this->table('member_commission')->field($field)->where($condition)->page($page)->order($order)->limit($limit)->select();
+        foreach ($commission_list as $key => $value) {
+            # code...
+            $member_info = $this->getMemberInfoByID($value['member_id'], 'member_name');
+            if ($value['c_type'] != 2) {
+                $member_form_info = $this->getMemberInfoByID($value['member_fromid'], 'member_name');    
+                $commission_list[$key]['member_fromid_name'] = $member_form_info['member_name'];
+            }
+            $commission_list[$key]['member_name'] = $member_info['member_name'];
+        }
+
+        return $commission_list;
+    }
+
+
 }
